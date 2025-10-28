@@ -1,0 +1,37 @@
+services:
+  reverse-proxy:
+    image: traefik:v3.1
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - letsencrypt:/letsencrypt
+    networks:
+      - calendorario-network
+
+  app:
+    image: cosmtrek/air:v1.63.0
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`localhost`)"
+      - "traefik.http.services.app.loadbalancer.server.port=8080"
+    restart: always
+    working_dir: /app
+    env_file:
+      - .env
+    environment:
+      - GOFLAGS=-buildvcs=false
+    volumes:
+      - .:/app
+    networks:
+      - calendorario-network
+
+volumes:
+  letsencrypt:
+
+networks:
+  calendorario-network:

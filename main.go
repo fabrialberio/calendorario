@@ -1,7 +1,11 @@
 package main
 
 import (
-	mw "calendorario/pkg/middleware"
+	"calendorario/pkg/middleware"
+	"calendorario/views"
+
+	"github.com/a-h/templ"
+
 	"log"
 	"net/http"
 )
@@ -12,7 +16,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    ":8080",
-		Handler: mw.WithLogging(mux),
+		Handler: middleware.WithLogging(mux),
 	}
 
 	log.Println("Server started on port 8080.")
@@ -20,5 +24,5 @@ func main() {
 }
 
 func setupRoutes(mux *http.ServeMux) {
-
+	mux.Handle("/", templ.Handler(views.Hello("person")))
 }

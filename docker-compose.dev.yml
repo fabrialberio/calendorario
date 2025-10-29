@@ -13,6 +13,13 @@ services:
     networks:
       - calendorario-network
 
+  templ:
+    image: ghcr.io/a-h/templ:v0.3.960
+    command: generate -watch
+    working_dir: /app
+    volumes:
+      - .:/app
+
   app:
     image: cosmtrek/air:v1.63.0
     labels:
@@ -20,6 +27,8 @@ services:
       - "traefik.http.routers.app.rule=Host(`localhost`)"
       - "traefik.http.services.app.loadbalancer.server.port=8080"
     restart: always
+    depends_on:
+      - templ
     working_dir: /app
     env_file:
       - .env

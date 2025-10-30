@@ -15,8 +15,17 @@ services:
 
   templ:
     image: ghcr.io/a-h/templ:v0.3.960
-    command: generate -watch
+    command: generate --watch
     working_dir: /app
+    volumes:
+      - .:/app
+
+  tailwindcss:
+    build: ./tailwindcss
+    command: -i ./tailwindcss/input.css -o ./public/tailwind.css --watch
+    working_dir: /app
+    tty: true
+    stop_grace_period: 0s
     volumes:
       - .:/app
 
@@ -27,8 +36,6 @@ services:
       - "traefik.http.routers.app.rule=Host(`localhost`)"
       - "traefik.http.services.app.loadbalancer.server.port=8080"
     restart: always
-    depends_on:
-      - templ
     working_dir: /app
     env_file:
       - .env

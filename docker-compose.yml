@@ -1,0 +1,76 @@
+services:
+  db:
+    image: postgres:18.0
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - postgres-data:/var/lib/postgresql/18/docker
+      - ./migrations/:/docker-entrypoint-initdb.d
+    networks:
+      - calendorario-network
+
+  reverse-proxy:
+    image: traefik:v3.5.4
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - letsencrypt:/letsencrypt
+    networks:
+      - calendorario-network
+
+  templ:
+    image: ghcr.io/a-h/templ:v0.3.960
+    command: generate
+    working_dir: /app
+    volumes:
+      - .:/app
+
+  tailwindcss:
+    build: ./tailwindcss
+    command: -i tailwindcss/input.css -o public/tailwind.css --minify
+    working_dir: /app
+    volumes:
+      - .:/app
+
+  app:
+    image: golang:1.25.1
+    command: go run .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`calendorario.enaiptesero.it`)"
+      - "traefik.http.services.app.loadbalancer.server.port=8080"
+      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.tls.certresolver=myresolver"
+    restart: always
+    depends_on:
+      - templ
+      - tailwindcss
+    working_dir: /app
+    env_file:
+      - .env
+    environment:
+      - GOFLAGS=-buildvcs=false
+    volumes:
+      - .:/app
+    networks:
+      - calendorario-network
+
+volumes:
+  postgres-data:
+  letsencrypt:
+
+networks:
+  calendorario-network:

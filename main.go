@@ -3,12 +3,16 @@ package main
 import (
 	"calendorario/pkg/middleware"
 	"calendorario/views"
+	"embed"
 
 	"github.com/a-h/templ"
 
 	"log"
 	"net/http"
 )
+
+//go:embed public
+var publicFS embed.FS
 
 func main() {
 	mux := http.NewServeMux()
@@ -25,4 +29,5 @@ func main() {
 
 func setupRoutes(mux *http.ServeMux) {
 	mux.Handle("/", templ.Handler(views.Hello("person")))
+	mux.Handle("GET /public/", http.FileServerFS(publicFS))
 }

@@ -1,5 +1,8 @@
 package views
 
 templ Hello(name string) {
-<div>Hello, { name }</div>
+	@head()
+	<div class="text-blue-500">
+		Hello, { name }
+	</div>
 }

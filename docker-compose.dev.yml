@@ -42,7 +42,8 @@ services:
       - .:/app
 
   app:
-    image: cosmtrek/air:v1.63.0
+    image: golang:1.25.1
+    command: go tool templ generate --watch --cmd="go run ."
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`localhost`)"
@@ -53,14 +54,23 @@ services:
       - .env
     environment:
       - GOFLAGS=-buildvcs=false
+      - GOCACHE=/go-cache
+      - GOMODCACHE=/go-mod-cache
+    ports:
+      - 80:8080
     volumes:
       - .:/app
+      - go-cache:/go-cache
+      - go-mod-cache:/go-mod-cache
+
     networks:
       - calendorario-network
 
 volumes:
   postgres-data:
   letsencrypt:
+  go-cache:
+  go-mod-cache:
 
 networks:
   calendorario-network:

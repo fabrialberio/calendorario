@@ -56,8 +56,6 @@ services:
       - GOFLAGS=-buildvcs=false
       - GOCACHE=/go-cache
       - GOMODCACHE=/go-mod-cache
-    ports:
-      - 80:8080
     volumes:
       - .:/app
       - go-cache:/go-cache

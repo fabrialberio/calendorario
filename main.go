@@ -15,9 +15,6 @@ import (
 	"net/http"
 )
 
-//go:embed public
-var publicFS embed.FS
-
 func main() {
 	db := createDatabase()
 	defer db.Close()
@@ -60,5 +57,10 @@ func createDatabase() *database.DB {
 
 func setupRoutes(mux *http.ServeMux) {
 	mux.Handle("/", templ.Handler(views.Hello("person")))
-	mux.Handle("GET /public/", http.FileServerFS(publicFS))
+
+	// TODO: Should change this to `FileServerFS` later.
+	mux.Handle(
+		"GET /public/",
+		http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))),
+	)
 }

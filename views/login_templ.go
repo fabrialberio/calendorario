@@ -8,7 +8,7 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Login() templ.Component {
+func Login(wrong_username_password bool, session_expired bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -37,7 +37,27 @@ func Login() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"fixed grid place-items-center w-screen h-screen\"><form class=\"space-y-8 p-4 max-w-sm w-full bg-surface rounded-[32px]\" method=\"POST\" action=\"login\"><div class=\"space-y-2 mt-2\"><h2>Calendorario</h2></div><div class=\"space-y-2\"><div><label for=\"username\" class=\"sr-only\">Username</label> <input id=\"username\" name=\"username\" type=\"username\" autocomplete=\"username\" placeholder=\"Username\"></div><div><label for=\"password\" class=\"sr-only\">Password</label> <input id=\"password\" name=\"password\" type=\"password\" autocomplete=\"current-password\" placeholder=\"Password\"></div></div><button type=\"submit\" class=\"w-full btn-lg suggested bg-primary\">Accedi</button></form></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"fixed grid place-items-center w-screen h-screen\"><form class=\"space-y-8 p-4 max-w-sm w-full bg-surface rounded-[40px]\" method=\"POST\" action=\"login\"><div class=\"space-y-2 mt-2\"><h2>Calendorario</h2>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if wrong_username_password {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<p class=\"text-error\">Username o password errati</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else if session_expired {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<p class=\"text-error\">Sessione scaduta</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<p>Inserisci le tue credenziali</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div><div class=\"space-y-2\"><div><label for=\"username\" class=\"sr-only\">Username</label> <input id=\"username\" name=\"username\" type=\"username\" autocomplete=\"username\" placeholder=\"Username\"></div><div><label for=\"password\" class=\"sr-only\">Password</label> <input id=\"password\" name=\"password\" type=\"password\" autocomplete=\"current-password\" placeholder=\"Password\"></div></div><button type=\"submit\" class=\"w-full btn-lg suggested bg-primary\">Accedi</button></form></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

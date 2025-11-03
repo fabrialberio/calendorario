@@ -36,7 +36,7 @@
     }
 
     input:not([type="checkbox"]), select {
-        @apply bg-surface px-3 py-2 border border-outline focus-visible:border-primary rounded-lg focus-visible:ring-1 w-full h-10 text-on-surface placeholder-on-surface-dim;
+        @apply bg-surface px-3 py-2 border border-outline rounded-lg focus-visible:ring-1 w-full h-10 text-on-surface placeholder-on-surface-dim;
     }
 
     /* Fix for Safari on iOS */

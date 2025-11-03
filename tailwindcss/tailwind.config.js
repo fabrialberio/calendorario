@@ -3,7 +3,7 @@ module.exports = {
     content: ["../views/**/*.html"],
     theme: {
         colors: {
-            "primary": "#49672E",
+            "primary": "#407828",
             "on-primary": "#FFFFFF",
             "secondary": "#57624A",
             "raised": "#e3e3e3",

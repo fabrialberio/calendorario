@@ -38,6 +38,13 @@ services:
     volumes:
       - .:/app
 
+  sqlc:
+    image: sqlc/sqlc
+    command: generate
+    working_dir: /app/sqlc
+    volumes:
+      - .:/app
+
   tailwindcss:
     build: ./tailwindcss
     command: -i tailwindcss/input.css -o public/tailwind.css --minify
@@ -57,6 +64,7 @@ services:
     restart: always
     depends_on:
       - templ
+      - sqlc
       - tailwindcss
     working_dir: /app
     env_file:

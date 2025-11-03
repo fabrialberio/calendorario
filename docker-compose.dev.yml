@@ -32,6 +32,13 @@ services:
     volumes:
       - .:/app
 
+  sqlc:
+    image: sqlc/sqlc
+    command: generate
+    working_dir: /app/sqlc
+    volumes:
+      - .:/app
+
   tailwindcss:
     build: ./tailwindcss
     command: -i ./tailwindcss/input.css -o ./public/tailwind.css --watch
@@ -48,6 +55,8 @@ services:
       - "traefik.http.routers.app.rule=Host(`localhost`)"
       - "traefik.http.services.app.loadbalancer.server.port=8080"
     restart: always
+    depends_on:
+      - sqlc
     working_dir: /app
     env_file:
       - .env

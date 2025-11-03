@@ -6,8 +6,6 @@ import (
 	"calendorario/pkg/middleware"
 	"embed"
 
-	"github.com/a-h/templ"
-
 	"fmt"
 	"log"
 	"net/http"
@@ -59,8 +57,9 @@ func createDatabase() *database.DB {
 }
 
 func setupRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("GET /", handlers.GetIndex)
-	mux.Handle("GET /login", templ.Handler(views.Login()))
+	mux.HandleFunc("GET /", handlers.IndexGet)
+	mux.HandleFunc("GET /login", handlers.LoginGet)
+	mux.HandleFunc("POST /login", handlers.LoginPost)
 
 	mux.Handle("GET /public/", http.FileServerFS(publicFS))
 }

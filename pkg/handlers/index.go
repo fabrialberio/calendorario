@@ -1,11 +1,10 @@
 package handlers
 
 import (
-	"calendorario/views"
 	"net/http"
 )
 
-func GetIndex(w http.ResponseWriter, r *http.Request) {
+func IndexGet(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 
 	/* user, err := appContext.AuthenticatedUser(r)
@@ -19,6 +18,4 @@ func GetIndex(w http.ResponseWriter, r *http.Request) {
 		loginRedirect(w, r, user.RoleID)
 		return
 	} */
-
-	views.Login().Render(r.Context(), w)
 }

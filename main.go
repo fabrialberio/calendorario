@@ -2,17 +2,17 @@ package main
 
 import (
 	"calendorario/pkg/database"
+	"calendorario/pkg/handlers"
 	"calendorario/pkg/middleware"
 	"calendorario/views"
-	"embed"
-	"fmt"
-	"os"
-	"time"
 
 	"github.com/a-h/templ"
 
+	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"time"
 )
 
 func main() {
@@ -56,7 +56,8 @@ func createDatabase() *database.DB {
 }
 
 func setupRoutes(mux *http.ServeMux) {
-	mux.Handle("/", templ.Handler(views.Hello("person")))
+	mux.HandleFunc("GET /", handlers.GetIndex)
+	mux.Handle("GET /login", templ.Handler(views.Login()))
 
 	// TODO: Should change this to `FileServerFS` later.
 	mux.Handle(

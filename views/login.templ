@@ -1,0 +1,40 @@
+package views
+
+templ Login() {
+	<!DOCTYPE html>
+	<html>
+		@head()
+		<body class="fixed grid place-items-center w-screen h-screen">
+			<form class="space-y-8 p-4 max-w-sm w-full bg-surface rounded-[32px]" method="POST" action="login">
+				<div class="space-y-2 mt-2">
+					<h2>Calendorario</h2>
+				</div>
+				<div class="space-y-2">
+					<div>
+						<label for="username" class="sr-only">Username</label>
+						<input
+							id="username"
+							name="username"
+							type="username"
+							autocomplete="username"
+							placeholder="Username"
+						/>
+					</div>
+					<div>
+						<label for="password" class="sr-only">Password</label>
+						<input
+							id="password"
+							name="password"
+							type="password"
+							autocomplete="current-password"
+							placeholder="Password"
+						/>
+					</div>
+				</div>
+				<button type="submit" class="w-full btn-lg suggested bg-primary">
+					Accedi
+				</button>
+			</form>
+		</body>
+	</html>
+}

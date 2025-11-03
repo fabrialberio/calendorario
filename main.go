@@ -4,7 +4,7 @@ import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/handlers"
 	"calendorario/pkg/middleware"
-	"calendorario/views"
+	"embed"
 
 	"github.com/a-h/templ"
 
@@ -14,6 +14,9 @@ import (
 	"os"
 	"time"
 )
+
+//go:embed public
+var publicFS embed.FS
 
 func main() {
 	db := createDatabase()
@@ -59,9 +62,5 @@ func setupRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET /", handlers.GetIndex)
 	mux.Handle("GET /login", templ.Handler(views.Login()))
 
-	// TODO: Should change this to `FileServerFS` later.
-	mux.Handle(
-		"GET /public/",
-		http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))),
-	)
+	mux.Handle("GET /public/", http.FileServerFS(publicFS))
 }

@@ -25,6 +25,13 @@ services:
     networks:
       - calendorario-network
 
+  templ:
+    image: ghcr.io/a-h/templ:v0.3.960
+    command: generate --watch
+    working_dir: /app
+    volumes:
+      - .:/app
+
   tailwindcss:
     build: ./tailwindcss
     command: -i ./tailwindcss/input.css -o ./public/tailwind.css --watch
@@ -35,8 +42,7 @@ services:
       - .:/app
 
   app:
-    image: golang:1.25.1
-    command: go tool templ generate --watch --cmd="go run ."
+    image: cosmtrek/air:v1.63.0
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`localhost`)"
@@ -47,21 +53,14 @@ services:
       - .env
     environment:
       - GOFLAGS=-buildvcs=false
-      - GOCACHE=/go-cache
-      - GOMODCACHE=/go-mod-cache
     volumes:
       - .:/app
-      - go-cache:/go-cache
-      - go-mod-cache:/go-mod-cache
-
     networks:
       - calendorario-network
 
 volumes:
   postgres-data:
   letsencrypt:
-  go-cache:
-  go-mod-cache:
 
 networks:
   calendorario-network:

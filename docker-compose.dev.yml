@@ -50,6 +50,7 @@ services:
 
   app:
     image: cosmtrek/air:v1.63.0
+    command: --build.include_ext="go,tmpl,css"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`localhost`)"

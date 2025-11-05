@@ -28,7 +28,7 @@
     }
 
     input:not([type="checkbox"]), select {
-        @apply bg-surface px-3 py-2 border border-on-surface-var rounded-lg w-full h-10 text-on-surface placeholder-on-surface-var;
+        @apply bg-surface px-3 py-2 border border-on-surface-var rounded-xl w-full h-10 text-on-surface placeholder-on-surface-var;
 
         &:focus-visible {
             @apply border-on-surface outline-none ring-1 ring-on-surface;
@@ -62,7 +62,7 @@
 
 @layer components {
     .btn {
-        @apply clickable focus-visible:ring-offset-2 flex items-center truncate
+        @apply clickable flex items-center truncate
     }
 
     .btn-md {
@@ -78,7 +78,7 @@
     }
 
     .checkbox {
-        @apply border border-on-surface-var rounded-sm w-5 h-5 text-on-primary clickable;
+        @apply border border-on-surface-var rounded-md w-5 h-5 text-on-primary text-sm clickable;
 
         &:has(input[type="checkbox"]:checked) {
             @apply border-none bg-primary

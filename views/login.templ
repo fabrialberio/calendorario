@@ -21,7 +21,7 @@ templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 						<label for="username" class="sr-only">Username</label>
 						<input
 							id="username"
-							name="username"
+							name={ KeyUsername }
 							type="username"
 							autocomplete="username"
 							placeholder="Username"
@@ -31,7 +31,7 @@ templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 						<label for="password" class="sr-only">Password</label>
 						<input
 							id="password"
-							name="password"
+							name={ KeyPassword }
 							x-bind:type="show_password ? 'text' : 'password'"
 							autocomplete="current-password"
 							placeholder="Password"

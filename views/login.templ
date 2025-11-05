@@ -1,6 +1,6 @@
 package views
 
-templ Login(wrong_username_password bool, session_expired bool) {
+templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 	<!DOCTYPE html>
 	<html>
 		@head()
@@ -8,9 +8,9 @@ templ Login(wrong_username_password bool, session_expired bool) {
 			<form class="space-y-8 p-4 max-w-sm w-full bg-surface rounded-[40px]" method="POST" action="login">
 				<div class="space-y-2 mt-2">
 					<h2>Calendorario</h2>
-					if wrong_username_password {
+					if wrongUsernamePassword {
 						<p class="text-error">Username o password errati</p>
-					} else if session_expired {
+					} else if sessionExpired {
 						<p class="text-error">Sessione scaduta</p>
 					} else {
 						<p>Inserisci le tue credenziali</p>

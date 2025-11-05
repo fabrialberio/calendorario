@@ -16,7 +16,7 @@ templ Login(wrong_username_password bool, session_expired bool) {
 						<p>Inserisci le tue credenziali</p>
 					}
 				</div>
-				<div class="space-y-2">
+				<div class="space-y-2" x-data="{show_password: false}">
 					<div>
 						<label for="username" class="sr-only">Username</label>
 						<input
@@ -32,13 +32,30 @@ templ Login(wrong_username_password bool, session_expired bool) {
 						<input
 							id="password"
 							name="password"
-							type="password"
+							x-bind:type="show_password ? 'text' : 'password'"
 							autocomplete="current-password"
 							placeholder="Password"
 						/>
 					</div>
+					<div>
+						<button
+							class="checkbox align-middle"
+							type="button"
+							x-on:click="show_password = !show_password"
+						>
+							<i class="fa-check fas" x-show="show_password"></i>
+							<input
+								id="checkbox"
+								type="checkbox"
+								tabindex="-1"
+								hidden
+								x-bind:checked="show_password"
+							/>
+						</button>
+						<label class="ml-1" for="checkbox">Mostra password</label>
+					</div>
 				</div>
-				<button type="submit" class="w-full btn-lg suggested bg-primary">
+				<button type="submit" class="w-full btn-lg suggested">
 					Accedi
 				</button>
 			</form>

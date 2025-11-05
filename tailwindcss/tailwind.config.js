@@ -11,7 +11,7 @@ module.exports = {
             "view": "#F9FAEF",
             "surface": "#DBE7C9",
             "on-surface": "#1A1D16",
-            "on-surface-dim": "#44483E",
+            "on-surface-var": "#1A1D1688",
             "outline": "#44483E",
             "scrim": "#000000",
         },

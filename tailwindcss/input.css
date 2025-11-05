@@ -31,12 +31,8 @@
         @apply space-y-4 mx-auto mb-24 px-6 w-full max-w-lg
     }
 
-    label {
-        @apply text-on-surface-dim pl-2 text-sm
-    }
-
     input:not([type="checkbox"]), select {
-        @apply bg-surface px-3 py-2 border border-outline rounded-lg focus-visible:ring-1 w-full h-10 text-on-surface placeholder-on-surface-dim;
+        @apply bg-surface px-3 py-2 border border-on-surface-var rounded-lg focus-visible:ring-1 w-full h-10 text-on-surface placeholder-on-surface-var;
     }
 
     /* Fix for Safari on iOS */

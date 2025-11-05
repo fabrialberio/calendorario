@@ -41,7 +41,7 @@ services:
 
   tailwindcss:
     build: ./tailwindcss
-    command: -i ./tailwindcss/input.css -o ./public/tailwind.css --watch
+    command: -i ./tailwindcss/input.css -o ./public/css/tailwind.css --watch
     working_dir: /app
     tty: true
     stop_grace_period: 0s

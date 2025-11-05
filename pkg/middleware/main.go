@@ -1,26 +1,29 @@
 package middleware
 
 import (
+	"calendorario/pkg/auth"
+	"calendorario/pkg/database"
+	"calendorario/pkg/requestcontext"
+
 	"log"
 	"net/http"
 )
-
-type Middleware func(http.Handler) http.Handler
-
-func CreateStack(xs ...Middleware) Middleware {
-	return func(next http.Handler) http.Handler {
-		for i := len(xs) - 1; i >= 0; i-- {
-			x := xs[i]
-			next = x(next)
-		}
-
-		return next
-	}
-}
 
 func WithLogging(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		next.ServeHTTP(w, r)
 		log.Printf("%s %s %s", r.RemoteAddr, r.Method, r.URL)
+	})
+}
+
+func WithContext(database *database.Queries, next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		user, err := auth.GetAuthenticatedUser(r)
+
+		ctx := r.Context()
+		rc := requestcontext.NewContext(ctx, database, user, err)
+		r = r.WithContext(rc)
+
+		next.ServeHTTP(w, r)
 	})
 }

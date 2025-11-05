@@ -48,17 +48,29 @@
     }
 }
 
+@utility clickable {
+    @apply transition duration-200 cursor-pointer;
+
+    &:hover {
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+    }
+}
+
 @layer components {
     .btn {
-        @apply focus-visible:ring-offset-2 flex items-center truncate
+        @apply clickable focus-visible:ring-offset-2 flex items-center truncate
     }
 
     .btn-md {
-        @apply min-h-10 min-w-10 px-3 py-2 gap-2 rounded-lg justify-center font-bold
+        @apply clickable min-h-10 min-w-10 px-3 py-2 gap-2 rounded-lg justify-center font-bold
     }
 
     .btn-lg {
-        @apply min-h-12 min-w-12 px-4 py-3 gap-2 rounded-full justify-center font-bold
+        @apply clickable min-h-12 min-w-12 px-4 py-3 gap-2 rounded-full justify-center font-bold
     }
 
     .suggested {

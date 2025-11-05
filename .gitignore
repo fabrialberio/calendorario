@@ -2,5 +2,5 @@
 tmp/
 
 .env
-private.key
+private_key.pem
 *.test

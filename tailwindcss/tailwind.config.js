@@ -15,6 +15,11 @@ module.exports = {
             "outline": "#44483E",
             "scrim": "#000000",
         },
+        extend: {
+            borderRadius: {
+                'card': '40px',
+            }
+        }
     },
     plugins: [],
 }

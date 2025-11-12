@@ -76,10 +76,9 @@ type Program struct {
 }
 
 type Subject struct {
-	ID        int64
-	Name      string
-	ColorID   int64
-	TeacherID int64
+	ID      int64
+	Name    string
+	ColorID int64
 }
 
 type SubjectColor struct {

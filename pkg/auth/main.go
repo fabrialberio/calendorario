@@ -5,12 +5,13 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 )
 
 var (
-	ErrNoCookie   = errors.New("cookie not found")
-	ErrInvalidJWT = errors.New("invalid JWT")
+	ErrCookieNotFound = errors.New("cookie not found")
+	ErrCookieExpired  = errors.New("cookie is expired")
 )
 
 const sessionCookieName = "jwt"
@@ -27,12 +28,14 @@ func HashPassword(password string) ([]byte, error) {
 func GetAuthenticatedUser(r *http.Request) (*database.User, error) {
 	cookie, err := r.Cookie(sessionCookieName)
 	if err != nil {
-		return nil, ErrNoCookie
+		return nil, ErrCookieNotFound
 	}
 
 	claims, err := validateJWT(cookie.Value)
-	if err != nil {
-		return nil, ErrInvalidJWT
+	if errors.Is(err, jwt.ErrTokenExpired) {
+		return nil, ErrCookieExpired
+	} else if err != nil {
+		return nil, err
 	}
 
 	return &claims.User, nil

@@ -11,6 +11,8 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+const sessionDuration = time.Minute * 90
+
 var (
 	privateKey *rsa.PrivateKey
 	publicKey  *rsa.PublicKey
@@ -51,7 +53,7 @@ func generateJWT(userId int64, role database.Role) (string, error) {
 		},
 		RegisteredClaims: jwt.RegisteredClaims{
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 3)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(sessionDuration)),
 			Issuer:    "calendorario",
 		},
 	}
@@ -67,9 +69,6 @@ func generateJWT(userId int64, role database.Role) (string, error) {
 
 func validateJWT(tokenString string) (*userClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &userClaims{}, func(t *jwt.Token) (interface{}, error) {
-		if _, ok := t.Method.(*jwt.SigningMethodRSA); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
-		}
 		return publicKey, nil
 	})
 	if err != nil {

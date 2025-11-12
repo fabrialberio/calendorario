@@ -5,6 +5,7 @@
 package database
 
 import (
+	"database/sql"
 	"database/sql/driver"
 	"fmt"
 	"time"
@@ -53,6 +54,52 @@ func (ns NullRole) Value() (driver.Value, error) {
 	return string(ns.Role), nil
 }
 
+type Class struct {
+	ID        int64
+	Name      string
+	TermID    int64
+	ProgramID int64
+}
+
+type Lesson struct {
+	ID        int64
+	ClassID   int64
+	TeacherID int64
+	Date      sql.NullTime
+	StartTime time.Time
+	EndTime   time.Time
+}
+
+type Program struct {
+	ID   int64
+	Name string
+}
+
+type Subject struct {
+	ID        int64
+	Name      string
+	ColorID   int64
+	TeacherID int64
+}
+
+type SubjectColor struct {
+	ID       int64
+	HexValue []byte
+}
+
+type Teacher struct {
+	ID                 int64
+	PreferredProgramID int64
+	UserID             int64
+	SubjectID          int64
+}
+
+type Term struct {
+	ID        int64
+	StartDate time.Time
+	EndDate   time.Time
+}
+
 type User struct {
 	ID           int64
 	Username     string
@@ -62,4 +109,11 @@ type User struct {
 	Role         Role
 	CreatedAt    time.Time
 	Deleted      bool
+}
+
+type Vacation struct {
+	ID            int64
+	Name          string
+	StartDatetime time.Time
+	EndDatetime   time.Time
 }

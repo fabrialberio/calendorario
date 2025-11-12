@@ -37,53 +37,66 @@ func Login(wrongUsernamePassword bool, sessionExpired bool) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"fixed grid place-items-center w-screen h-screen\"><form class=\"space-y-8 p-4 max-w-sm w-full bg-surface rounded-[40px]\" method=\"POST\" action=\"login\"><div class=\"space-y-2 mt-2\"><h2>Calendorario</h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"fixed grid place-items-center w-screen h-screen\"><form class=\"space-y-8 p-4 max-w-sm w-full bg-surface rounded-card\" method=\"POST\" action=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if wrongUsernamePassword {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<p class=\"text-error\">Username o password errati</p>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		} else if sessionExpired {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<p class=\"text-error\">Sessione scaduta</p>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		} else {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<p>Inserisci le tue credenziali</p>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</div><div class=\"space-y-2\" x-data=\"{show_password: false}\"><div><label for=\"username\" class=\"sr-only\">Username</label> <input id=\"username\" name=\"")
+		var templ_7745c5c3_Var2 templ.SafeURL
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(DestLogin)
 		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(KeyUsername)
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/login.templ`, Line: 24, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/login.templ`, Line: 11, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\" type=\"username\" autocomplete=\"username\" placeholder=\"Username\"></div><div><label for=\"password\" class=\"sr-only\">Password</label> <input id=\"password\" name=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><div class=\"space-y-2 mt-2\"><h2>Calendorario</h2>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if wrongUsernamePassword {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<p class=\"text-error\">Username o password errati</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else if sessionExpired {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<p class=\"text-error\">Sessione scaduta</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<p>Inserisci le tue credenziali</p>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</div><div class=\"space-y-2\" x-data=\"{show_password: false}\"><div><label for=\"username\" class=\"sr-only\">Username</label> <input id=\"username\" name=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(KeyPassword)
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(KeyUsername)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/login.templ`, Line: 34, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/login.templ`, Line: 28, Col: 25}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" x-bind:type=\"show_password ? 'text' : 'password'\" autocomplete=\"current-password\" placeholder=\"Password\"></div><div><button class=\"checkbox align-middle\" type=\"button\" x-on:click=\"show_password = !show_password\"><i class=\"fa-check fas\" x-show=\"show_password\"></i> <input id=\"checkbox\" type=\"checkbox\" tabindex=\"-1\" hidden x-bind:checked=\"show_password\"></button> <label class=\"ml-1\" for=\"checkbox\">Mostra password</label></div></div><button type=\"submit\" class=\"w-full btn-lg suggested\">Accedi</button></form></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "\" type=\"username\" autocomplete=\"username\" placeholder=\"Username\"></div><div><label for=\"password\" class=\"sr-only\">Password</label> <input id=\"password\" name=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(KeyPassword)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/login.templ`, Line: 38, Col: 25}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" x-bind:type=\"show_password ? 'text' : 'password'\" autocomplete=\"current-password\" placeholder=\"Password\"></div><div><button class=\"checkbox align-middle\" type=\"button\" x-on:click=\"show_password = !show_password\"><i class=\"fa-check fas\" x-show=\"show_password\"></i> <input id=\"checkbox\" type=\"checkbox\" tabindex=\"-1\" hidden x-bind:checked=\"show_password\"></button> <label class=\"ml-1\" for=\"checkbox\">Mostra password</label></div></div><button type=\"submit\" class=\"w-full btn-lg suggested\">Accedi</button></form></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

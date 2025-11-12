@@ -5,7 +5,11 @@ templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 	<html>
 		@head()
 		<body class="fixed grid place-items-center w-screen h-screen">
-			<form class="space-y-8 p-4 max-w-sm w-full bg-surface rounded-[40px]" method="POST" action="login">
+			<form
+				class="space-y-8 p-4 max-w-sm w-full bg-surface rounded-card"
+				method="POST"
+				action={ DestLogin }
+			>
 				<div class="space-y-2 mt-2">
 					<h2>Calendorario</h2>
 					if wrongUsernamePassword {

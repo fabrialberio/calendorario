@@ -1,10 +1,47 @@
 @import "tailwindcss";
 
-@config "./tailwind.config.js";
+@source "../views/**/*.templ";
+
+@theme {
+    --color-*: initial;
+    --color-primary: rgb(66 104 52);
+    --color-surface-tint: rgb(66 104 52);
+    --color-on-primary: rgb(255 255 255);
+    --color-primary-container: rgb(195 239 173);
+    --color-secondary: rgb(43 106 70);
+    --color-on-secondary: rgb(255 255 255);
+    --color-secondary-container: rgb(175 242 196);
+    --color-tertiary: rgb(56 102 103);
+    --color-on-tertiary: rgb(255 255 255);
+    --color-tertiary-container: rgb(188 235 237);
+    --color-error: rgb(186 26 26);
+    --color-on-error: rgb(255 255 255);
+    --color-error-container: rgb(255 218 214);
+    --color-on-error-container: rgb(147 0 10);
+    --color-background: rgb(248 250 240);
+    --color-on-background: rgb(25 29 23);
+    --color-surface: rgb(248 250 240);
+    --color-on-surface: rgb(25 29 23);
+    --color-surface-variant: rgb(223 228 215);
+    --color-on-surface-variant: rgb(67 72 63);
+    --color-outline: rgb(115 121 110);
+    --color-outline-variant: rgb(195 200 187);
+    --color-shadow: rgb(0 0 0);
+    --color-scrim: rgb(0 0 0);
+    --color-surface-dim: rgb(216 219 209);
+    --color-surface-bright: rgb(248 250 240);
+    --color-surface-container-lowest: rgb(255 255 255);
+    --color-surface-container-low: rgb(242 245 234);
+    --color-surface-container: rgb(236 239 229);
+    --color-surface-container-high: rgb(231 233 223);
+    --color-surface-container-highest: rgb(225 228 218);
+
+    --radius-card: 40px;
+}
 
 @layer base {
     body {
-        @apply bg-view text-on-surface overflow-x-hidden
+        @apply bg-surface-container-high text-on-surface overflow-x-hidden
     }
 
     h2 {
@@ -20,10 +57,10 @@
     }
 
     input:not([type="checkbox"]), select {
-        @apply bg-surface px-3 py-2 border border-on-surface-var rounded-xl w-full h-10 text-on-surface placeholder-on-surface-var;
+        @apply border-outline placeholder-outline text-on-surface h-10 w-full rounded-xl border px-3 py-2;
 
         &:focus-visible {
-            @apply border-on-surface outline-none ring-1 ring-on-surface;
+            @apply border-on-surface ring-on-surface outline-none ring-1;
         }
     }
 
@@ -37,40 +74,34 @@
 }
 
 @utility clickable {
-    @apply transition-shadow duration-200 cursor-pointer;
+    &:not(:disabled) {
+        @apply cursor-pointer transition-shadow duration-200;
 
-    &:hover {
-        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
-    }
+        &:hover {
+            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
+        }
 
-    &:active {
-        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
-    }
+        &:active {
+            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+        }
 
-    &:focus-visible {
-        @apply z-10 outline-none ring-2 ring-on-surface ring-offset-2 ring-offset-on-primary;
+        &:focus-visible {
+            @apply ring-on-surface ring-offset-on-primary z-10 outline-none ring-2 ring-offset-2;
+        }
     }
 }
 
 @layer components {
-    .btn {
-        @apply clickable flex items-center truncate
-    }
-
     .btn-md {
-        @apply clickable flex items-center truncate min-h-10 min-w-10 px-3 py-2 gap-2 rounded-lg justify-center font-bold
+        @apply clickable flex items-center truncate min-h-10 min-w-10 px-3 py-2 gap-2 rounded-full justify-center font-bold
     }
 
     .btn-lg {
         @apply clickable flex items-center truncate min-h-12 min-w-12 px-4 py-3 gap-2 rounded-full justify-center font-bold
     }
 
-    .suggested {
-        @apply bg-primary text-on-primary
-    }
-
     .checkbox {
-        @apply border border-on-surface-var rounded-md w-5 h-5 text-on-primary text-sm clickable;
+        @apply border-outline text-on-primary clickable h-5 w-5 rounded-md border text-sm;
 
         &:has(input[type="checkbox"]:checked) {
             @apply border-none bg-primary

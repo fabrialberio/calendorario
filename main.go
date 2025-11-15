@@ -95,7 +95,7 @@ func setupRoutes(mux *http.ServeMux) {
 
 	mux.Handle("GET "+views.DestCalendar, templ.Handler(views.Calendar(2025, time.January)))
 
-	mux.Handle("GET "+views.DestTimetable, templ.Handler(views.Timetable()))
+	mux.Handle("GET "+views.DestTimetableClass, templ.Handler(views.TimetableClass()))
 
 	mux.Handle("GET /public/", http.FileServerFS(publicFS))
 }

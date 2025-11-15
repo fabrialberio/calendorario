@@ -1,8 +1,8 @@
 package views
 
 const (
-	DestLogin     = "/"
-	DestLogout    = "/logout"
-	DestCalendar  = "/calendar"
-	DestTimetable = "/timetable"
+	DestLogin          = "/"
+	DestLogout         = "/logout"
+	DestCalendar       = "/calendar"
+	DestTimetableClass = "/timetableclass"
 )

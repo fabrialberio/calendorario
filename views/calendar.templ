@@ -1,15 +1,105 @@
 package views
 
-templ Calendar() {
+import (
+	"strings"
+	"time"
+)
+
+var weekday_nicks = []string{"lun", "mar", "mer", "gio", "ven", "sab", "dom"}
+var month_names = map[time.Month]string{
+	time.January:   "Gennaio",
+	time.February:  "Febbraio",
+	time.March:     "Marzo",
+	time.April:     "Aprile",
+	time.May:       "Maggio",
+	time.June:      "Giugno",
+	time.July:      "Luglio",
+	time.August:    "Agosto",
+	time.September: "Settembre",
+	time.October:   "Ottobre",
+	time.November:  "Novembre",
+	time.December:  "Dicembre",
+}
+
+func firstCalendarDay(year int, month time.Month) time.Time {
+	firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+
+	for firstDay.Weekday() != time.Monday {
+		firstDay = firstDay.AddDate(0, 0, -1)
+	}
+
+	return firstDay
+}
+
+templ Calendar(year int, month time.Month) {
 	<!DOCTYPE html>
-	<html class="h-full">
+	<html>
 		@head()
-		<body class="w-full h-full">
+		<body>
 			@sidebar(0)
-			<div class="pl-64 h-full ">
-				<header></header>
-				<main class="bg-surface rounded-tl-card h-full space-y-4 p-4 mt-4"></main>
-			</div>
+			<main class="flex flex-row gap-4">
+				<div class="flex w-full flex-col gap-2">
+					<div class="flex flex-row gap-4">
+						<div class="card-group-row">
+							<button class="btn-md bg-surface-container-lowest px-2">
+								<i class="fas fa-chevron-left"></i>
+							</button>
+							<button class="btn-md bg-surface-container-lowest">
+								{ month_names[month] } { year }
+							</button>
+							<button class="btn-md bg-surface-container-lowest px-2">
+								<i class="fas fa-chevron-right"></i>
+							</button>
+						</div>
+						<button class="btn-md bg-surface-container-lowest" disabled>
+							<i class="fas fa-calendar-day"></i>
+							Oggi
+						</button>
+					</div>
+					<div class="bg-surface-container-lowest rounded-card grid h-full grid-cols-7 grid-rows-6 overflow-hidden">
+						{{ day := firstCalendarDay(year, month) }}
+						for i := 0; i < 6; i++ {
+							for j := 0; j < 7; j++ {
+								{{
+									class := "border-outline-variant text-center"
+									if i > 0 {
+										class += " border-t"
+									}
+									if j > 0 {
+										class += " border-l"
+									}
+									if day.Month() != month {
+										class += " bg-surface-container-low"
+									}
+								}}
+								<div class={ class }>
+									if i == 0 {
+										<p>
+											{ weekday_nicks[j] }
+										</p>
+									}
+									<p class="text-sm">
+										{ day.Day() }
+										if day.Month() != month {
+											{ strings.ToLower(month_names[day.Month()][0:3]) }
+										}
+									</p>
+								</div>
+								{{ day = day.AddDate(0, 0, 1) }}
+							}
+						}
+					</div>
+				</div>
+				<div class="flex h-full basis-80 flex-col">
+					<h4>
+						Vacanze
+					</h4>
+					<button class="btn-md bg-primary text-on-primary mt-auto w-full">
+						<i class="fas fa-add"></i>
+						Aggiungi vacanza
+					</button>
+				</div>
+			</main>
 		</body>
 	</html>
 }

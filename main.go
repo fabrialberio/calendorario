@@ -93,7 +93,7 @@ func setupRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("POST "+views.DestLogin, handlers.LoginPost)
 	mux.HandleFunc("GET "+views.DestLogout, handlers.LogoutGet)
 
-	mux.Handle("GET "+views.DestCalendar, templ.Handler(views.Calendar()))
+	mux.Handle("GET "+views.DestCalendar, templ.Handler(views.Calendar(2025, time.January)))
 
 	mux.Handle("GET "+views.DestTimetable, templ.Handler(views.Timetable()))
 

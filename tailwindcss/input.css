@@ -5,7 +5,6 @@
 @theme {
     --color-*: initial;
     --color-primary: rgb(66 104 52);
-    --color-surface-tint: rgb(66 104 52);
     --color-on-primary: rgb(255 255 255);
     --color-primary-container: rgb(195 239 173);
     --color-secondary: rgb(43 106 70);
@@ -17,7 +16,6 @@
     --color-error: rgb(186 26 26);
     --color-on-error: rgb(255 255 255);
     --color-error-container: rgb(255 218 214);
-    --color-on-error-container: rgb(147 0 10);
     --color-background: rgb(248 250 240);
     --color-on-background: rgb(25 29 23);
     --color-surface: rgb(248 250 240);
@@ -41,7 +39,11 @@
 
 @layer base {
     body {
-        @apply bg-surface-container-high text-on-surface overflow-x-hidden
+        @apply bg-surface-container-highest text-on-surface h-screen w-full overflow-x-hidden;
+    }
+
+    main {
+        @apply bg-surface-container rounded-tl-card ml-64 h-full p-4;
     }
 
     h2 {
@@ -91,13 +93,37 @@
     }
 }
 
+@utility button {
+    @apply flex items-center justify-center gap-2 truncate rounded-full font-bold;
+
+    &:disabled {
+        @apply bg-surface-dim text-outline;
+    }
+}
+
 @layer components {
     .btn-md {
-        @apply clickable flex items-center truncate min-h-10 min-w-10 px-3 py-2 gap-2 rounded-full justify-center font-bold
+        @apply clickable button min-h-10 min-w-10 px-3 py-2;
     }
 
     .btn-lg {
-        @apply clickable flex items-center truncate min-h-12 min-w-12 px-4 py-3 gap-2 rounded-full justify-center font-bold
+        @apply clickable button min-h-12 min-w-12 px-4 py-3;
+    }
+
+    .card-group-row {
+        @apply flex flex-row gap-1;
+
+        &>* {
+            @apply not-first:rounded-l-md not-last:rounded-r-md first:rounded-l-card last:rounded-r-card;
+        }
+    }
+
+    .card-group-col {
+        @apply flex flex-col gap-1;
+
+        &>* {
+            @apply not-first:rounded-t-md not-last:rounded-b-md first:rounded-t-card last:rounded-b-card;
+        }
     }
 
     .checkbox {

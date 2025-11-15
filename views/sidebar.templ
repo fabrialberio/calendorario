@@ -8,24 +8,36 @@ type sidebarRow struct {
 
 var rows = []sidebarRow{
 	sidebarRow{"fa-calendar-days", "Calendario", DestCalendar},
+	sidebarRow{"fa-calendar-week", "Orario", DestTimetableClass},
 	sidebarRow{"fa-arrow-right-from-bracket", "Esci", DestLogout},
 }
 
 templ sidebar(selected_index int) {
-	<aside class="w-64 top-0 left-0 z-40 fixed h-full transition-transform translate-x-0">
-		<nav class="h-full p-4">
+	<aside class="fixed left-0 top-0 z-40 h-full w-64 translate-x-0 transition-transform">
+		<nav class="h-full space-y-4 p-4">
+			<button class="clickable bg-surface-container flex h-16 w-full flex-row items-center rounded-3xl px-4 text-start">
+				<div class="w-full truncate">
+					<p class="text-outline text-sm">
+						Periodo scolastico
+					</p>
+					<p class="truncate font-bold">
+						Anno 2024-25
+					</p>
+				</div>
+				<i class="fas fa-chevron-down"></i>
+			</button>
 			<ul class="space-y-1">
 				for i := 0; i < len(rows); i++ {
 					<li>
 						<a
 							if i == selected_index {
-								class="bg-surface btn-lg w-full"
+								class="bg-primary-container btn-lg w-full"
 							} else {
 								href={ rows[i].destination }
-								class="btn-lg w-full"
+								class="clickable btn-lg w-full"
 							}
 						>
-							<div class="justify-start w-full">
+							<div class="w-full justify-start">
 								<i class={ rows[i].fa_icon + " fas pr-2" }></i>
 								{ rows[i].label }
 							</div>
@@ -34,10 +46,5 @@ templ sidebar(selected_index int) {
 				}
 			</ul>
 		</nav>
-		<div id="hideButton" class="top-0 left-64 z-400 fixed">
-			<button class="md:hidden m-4 btn-lg" onclick="toggleSidebar()">
-				<i class="fa-close fas"></i>
-			</button>
-		</div>
 	</aside>
 }

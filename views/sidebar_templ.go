@@ -16,6 +16,7 @@ type sidebarRow struct {
 
 var rows = []sidebarRow{
 	sidebarRow{"fa-calendar-days", "Calendario", DestCalendar},
+	sidebarRow{"fa-calendar-week", "Orario", DestTimetableClass},
 	sidebarRow{"fa-arrow-right-from-bracket", "Esci", DestLogout},
 }
 
@@ -40,7 +41,7 @@ func sidebar(selected_index int) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside class=\"w-64 top-0 left-0 z-40 fixed h-full transition-transform translate-x-0\"><nav class=\"h-full p-4\"><ul class=\"space-y-1\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside class=\"fixed left-0 top-0 z-40 h-full w-64 translate-x-0 transition-transform\"><nav class=\"h-full space-y-4 p-4\"><button class=\"clickable bg-surface-container flex h-16 w-full flex-row items-center rounded-3xl px-4 text-start\"><div class=\"w-full truncate\"><p class=\"text-outline text-sm\">Periodo scolastico</p><p class=\"truncate font-bold\">Anno 2024-25</p></div><i class=\"fas fa-chevron-down\"></i></button><ul class=\"space-y-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -50,7 +51,7 @@ func sidebar(selected_index int) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if i == selected_index {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " class=\"bg-surface btn-lg w-full\"")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " class=\"bg-primary-container btn-lg w-full\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -62,18 +63,18 @@ func sidebar(selected_index int) templ.Component {
 				var templ_7745c5c3_Var2 templ.SafeURL
 				templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(rows[i].destination)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/sidebar.templ`, Line: 24, Col: 34}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/sidebar.templ`, Line: 36, Col: 34}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"btn-lg w-full\"")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"clickable btn-lg w-full\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "><div class=\"justify-start w-full\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "><div class=\"w-full justify-start\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -102,7 +103,7 @@ func sidebar(selected_index int) templ.Component {
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(rows[i].label)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/sidebar.templ`, Line: 30, Col: 23}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/sidebar.templ`, Line: 42, Col: 23}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -113,7 +114,7 @@ func sidebar(selected_index int) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</ul></nav><div id=\"hideButton\" class=\"top-0 left-64 z-400 fixed\"><button class=\"md:hidden m-4 btn-lg\" onclick=\"toggleSidebar()\"><i class=\"fa-close fas\"></i></button></div></aside>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "</ul></nav></aside>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

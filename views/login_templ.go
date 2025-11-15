@@ -37,7 +37,7 @@ func Login(wrongUsernamePassword bool, sessionExpired bool) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"fixed grid place-items-center w-screen h-screen\"><form class=\"space-y-8 p-4 max-w-sm w-full bg-surface rounded-card\" method=\"POST\" action=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"fixed grid h-screen w-screen place-items-center\"><form class=\"bg-surface rounded-card w-full max-w-sm space-y-8 p-4\" method=\"POST\" action=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -50,7 +50,7 @@ func Login(wrongUsernamePassword bool, sessionExpired bool) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><div class=\"space-y-2 mt-2\"><h2>Calendorario</h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><div class=\"mt-2 space-y-2\"><h2>Calendorario</h2>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -96,7 +96,7 @@ func Login(wrongUsernamePassword bool, sessionExpired bool) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" x-bind:type=\"show_password ? 'text' : 'password'\" autocomplete=\"current-password\" placeholder=\"Password\"></div><div><button class=\"checkbox align-middle\" type=\"button\" x-on:click=\"show_password = !show_password\"><i class=\"fa-check fas\" x-show=\"show_password\"></i> <input id=\"checkbox\" type=\"checkbox\" tabindex=\"-1\" hidden x-bind:checked=\"show_password\"></button> <label class=\"ml-1\" for=\"checkbox\">Mostra password</label></div></div><button type=\"submit\" class=\"w-full btn-lg suggested\">Accedi</button></form></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" x-bind:type=\"show_password ? 'text' : 'password'\" autocomplete=\"current-password\" placeholder=\"Password\"></div><div><button class=\"checkbox align-middle\" type=\"button\" x-on:click=\"show_password = !show_password\"><i class=\"fa-check fas\" x-show=\"show_password\"></i> <input id=\"checkbox\" type=\"checkbox\" tabindex=\"-1\" hidden x-bind:checked=\"show_password\"></button> <label class=\"ml-1\" for=\"checkbox\">Mostra password</label></div></div><button type=\"submit\" class=\"btn-lg bg-primary text-on-primary w-full\">Accedi</button></form></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

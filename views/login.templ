@@ -4,13 +4,13 @@ templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 	<!DOCTYPE html>
 	<html>
 		@head()
-		<body class="fixed grid place-items-center w-screen h-screen">
+		<body class="fixed grid h-screen w-screen place-items-center">
 			<form
-				class="space-y-8 p-4 max-w-sm w-full bg-surface rounded-card"
+				class="bg-surface rounded-card w-full max-w-sm space-y-8 p-4"
 				method="POST"
 				action={ DestLogin }
 			>
-				<div class="space-y-2 mt-2">
+				<div class="mt-2 space-y-2">
 					<h2>Calendorario</h2>
 					if wrongUsernamePassword {
 						<p class="text-error">Username o password errati</p>
@@ -59,7 +59,7 @@ templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 						<label class="ml-1" for="checkbox">Mostra password</label>
 					</div>
 				</div>
-				<button type="submit" class="w-full btn-lg suggested">
+				<button type="submit" class="btn-lg bg-primary text-on-primary w-full">
 					Accedi
 				</button>
 			</form>

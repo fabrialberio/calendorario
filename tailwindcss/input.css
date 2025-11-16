@@ -114,7 +114,7 @@
         @apply flex flex-row gap-1;
 
         &>* {
-            @apply not-first:rounded-l-md not-last:rounded-r-md first:rounded-l-card last:rounded-r-card;
+            @apply not-first:rounded-l-md not-last:rounded-r-md first:rounded-l-4xl last:rounded-r-4xl;
         }
     }
 
@@ -122,7 +122,7 @@
         @apply flex flex-col gap-1;
 
         &>* {
-            @apply not-first:rounded-t-md not-last:rounded-b-md first:rounded-t-card last:rounded-b-card;
+            @apply not-first:rounded-t-md not-last:rounded-b-md first:rounded-t-4xl last:rounded-b-4xl;
         }
     }
 

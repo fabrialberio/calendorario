@@ -49,9 +49,9 @@ func createDatabase() *database.Queries {
 	)
 
 	conn, err := sql.Open("postgres", dsn)
-	for n_retries := 0; err != nil; n_retries++ {
-		if n_retries == 5 {
-			log.Fatalf("Error creating database after %v retries: %v", n_retries, err)
+	for retries := 0; err != nil; retries++ {
+		if retries == 5 {
+			log.Fatalf("Error creating database after %v retries: %v", retries, err)
 		}
 
 		time.Sleep(5 * time.Second)

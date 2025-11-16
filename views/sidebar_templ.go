@@ -9,18 +9,18 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 type sidebarRow struct {
-	fa_icon     string
+	faIcon      string
 	label       string
 	destination string
 }
 
-var rows = []sidebarRow{
+var sidebarRows = []sidebarRow{
 	sidebarRow{"fa-calendar-days", "Calendario", DestCalendar},
 	sidebarRow{"fa-calendar-week", "Orario", DestTimetableClass},
 	sidebarRow{"fa-arrow-right-from-bracket", "Esci", DestLogout},
 }
 
-func sidebar(selected_index int) templ.Component {
+func sidebar(selectedIndex int) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -45,12 +45,12 @@ func sidebar(selected_index int) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for i := 0; i < len(rows); i++ {
+		for i := 0; i < len(sidebarRows); i++ {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<li><a")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if i == selected_index {
+			if i == selectedIndex {
 				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, " class=\"bg-primary-container btn-lg w-full\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -61,9 +61,9 @@ func sidebar(selected_index int) templ.Component {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var2 templ.SafeURL
-				templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(rows[i].destination)
+				templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(sidebarRows[i].destination)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/sidebar.templ`, Line: 36, Col: 34}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/sidebar.templ`, Line: 36, Col: 41}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 				if templ_7745c5c3_Err != nil {
@@ -78,7 +78,7 @@ func sidebar(selected_index int) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var3 = []any{rows[i].fa_icon + " fas pr-2"}
+			var templ_7745c5c3_Var3 = []any{sidebarRows[i].faIcon + " fas pr-2"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var3...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -101,9 +101,9 @@ func sidebar(selected_index int) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(rows[i].label)
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(sidebarRows[i].label)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/sidebar.templ`, Line: 42, Col: 23}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/sidebar.templ`, Line: 42, Col: 30}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {

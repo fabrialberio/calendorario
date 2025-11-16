@@ -34,7 +34,7 @@ func nameToNick(name string) string {
 	return strings.ToLower(name[0:3])
 }
 
-templ calendarWidget(year int, month time.Month) {
+templ monthWidget(year int, month time.Month) {
 	<div class="bg-surface-highest rounded-card divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden">
 		{{
 			day := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
@@ -111,7 +111,7 @@ templ Calendar(year int, month time.Month) {
 		@head()
 		<body>
 			@sidebar(0)
-			<main class="flex flex-row gap-4">
+			<main class="flex flex-row gap-8">
 				<div class="flex w-full flex-col gap-2">
 					<div class="flex flex-row gap-4">
 						<div class="card-group-row">
@@ -130,14 +130,14 @@ templ Calendar(year int, month time.Month) {
 							Oggi
 						</button>
 					</div>
-					@calendarWidget(year, month)
+					@monthWidget(year, month)
 				</div>
 				<div class="flex h-full basis-80 flex-col gap-2">
 					<div class="flex flex-row items-center">
 						<h4>
 							Vacanze e festività
 						</h4>
-						<button class="btn-md bg-surface-highest ml-auto px-2">
+						<button class="btn-md bg-primary text-on-primary ml-auto px-2">
 							<i class="fas fa-add"></i>
 						</button>
 					</div>

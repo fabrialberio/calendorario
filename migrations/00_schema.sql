@@ -5,6 +5,7 @@ CREATE TYPE role AS ENUM (
 );
 CREATE TABLE "term" (
     "id" BIGSERIAL PRIMARY KEY,
+    "name" TEXT NOT NULL,
     "start_date" DATE NOT NULL,
     "end_date" DATE NOT NULL
 );
@@ -28,32 +29,34 @@ CREATE TABLE "vacation" (
     "start_datetime" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     "end_datetime" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL
 );
-CREATE TABLE "subject_color" (
-    "id" BIGSERIAL PRIMARY KEY,
-    "hex_value" bytea NOT NULL
-);
-CREATE TABLE "subject" (
-    "id" BIGSERIAL PRIMARY KEY,
-    "name" TEXT NOT NULL,
-    "color_id" BIGINT NOT NULL REFERENCES "subject_color"
-);
 CREATE TABLE "class" (
     "id" BIGSERIAL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "term_id" BIGINT NOT NULL REFERENCES "term",
     "program_id" BIGINT NOT NULL REFERENCES "program"
 );
-CREATE TABLE "teacher" (
+CREATE TABLE "subject" (
     "id" BIGSERIAL PRIMARY KEY,
-    "preferred_program_id" BIGINT NOT NULL REFERENCES "program",
-    "user_id" BIGINT NOT NULL REFERENCES "user",
-    "subject_id" BIGINT NOT NULL REFERENCES "subject"
+    "name" TEXT NOT NULL,
+    "color_hex_value" bytea NOT NULL
+);
+CREATE TABLE "teacher" (
+    "user_id" BIGINT PRIMARY KEY REFERENCES "user",
+    "contract_start_date" DATE NOT NULL,
+    "contract_end_date" DATE NOT NULL
 );
 CREATE TABLE "lesson" (
     "id" BIGSERIAL PRIMARY KEY,
     "class_id" BIGINT NOT NULL REFERENCES "class",
     "teacher_id" BIGINT NOT NULL REFERENCES "teacher",
-    "date" DATE NULL,
     "start_time" TIME(0) WITHOUT TIME ZONE NOT NULL,
-    "end_time" TIME(0) WITHOUT TIME ZONE NOT NULL
+    "end_time" TIME(0) WITHOUT TIME ZONE NOT NULL,
+    "first_date" DATE NOT NULL,
+    "last_date" DATE NOT NULL
 );
+CREATE TABLE "teacher_subject_assignment" (
+    "term_id" BIGINT NOT NULL REFERENCES "term",
+    "teacher_id" BIGINT NOT NULL REFERENCES "teacher",
+    "subject_id" BIGINT NOT NULL REFERENCES "subject",
+    PRIMARY KEY ("term_id", "teacher_id", "subject_id")
+)

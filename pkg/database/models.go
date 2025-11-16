@@ -5,7 +5,6 @@
 package database
 
 import (
-	"database/sql"
 	"database/sql/driver"
 	"fmt"
 	"time"
@@ -65,9 +64,10 @@ type Lesson struct {
 	ID        int64
 	ClassID   int64
 	TeacherID int64
-	Date      sql.NullTime
 	StartTime time.Time
 	EndTime   time.Time
+	FirstDate time.Time
+	LastDate  time.Time
 }
 
 type Program struct {
@@ -76,25 +76,26 @@ type Program struct {
 }
 
 type Subject struct {
-	ID      int64
-	Name    string
-	ColorID int64
-}
-
-type SubjectColor struct {
-	ID       int64
-	HexValue []byte
+	ID            int64
+	Name          string
+	ColorHexValue []byte
 }
 
 type Teacher struct {
-	ID                 int64
-	PreferredProgramID int64
-	UserID             int64
-	SubjectID          int64
+	UserID            int64
+	ContractStartDate time.Time
+	ContractEndDate   time.Time
+}
+
+type TeacherSubjectAssignment struct {
+	TermID    int64
+	TeacherID int64
+	SubjectID int64
 }
 
 type Term struct {
 	ID        int64
+	Name      string
 	StartDate time.Time
 	EndDate   time.Time
 }

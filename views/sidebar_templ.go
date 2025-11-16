@@ -41,7 +41,7 @@ func sidebar(selected_index int) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside class=\"fixed left-0 top-0 z-40 h-full w-64 translate-x-0 transition-transform\"><nav class=\"h-full space-y-4 p-4\"><button class=\"clickable bg-surface-container flex h-16 w-full flex-row items-center rounded-3xl px-4 text-start\"><div class=\"w-full truncate\"><p class=\"text-outline text-sm\">Periodo scolastico</p><p class=\"truncate font-bold\">Anno 2024-25</p></div><i class=\"fas fa-chevron-down\"></i></button><ul class=\"space-y-1\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside class=\"fixed left-0 top-0 z-40 h-full w-64 translate-x-0 transition-transform\"><nav class=\"h-full space-y-4 p-4\"><button class=\"clickable bg-surface flex h-16 w-full flex-row items-center rounded-3xl px-4 text-start\"><div class=\"w-full truncate\"><p class=\"text-on-surface-dim text-sm\">Periodo scolastico</p><p class=\"truncate font-bold\">Anno 2024-25</p></div><i class=\"fas fa-chevron-down\"></i></button><ul class=\"space-y-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

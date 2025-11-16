@@ -3,10 +3,10 @@ package views
 import "time"
 
 templ weekWidget(monday time.Time) {
-	<div class="divide-outline-variant rounded-card bg-surface-container-lowest grid h-full grid-cols-7 divide-x overflow-hidden">
+	<div class="divide-outline rounded-card bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden">
 		for i := 0; i < 7; i++ {
 			<div class="text-center">
-				<p class="text-outline">
+				<p class="text-on-surface-dim">
 					{ nameToNick(weekdayNames[i]) }
 				</p>
 				<p class="text-sm">
@@ -34,17 +34,17 @@ templ TimetableClass(date time.Time) {
 					}}
 					<div class="flex flex-row gap-4">
 						<div class="card-group-row">
-							<button class="bg-surface-container-lowest btn-md">
+							<button class="bg-surface-highest btn-md">
 								<i class="fas fa-chevron-left"></i>
 							</button>
-							<button class="bg-surface-container-lowest btn-md">
+							<button class="bg-surface-highest btn-md">
 								{ monday.Day() }-{ monday.AddDate(0, 0, 6).Day() } { monthNames[date.Month()] } { date.Year() }
 							</button>
-							<button class="bg-surface-container-lowest btn-md">
+							<button class="bg-surface-highest btn-md">
 								<i class="fas fa-chevron-right"></i>
 							</button>
 						</div>
-						<button class="btn-md bg-surface-container-lowest" disabled>
+						<button class="btn-md bg-surface-highest" disabled>
 							<i class="fas fa-calendar-day"></i>
 							Oggi
 						</button>

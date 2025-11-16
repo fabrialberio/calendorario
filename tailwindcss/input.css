@@ -10,40 +10,30 @@
     --color-secondary: rgb(43 106 70);
     --color-on-secondary: rgb(255 255 255);
     --color-secondary-container: rgb(175 242 196);
-    --color-tertiary: rgb(56 102 103);
-    --color-on-tertiary: rgb(255 255 255);
-    --color-tertiary-container: rgb(188 235 237);
     --color-error: rgb(186 26 26);
     --color-on-error: rgb(255 255 255);
     --color-error-container: rgb(255 218 214);
-    --color-background: rgb(248 250 240);
-    --color-on-background: rgb(25 29 23);
-    --color-surface: rgb(248 250 240);
+    --color-surface-highest: rgb(255 255 255);
+    --color-surface-high: rgb(242 245 234);
+    --color-surface: rgb(236 239 229);
+    --color-surface-low: rgb(231 233 223);
+    --color-surface-lowest: rgb(225 228 218);
     --color-on-surface: rgb(25 29 23);
-    --color-surface-variant: rgb(223 228 215);
-    --color-on-surface-variant: rgb(67 72 63);
-    --color-outline: rgb(115 121 110);
-    --color-outline-variant: rgb(195 200 187);
-    --color-shadow: rgb(0 0 0);
-    --color-scrim: rgb(0 0 0);
     --color-surface-dim: rgb(216 219 209);
-    --color-surface-bright: rgb(248 250 240);
-    --color-surface-container-lowest: rgb(255 255 255);
-    --color-surface-container-low: rgb(242 245 234);
-    --color-surface-container: rgb(236 239 229);
-    --color-surface-container-high: rgb(231 233 223);
-    --color-surface-container-highest: rgb(225 228 218);
+    --color-on-surface-dim: rgb(115 121 110);
+    --color-outline: rgb(195 200 187);
+    --color-scrim: rgb(0 0 0);
 
     --radius-card: 40px;
 }
 
 @layer base {
     body {
-        @apply bg-surface-container-highest text-on-surface h-screen w-full overflow-x-hidden;
+        @apply bg-surface-lowest text-on-surface h-screen w-full overflow-x-hidden;
     }
 
     main {
-        @apply bg-surface-container rounded-tl-card ml-64 h-full p-4;
+        @apply bg-surface rounded-tl-card ml-64 h-full p-4;
     }
 
     h2 {
@@ -59,7 +49,7 @@
     }
 
     input:not([type="checkbox"]), select {
-        @apply border-outline placeholder-outline text-on-surface h-10 w-full rounded-xl border px-3 py-2;
+        @apply border-on-surface-dim placeholder-on-surface-dim text-on-surface h-10 w-full rounded-xl border px-3 py-2;
 
         &:focus-visible {
             @apply border-on-surface ring-on-surface outline-none ring-1;
@@ -97,7 +87,7 @@
     @apply flex items-center justify-center gap-2 truncate rounded-full font-bold;
 
     &:disabled {
-        @apply bg-surface-dim text-outline;
+        @apply bg-surface-dim text-on-surface-dim;
     }
 }
 
@@ -127,7 +117,7 @@
     }
 
     .checkbox {
-        @apply border-outline text-on-primary clickable h-5 w-5 rounded-md border text-sm;
+        @apply border-on-surface-dim text-on-primary clickable h-5 w-5 rounded-md border text-sm;
 
         &:has(input[type="checkbox"]:checked) {
             @apply border-none bg-primary

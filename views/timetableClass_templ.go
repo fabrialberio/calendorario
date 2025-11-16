@@ -31,12 +31,12 @@ func weekWidget(monday time.Time) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"divide-outline-variant rounded-card bg-surface-container-lowest grid h-full grid-cols-7 divide-x overflow-hidden\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"divide-outline rounded-card bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		for i := 0; i < 7; i++ {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"text-center\"><p class=\"text-outline\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"text-center\"><p class=\"text-on-surface-dim\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -121,7 +121,7 @@ func TimetableClass(date time.Time) templ.Component {
 		for monday.Weekday() != time.Monday {
 			monday = monday.AddDate(0, 0, -1)
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div class=\"flex flex-row gap-4\"><div class=\"card-group-row\"><button class=\"bg-surface-container-lowest btn-md\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"bg-surface-container-lowest btn-md\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div class=\"flex flex-row gap-4\"><div class=\"card-group-row\"><button class=\"bg-surface-highest btn-md\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"bg-surface-highest btn-md\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -173,7 +173,7 @@ func TimetableClass(date time.Time) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</button> <button class=\"bg-surface-container-lowest btn-md\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"btn-md bg-surface-container-lowest\" disabled><i class=\"fas fa-calendar-day\"></i> Oggi</button></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</button> <button class=\"bg-surface-highest btn-md\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"btn-md bg-surface-highest\" disabled><i class=\"fas fa-calendar-day\"></i> Oggi</button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

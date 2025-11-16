@@ -63,7 +63,7 @@ func calendarWidget(year int, month time.Month) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"bg-surface-container-lowest rounded-card divide-outline-variant flex h-full flex-auto flex-col divide-y overflow-hidden\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"bg-surface-highest rounded-card divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -77,14 +77,14 @@ func calendarWidget(year int, month time.Month) templ.Component {
 			if i == 5 && day.Month() != month {
 				break
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"divide-outline-variant flex flex-auto flex-row divide-x\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"divide-outline flex flex-auto flex-row divide-x\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			for j := 0; j < 7; j++ {
-				class := "text-center w-full"
+				class := "text-center w-full clickable"
 				if day.Month() != month {
-					class += " bg-surface-container-low"
+					class += " bg-surface-high"
 				}
 				var templ_7745c5c3_Var2 = []any{class}
 				templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
@@ -109,7 +109,7 @@ func calendarWidget(year int, month time.Month) templ.Component {
 					return templ_7745c5c3_Err
 				}
 				if i == 0 {
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<p class=\"text-outline\">")
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<p class=\"text-on-surface-dim\">")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -213,7 +213,7 @@ func vacationCard(vacation database.Vacation) templ.Component {
 			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div class=\"bg-surface-container-lowest clickable p-4\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div class=\"bg-surface-highest clickable p-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -226,7 +226,7 @@ func vacationCard(vacation database.Vacation) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<p class=\"text-outline\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<p class=\"text-on-surface-dim\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -323,7 +323,7 @@ func Calendar(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<main class=\"flex flex-row gap-4\"><div class=\"flex w-full flex-col gap-2\"><div class=\"flex flex-row gap-4\"><div class=\"card-group-row\"><button class=\"btn-md bg-surface-container-lowest px-2\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"btn-md bg-surface-container-lowest\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<main class=\"flex flex-row gap-4\"><div class=\"flex w-full flex-col gap-2\"><div class=\"flex flex-row gap-4\"><div class=\"card-group-row\"><button class=\"btn-md bg-surface-highest px-2\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"btn-md bg-surface-highest\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -349,7 +349,7 @@ func Calendar(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "</button> <button class=\"btn-md bg-surface-container-lowest px-2\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"btn-md bg-surface-container-lowest\" disabled><i class=\"fas fa-calendar-day\"></i> Oggi</button></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, "</button> <button class=\"btn-md bg-surface-highest px-2\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"btn-md bg-surface-highest\"><i class=\"fas fa-calendar-day\"></i> Oggi</button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -357,7 +357,7 @@ func Calendar(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</div><div class=\"flex h-full basis-80 flex-col gap-2\"><div class=\"flex flex-row items-center\"><h4>Vacanze e festività</h4><button class=\"btn-md bg-surface-container-lowest ml-auto px-2\"><i class=\"fas fa-add\"></i></button></div><div class=\"card-group-col\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</div><div class=\"flex h-full basis-80 flex-col gap-2\"><div class=\"flex flex-row items-center\"><h4>Vacanze e festività</h4><button class=\"btn-md bg-surface-highest ml-auto px-2\"><i class=\"fas fa-add\"></i></button></div><div class=\"card-group-col\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

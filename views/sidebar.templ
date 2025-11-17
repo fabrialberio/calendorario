@@ -50,3 +50,19 @@ templ sidebar(selectedIndex int) {
 		</nav>
 	</aside>
 }
+
+templ sidebarScaffold(sidebarIndex int, widgets []templ.Component) {
+	<!DOCTYPE html>
+	<html>
+		@head()
+		<body>
+			@sidebar(sidebarIndex)
+			<main class="rounded-tl-card ml-64 flex h-full flex-row gap-8 p-4">
+				for i := 0; i < len(widgets); i++ {
+					{{ widgetFunc := func() templ.Component { return widgets[i] } }}
+					@widgetFunc()
+				}
+			</main>
+		</body>
+	</html>
+}

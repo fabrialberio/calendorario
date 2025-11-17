@@ -1,7 +1,6 @@
 package views
 
 import (
-	"calendorario/pkg/database"
 	"strings"
 	"time"
 )
@@ -34,119 +33,64 @@ func nameToNick(name string) string {
 	return strings.ToLower(name[0:3])
 }
 
-templ monthWidget(year int, month time.Month) {
-	<div class="bg-surface-highest rounded-card divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden">
-		{{
-			day := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
-
-			for day.Weekday() != time.Monday {
-				day = day.AddDate(0, 0, -1)
-			}
-		}}
-		for i := 0; i < 6; i++ {
+templ calendar(year int, month time.Month) {
+	<div class="flex w-full flex-col gap-2">
+		<div class="flex flex-row gap-4">
+			<div class="card-group">
+				<button class="btn-md bg-surface-highest px-2">
+					<i class="fas fa-chevron-left"></i>
+				</button>
+				<button class="btn-md bg-surface-highest">
+					{ monthNames[month] } { year }
+				</button>
+				<button class="btn-md bg-surface-highest px-2">
+					<i class="fas fa-chevron-right"></i>
+				</button>
+			</div>
+			<button class="btn-md bg-surface-highest">
+				<i class="fas fa-calendar-day"></i>
+				Oggi
+			</button>
+		</div>
+		<div class="bg-surface-highest rounded-card divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden">
 			{{
-				// Skip adding sixt row if the month ends before.
-				if i == 5 && day.Month() != month {
-					break
+				day := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+
+				for day.Weekday() != time.Monday {
+					day = day.AddDate(0, 0, -1)
 				}
 			}}
-			<div class="divide-outline flex flex-auto flex-row divide-x">
-				for j := 0; j < 7; j++ {
-					<div
-						class={
-							templ.KV("bg-surface-high", day.Month() != month),
-							"text-center w-full clickable",
-						}
-					>
-						if i == 0 {
-							<p class="text-on-surface-dim">
-								{ nameToNick(weekdayNames[j]) }
-							</p>
-						}
-						<p class="text-sm">
-							{ day.Day() }
-							if day.Month() != month {
-								{ nameToNick(monthNames[day.Month()]) }
+			for i := 0; i < 6; i++ {
+				{{
+					// Skip adding sixt row if the month ends before.
+					if i == 5 && day.Month() != month {
+						break
+					}
+				}}
+				<div class="divide-outline flex flex-auto flex-row divide-x">
+					for j := 0; j < 7; j++ {
+						<div
+							class={
+								templ.KV("bg-surface-high", day.Month() != month),
+								"text-center w-full clickable",
 							}
-						</p>
-					</div>
-					{{ day = day.AddDate(0, 0, 1) }}
-				}
-			</div>
-		}
-	</div>
-}
-
-var exampleVacations = []database.Vacation{
-	database.Vacation{
-		Name:          "Vacanze invernali",
-		StartDatetime: time.Date(2025, 12, 23, 0, 0, 0, 0, time.Local),
-		EndDatetime:   time.Date(2026, 1, 6, 0, 0, 0, 0, time.Local),
-	},
-	database.Vacation{
-		Name:          "Pasqua",
-		StartDatetime: time.Date(2026, 4, 5, 0, 0, 0, 0, time.Local),
-		EndDatetime:   time.Date(2026, 4, 6, 0, 0, 0, 0, time.Local),
-	},
-	database.Vacation{
-		Name:          "Liberazione",
-		StartDatetime: time.Date(2026, 4, 25, 0, 0, 0, 0, time.Local),
-		EndDatetime:   time.Date(2026, 4, 25, 0, 0, 0, 0, time.Local),
-	},
-}
-
-templ vacationCard(vacation database.Vacation) {
-	<div class="bg-surface-highest clickable p-4">
-		{ vacation.Name }
-		<p class="text-on-surface-dim">
-			{ vacation.StartDatetime.Day() } { nameToNick(monthNames[vacation.StartDatetime.Month()]) } - { vacation.EndDatetime.Day() } { nameToNick(monthNames[vacation.EndDatetime.Month()]) }
-		</p>
-	</div>
-}
-
-templ CalendarPage(year int, month time.Month) {
-	<!DOCTYPE html>
-	<html>
-		@head()
-		<body>
-			@sidebar(0)
-			<main class="flex flex-row gap-8">
-				<div class="flex w-full flex-col gap-2">
-					<div class="flex flex-row gap-4">
-						<div class="card-group">
-							<button class="btn-md bg-surface-highest px-2">
-								<i class="fas fa-chevron-left"></i>
-							</button>
-							<button class="btn-md bg-surface-highest">
-								{ monthNames[month] } { year }
-							</button>
-							<button class="btn-md bg-surface-highest px-2">
-								<i class="fas fa-chevron-right"></i>
-							</button>
+						>
+							if i == 0 {
+								<p class="text-on-surface-dim">
+									{ nameToNick(weekdayNames[j]) }
+								</p>
+							}
+							<p class="text-sm">
+								{ day.Day() }
+								if day.Month() != month {
+									{ nameToNick(monthNames[day.Month()]) }
+								}
+							</p>
 						</div>
-						<button class="btn-md bg-surface-highest">
-							<i class="fas fa-calendar-day"></i>
-							Oggi
-						</button>
-					</div>
-					@monthWidget(year, month)
+						{{ day = day.AddDate(0, 0, 1) }}
+					}
 				</div>
-				<div class="flex h-full basis-80 flex-col gap-2">
-					<div class="flex flex-row items-center">
-						<h4>
-							Vacanze e festività
-						</h4>
-						<button class="btn-md bg-primary text-on-primary ml-auto px-2">
-							<i class="fas fa-add"></i>
-						</button>
-					</div>
-					<div class="card-group flex-col">
-						for i := 0; i < len(exampleVacations); i++ {
-							@vacationCard(exampleVacations[i])
-						}
-					</div>
-				</div>
-			</main>
-		</body>
-	</html>
+			}
+		</div>
+	</div>
 }

@@ -1,0 +1,63 @@
+package views
+
+import "calendorario/pkg/database"
+
+var exampleClasses = []database.Class{
+	database.Class{Name: "1A"},
+	database.Class{Name: "1B"},
+	database.Class{Name: "1C"},
+	database.Class{Name: "2A"},
+}
+
+templ classCard(class database.Class, selected bool) {
+	<div
+		class={
+			templ.KV("bg-primary-container", selected),
+			templ.KV("bg-surface-high clickable", !selected),
+			"flex flex-row items-center gap-2 p-2",
+		}
+	>
+		<i
+			if selected {
+				class="fas fa-check"
+			} else {
+				class="fas fa-check opacity-0"
+			}
+		></i>
+		{ class.Name }
+	</div>
+}
+
+templ classSelectList(classes []database.Class) {
+	<div class="basis-1/4 flex-col space-y-8">
+		<button class="clickable bg-surface-highest flex h-16 w-full flex-row items-center rounded-3xl px-4 text-start">
+			<div class="w-full truncate">
+				<p class="text-on-surface-dim text-sm">
+					Indirizzo
+				</p>
+				<p class="truncate font-bold">
+					Scientifico
+				</p>
+			</div>
+			<i class="fas fa-chevron-down"></i>
+		</button>
+		<div class="space-y-2">
+			<div class="flex flex-row items-center gap-2">
+				<h4>
+					Classe
+				</h4>
+				<button class="btn-md bg-surface-highest ml-auto px-2">
+					<i class="fas fa-edit"></i>
+				</button>
+				<button class="btn-md bg-primary text-on-primary px-2">
+					<i class="fas fa-add"></i>
+				</button>
+			</div>
+			<div class="border-on-surface-dim divide-on-surface-dim divide-y overflow-hidden rounded-3xl border">
+				for i := 0; i < len(exampleClasses); i++ {
+					@classCard(exampleClasses[i], i == 0)
+				}
+			</div>
+		</div>
+	</div>
+}

@@ -1,0 +1,44 @@
+package views
+
+import "time"
+
+templ timetable(date time.Time) {
+	<div class="flex w-full flex-col gap-2">
+		{{
+			monday := date
+
+			for monday.Weekday() != time.Monday {
+				monday = monday.AddDate(0, 0, -1)
+			}
+		}}
+		<div class="flex flex-row gap-4">
+			<div class="card-group">
+				<button class="bg-surface-highest btn-md">
+					<i class="fas fa-chevron-left"></i>
+				</button>
+				<button class="bg-surface-highest btn-md">
+					{ monday.Day() }-{ monday.AddDate(0, 0, 6).Day() } { monthNames[date.Month()] } { date.Year() }
+				</button>
+				<button class="bg-surface-highest btn-md">
+					<i class="fas fa-chevron-right"></i>
+				</button>
+			</div>
+			<button class="btn-md bg-surface-highest" disabled>
+				<i class="fas fa-calendar-day"></i>
+				Oggi
+			</button>
+		</div>
+		<div class="divide-outline rounded-card bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden">
+			for i := 0; i < 7; i++ {
+				<div class="text-center">
+					<p class="text-on-surface-dim">
+						{ nameToNick(weekdayNames[i]) }
+					</p>
+					<p class="text-sm">
+						{ monday.AddDate(0, 0, i).Day() }
+					</p>
+				</div>
+			}
+		</div>
+	</div>
+}

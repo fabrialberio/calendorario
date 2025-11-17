@@ -29,11 +29,11 @@
 
 @layer base {
     body {
-        @apply bg-surface-lowest text-on-surface h-screen w-full overflow-x-hidden;
+        @apply bg-surface-lowest text-on-surface h-screen w-screen overflow-x-hidden;
     }
 
     main {
-        @apply bg-surface rounded-tl-card ml-64 h-full p-4;
+        @apply bg-surface;
     }
 
     h2 {
@@ -63,23 +63,25 @@
         -mox-appearance: textfield;
         appearance: textfield;
     }
+
+    button:not(:disabled) {
+        @apply clickable;
+    }
 }
 
 @utility clickable {
-    &:not(:disabled) {
-        @apply cursor-pointer transition-shadow duration-200;
+    @apply cursor-pointer transition-shadow duration-200;
 
-        &:hover {
-            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
-        }
+    &:hover {
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);
+    }
 
-        &:active {
-            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
-        }
+    &:active {
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+    }
 
-        &:focus-visible {
-            @apply ring-on-surface ring-offset-on-primary z-10 outline-none ring-2 ring-offset-2;
-        }
+    &:focus-visible {
+        @apply ring-on-surface ring-offset-on-primary z-10 outline-none ring-2 ring-offset-2;
     }
 }
 
@@ -93,11 +95,11 @@
 
 @layer components {
     .btn-md {
-        @apply clickable button min-h-10 min-w-10 px-3 py-2;
+        @apply button min-h-10 min-w-10 px-3 py-2;
     }
 
     .btn-lg {
-        @apply clickable button min-h-12 min-w-12 px-4 py-3;
+        @apply button min-h-12 min-w-12 px-4 py-3;
     }
 
     .card-group {

@@ -211,7 +211,7 @@ func TimetableClass(date time.Time) templ.Component {
 		for monday.Weekday() != time.Monday {
 			monday = monday.AddDate(0, 0, -1)
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<div class=\"flex flex-row gap-4\"><div class=\"card-group-row\"><button class=\"bg-surface-highest btn-md\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"bg-surface-highest btn-md\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "<div class=\"flex flex-row gap-4\"><div class=\"card-group\"><button class=\"bg-surface-highest btn-md\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"bg-surface-highest btn-md\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

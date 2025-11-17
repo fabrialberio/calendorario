@@ -100,19 +100,11 @@
         @apply clickable button min-h-12 min-w-12 px-4 py-3;
     }
 
-    .card-group-row {
-        @apply flex flex-row gap-1;
+    .card-group {
+        @apply rounded-4xl flex gap-1 overflow-hidden;
 
         &>* {
-            @apply not-first:rounded-l-md not-last:rounded-r-md first:rounded-l-4xl last:rounded-r-4xl;
-        }
-    }
-
-    .card-group-col {
-        @apply flex flex-col gap-1;
-
-        &>* {
-            @apply not-first:rounded-t-md not-last:rounded-b-md first:rounded-t-4xl last:rounded-b-4xl;
+            @apply rounded-md;
         }
     }
 

@@ -323,7 +323,7 @@ func Calendar(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<main class=\"flex flex-row gap-8\"><div class=\"flex w-full flex-col gap-2\"><div class=\"flex flex-row gap-4\"><div class=\"card-group-row\"><button class=\"btn-md bg-surface-highest px-2\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"btn-md bg-surface-highest\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<main class=\"flex flex-row gap-8\"><div class=\"flex w-full flex-col gap-2\"><div class=\"flex flex-row gap-4\"><div class=\"card-group\"><button class=\"btn-md bg-surface-highest px-2\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"btn-md bg-surface-highest\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -357,7 +357,7 @@ func Calendar(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</div><div class=\"flex h-full basis-80 flex-col gap-2\"><div class=\"flex flex-row items-center\"><h4>Vacanze e festività</h4><button class=\"btn-md bg-primary text-on-primary ml-auto px-2\"><i class=\"fas fa-add\"></i></button></div><div class=\"card-group-col\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, "</div><div class=\"flex h-full basis-80 flex-col gap-2\"><div class=\"flex flex-row items-center\"><h4>Vacanze e festività</h4><button class=\"btn-md bg-primary text-on-primary ml-auto px-2\"><i class=\"fas fa-add\"></i></button></div><div class=\"card-group flex-col\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -252,9 +252,6 @@
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
-  .mb-4 {
-    margin-bottom: calc(var(--spacing) * 4);
-  }
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
   }
@@ -292,9 +289,6 @@
   .inline {
     display: inline;
   }
-  .table {
-    display: table;
-  }
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
@@ -319,17 +313,11 @@
   .flex-auto {
     flex: auto;
   }
-  .basis-1 {
-    flex-basis: calc(var(--spacing) * 1);
-  }
   .basis-1\/4 {
     flex-basis: calc(1/4 * 100%);
   }
   .basis-80 {
     flex-basis: calc(var(--spacing) * 80);
-  }
-  .border-collapse {
-    border-collapse: collapse;
   }
   .translate-x-0 {
     --tw-translate-x: calc(var(--spacing) * 0);
@@ -337,9 +325,6 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
-  }
-  .resize {
-    resize: both;
   }
   .grid-cols-7 {
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -434,9 +419,6 @@
   .rounded-3xl {
     border-radius: var(--radius-3xl);
   }
-  .rounded-4xl {
-    border-radius: var(--radius-4xl);
-  }
   .rounded-card {
     border-radius: var(--radius-card);
   }
@@ -446,9 +428,6 @@
   }
   .border-on-surface-dim {
     border-color: var(--color-on-surface-dim);
-  }
-  .border-outline {
-    border-color: var(--color-outline);
   }
   .bg-primary {
     background-color: var(--color-primary);
@@ -477,14 +456,8 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
-  .py-2 {
-    padding-block: calc(var(--spacing) * 2);
-  }
   .pr-2 {
     padding-right: calc(var(--spacing) * 2);
-  }
-  .pb-4 {
-    padding-bottom: calc(var(--spacing) * 4);
   }
   .text-center {
     text-align: center;
@@ -503,31 +476,17 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
-  .font-normal {
-    --tw-font-weight: var(--font-weight-normal);
-    font-weight: var(--font-weight-normal);
-  }
   .text-error {
     color: var(--color-error);
   }
   .text-on-primary {
     color: var(--color-on-primary);
   }
-  .text-on-surface {
-    color: var(--color-on-surface);
-  }
   .text-on-surface-dim {
     color: var(--color-on-surface-dim);
   }
-  .underline {
-    text-decoration-line: underline;
-  }
   .opacity-0 {
     opacity: 0%;
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
   }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
@@ -907,11 +866,6 @@
   inherits: false;
   initial-value: 0;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
@@ -943,7 +897,6 @@
       --tw-divide-x-reverse: 0;
       --tw-border-style: solid;
       --tw-divide-y-reverse: 0;
-      --tw-outline-style: solid;
     }
   }
 }

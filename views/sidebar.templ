@@ -30,11 +30,13 @@ templ sidebar(selectedIndex int) {
 				for i := 0; i < len(sidebarRows); i++ {
 					<li>
 						<a
-							if i == selectedIndex {
-								class="bg-primary-container btn-lg w-full"
-							} else {
+							class={
+								templ.KV("bg-primary-container", i == selectedIndex),
+								templ.KV("clickable", i != selectedIndex),
+								"btn-lg w-full",
+							}
+							if i != selectedIndex {
 								href={ sidebarRows[i].destination }
-								class="clickable btn-lg w-full"
 							}
 						>
 							<div class="w-full justify-start">

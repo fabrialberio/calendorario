@@ -52,13 +52,12 @@ templ monthWidget(year int, month time.Month) {
 			}}
 			<div class="divide-outline flex flex-auto flex-row divide-x">
 				for j := 0; j < 7; j++ {
-					{{
-						class := "text-center w-full clickable"
-						if day.Month() != month {
-							class += " bg-surface-high"
+					<div
+						class={
+							templ.KV("bg-surface-high", day.Month() != month),
+							"text-center w-full clickable",
 						}
-					}}
-					<div class={ class }>
+					>
 						if i == 0 {
 							<p class="text-on-surface-dim">
 								{ nameToNick(weekdayNames[j]) }
@@ -105,7 +104,7 @@ templ vacationCard(vacation database.Vacation) {
 	</div>
 }
 
-templ Calendar(year int, month time.Month) {
+templ CalendarPage(year int, month time.Month) {
 	<!DOCTYPE html>
 	<html>
 		@head()

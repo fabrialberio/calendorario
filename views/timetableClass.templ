@@ -27,10 +27,10 @@ var exampleClasses = []database.Class{
 
 templ classCard(class database.Class, selected bool) {
 	<div
-		if selected {
-			class="bg-primary-container flex flex-row items-center gap-2 p-2"
-		} else {
-			class="bg-surface-high clickable flex flex-row items-center gap-2 p-2"
+		class={
+			templ.KV("bg-primary-container", selected),
+			templ.KV("bg-surface-high clickable", !selected),
+			"flex flex-row items-center gap-2 p-2",
 		}
 	>
 		<i
@@ -44,7 +44,7 @@ templ classCard(class database.Class, selected bool) {
 	</div>
 }
 
-templ TimetableClass(date time.Time) {
+templ TimetableClassPage(date time.Time) {
 	<!DOCTYPE html>
 	<html>
 		@head()

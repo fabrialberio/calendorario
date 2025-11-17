@@ -89,13 +89,19 @@ func addAdminUserIfNotExists(db *database.Queries) {
 }
 
 func setupRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("/", handlers.Index)
 	mux.HandleFunc("GET "+views.DestLogin, handlers.LoginGet)
 	mux.HandleFunc("POST "+views.DestLogin, handlers.LoginPost)
 	mux.HandleFunc("GET "+views.DestLogout, handlers.LogoutGet)
-
-	mux.Handle("GET "+views.DestCalendar, templ.Handler(views.Calendar(time.Now().Year(), time.Now().Month())))
-
-	mux.Handle("GET "+views.DestTimetableClass, templ.Handler(views.TimetableClass(time.Now())))
-
 	mux.Handle("GET /public/", http.FileServerFS(publicFS))
+
+	adminMux := http.NewServeMux()
+	adminMux.Handle("GET "+views.DestAdmin, templ.Handler(views.TermsPage()))
+	adminMux.Handle("GET "+views.DestAdminCalendar, templ.Handler(views.Calendar(time.Now().Year(), time.Now().Month())))
+	adminMux.Handle("GET "+views.DestAdminTimetableClass, templ.Handler(views.TimetableClass(time.Now())))
+
+	mux.Handle(views.DestAdmin, middleware.WithUserCheck(
+		func(u *database.User) bool { return u.Role == database.RoleAdministrator },
+		adminMux,
+	))
 }

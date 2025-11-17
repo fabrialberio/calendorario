@@ -15,8 +15,8 @@ type sidebarRow struct {
 }
 
 var sidebarRows = []sidebarRow{
-	sidebarRow{"fa-calendar-days", "Calendario", DestCalendar},
-	sidebarRow{"fa-calendar-week", "Orario", DestTimetableClass},
+	sidebarRow{"fa-calendar-days", "Calendario", DestAdminCalendar},
+	sidebarRow{"fa-calendar-week", "Orario", DestAdminTimetableClass},
 	sidebarRow{"fa-arrow-right-from-bracket", "Esci", DestLogout},
 }
 

@@ -1,0 +1,48 @@
+package views
+
+import (
+	"calendorario/pkg/database"
+	"time"
+)
+
+var exampleTerms = []database.Term{
+	database.Term{
+		Name:      "Anno 2023-24",
+		StartDate: time.Date(2023, 9, 11, 0, 0, 0, 0, time.Local),
+		EndDate:   time.Date(2024, 6, 8, 0, 0, 0, 0, time.Local),
+	},
+	database.Term{
+		Name:      "Anno 2024-25",
+		StartDate: time.Date(2024, 9, 11, 0, 0, 0, 0, time.Local),
+		EndDate:   time.Date(2025, 6, 8, 0, 0, 0, 0, time.Local),
+	},
+	database.Term{
+		Name:      "Anno 2025-26",
+		StartDate: time.Date(2025, 9, 11, 0, 0, 0, 0, time.Local),
+		EndDate:   time.Date(2026, 6, 8, 0, 0, 0, 0, time.Local),
+	},
+}
+
+templ termCard(term database.Term) {
+	<a class="clickable bg-surface-highest rounded-4xl space-y-4 p-4">
+		<p>
+			{ term.Name }
+		</p>
+		<p class="text-on-surface-dim">
+			{ term.StartDate.Format("02/01/2006") }-{ term.EndDate.Format("02/01/2006") }
+		</p>
+	</a>
+}
+
+templ termGrid(terms []database.Term) {
+	<div class="space-y-2 text-start">
+		<h3>
+			Periodi scolastici
+		</h3>
+		<div class="flex flex-row gap-2">
+			for i := 0; i < len(terms); i++ {
+				@termCard(terms[i])
+			}
+		</div>
+	</div>
+}

@@ -142,7 +142,7 @@ func sidebar(selectedIndex int) templ.Component {
 	})
 }
 
-func sidebarScaffold(sidebarIndex int, widgets []templ.Component) templ.Component {
+func sidebarScaffold(sidebarIndex int, content templ.Component) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -183,12 +183,10 @@ func sidebarScaffold(sidebarIndex int, widgets []templ.Component) templ.Componen
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for i := 0; i < len(widgets); i++ {
-			widgetFunc := func() templ.Component { return widgets[i] }
-			templ_7745c5c3_Err = widgetFunc().Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
+		contentFunc := func() templ.Component { return content }
+		templ_7745c5c3_Err = contentFunc().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</main></body></html>")
 		if templ_7745c5c3_Err != nil {

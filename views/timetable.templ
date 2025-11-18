@@ -12,6 +12,11 @@ templ timetable(date time.Time) {
 			}
 		}}
 		<div class="flex flex-row gap-4">
+			<button class="btn-md bg-primary-container rounded-md">
+				<i class="fas fa-chalkboard"></i>
+				1A
+				<i class="fas fa-caret-down"></i>
+			</button>
 			<div class="card-group">
 				<button class="bg-surface-highest btn-md">
 					<i class="fas fa-chevron-left"></i>
@@ -28,7 +33,7 @@ templ timetable(date time.Time) {
 				Oggi
 			</button>
 		</div>
-		<div class="divide-outline rounded-card bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden">
+		<div class="divide-outline min-h-120 rounded-card bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden">
 			for i := 0; i < 7; i++ {
 				<div class="text-center">
 					<p class="text-on-surface-dim">

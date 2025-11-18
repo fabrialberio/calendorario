@@ -9,6 +9,9 @@
     monospace;
     --spacing: 0.25rem;
     --container-sm: 24rem;
+    --container-xl: 36rem;
+    --container-4xl: 56rem;
+    --container-6xl: 72rem;
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
     --text-lg: 1.125rem;
@@ -289,6 +292,9 @@
   .inline {
     display: inline;
   }
+  .table {
+    display: table;
+  }
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
@@ -297,6 +303,9 @@
   }
   .h-screen {
     height: 100vh;
+  }
+  .min-h-120 {
+    min-height: calc(var(--spacing) * 120);
   }
   .w-64 {
     width: calc(var(--spacing) * 64);
@@ -307,11 +316,17 @@
   .w-screen {
     width: 100vw;
   }
+  .max-w-4xl {
+    max-width: var(--container-4xl);
+  }
   .max-w-sm {
     max-width: var(--container-sm);
   }
   .flex-auto {
     flex: auto;
+  }
+  .basis-1 {
+    flex-basis: calc(var(--spacing) * 1);
   }
   .basis-1\/4 {
     flex-basis: calc(1/4 * 100%);
@@ -319,12 +334,18 @@
   .basis-80 {
     flex-basis: calc(var(--spacing) * 80);
   }
+  .border-collapse {
+    border-collapse: collapse;
+  }
   .translate-x-0 {
     --tw-translate-x: calc(var(--spacing) * 0);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .resize {
+    resize: both;
   }
   .grid-cols-7 {
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -398,6 +419,16 @@
       border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
     }
   }
+  .divide-current {
+    :where(& > :not(:last-child)) {
+      border-color: currentcolor;
+    }
+  }
+  .divide-inherit {
+    :where(& > :not(:last-child)) {
+      border-color: inherit;
+    }
+  }
   .divide-on-surface-dim {
     :where(& > :not(:last-child)) {
       border-color: var(--color-on-surface-dim);
@@ -419,8 +450,14 @@
   .rounded-3xl {
     border-radius: var(--radius-3xl);
   }
+  .rounded-4xl {
+    border-radius: var(--radius-4xl);
+  }
   .rounded-card {
     border-radius: var(--radius-card);
+  }
+  .rounded-md {
+    border-radius: var(--radius-md);
   }
   .rounded-tl-card {
     border-top-left-radius: var(--radius-card);
@@ -429,8 +466,15 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+  }
   .border-on-surface-dim {
     border-color: var(--color-on-surface-dim);
+  }
+  .border-outline {
+    border-color: var(--color-outline);
   }
   .bg-primary {
     background-color: var(--color-primary);
@@ -446,6 +490,9 @@
   }
   .bg-surface-highest {
     background-color: var(--color-surface-highest);
+  }
+  .p-1 {
+    padding: calc(var(--spacing) * 1);
   }
   .p-2 {
     padding: calc(var(--spacing) * 2);
@@ -488,8 +535,15 @@
   .text-on-surface-dim {
     color: var(--color-on-surface-dim);
   }
+  .underline {
+    text-decoration-line: underline;
+  }
   .opacity-0 {
     opacity: 0%;
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
   }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
@@ -801,6 +855,11 @@
   inherits: false;
   initial-value: 0;
 }
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
@@ -832,6 +891,7 @@
       --tw-divide-x-reverse: 0;
       --tw-border-style: solid;
       --tw-divide-y-reverse: 0;
+      --tw-outline-style: solid;
     }
   }
 }

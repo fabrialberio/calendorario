@@ -7,19 +7,19 @@ import (
 
 var exampleVacations = []database.Vacation{
 	database.Vacation{
-		Name:          "Vacanze invernali",
-		StartDatetime: time.Date(2025, 12, 23, 0, 0, 0, 0, time.Local),
-		EndDatetime:   time.Date(2026, 1, 6, 0, 0, 0, 0, time.Local),
+		Name:      "Vacanze invernali",
+		StartDate: time.Date(2025, 12, 23, 0, 0, 0, 0, time.Local),
+		EndDate:   time.Date(2026, 1, 6, 0, 0, 0, 0, time.Local),
 	},
 	database.Vacation{
-		Name:          "Pasqua",
-		StartDatetime: time.Date(2026, 4, 5, 0, 0, 0, 0, time.Local),
-		EndDatetime:   time.Date(2026, 4, 6, 0, 0, 0, 0, time.Local),
+		Name:      "Pasqua",
+		StartDate: time.Date(2026, 4, 5, 0, 0, 0, 0, time.Local),
+		EndDate:   time.Date(2026, 4, 6, 0, 0, 0, 0, time.Local),
 	},
 	database.Vacation{
-		Name:          "Liberazione",
-		StartDatetime: time.Date(2026, 4, 25, 0, 0, 0, 0, time.Local),
-		EndDatetime:   time.Date(2026, 4, 25, 0, 0, 0, 0, time.Local),
+		Name:      "Liberazione",
+		StartDate: time.Date(2026, 4, 25, 0, 0, 0, 0, time.Local),
+		EndDate:   time.Date(2026, 4, 25, 0, 0, 0, 0, time.Local),
 	},
 }
 
@@ -27,7 +27,7 @@ templ vacationCard(vacation database.Vacation) {
 	<div class="bg-surface-highest clickable p-4">
 		{ vacation.Name }
 		<p class="text-on-surface-dim">
-			{ vacation.StartDatetime.Day() } { nameToNick(monthNames[vacation.StartDatetime.Month()]) } - { vacation.EndDatetime.Day() } { nameToNick(monthNames[vacation.EndDatetime.Month()]) }
+			{ vacation.StartDate.Day() } { nameToNick(monthNames[vacation.StartDate.Month()]) } - { vacation.EndDate.Day() } { nameToNick(monthNames[vacation.EndDate.Month()]) }
 		</p>
 	</div>
 }

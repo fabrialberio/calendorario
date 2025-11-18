@@ -1,27 +1,63 @@
 package views
 
-import "time"
+import (
+	"calendorario/pkg/requestcontext"
+	"time"
+)
 
 templ CalendarPage(year int, month time.Month) {
-	@sidebarScaffold(0, []templ.Component{
-		calendar(year, month),
-		vacationList(exampleVacations),
-	})
+	<!DOCTYPE html>
+	<html>
+		@head()
+		<body>
+			@sidebar(0)
+			<main class="rounded-tl-card ml-64 flex h-full flex-row gap-8 p-4">
+				@calendar(year, month)
+				@vacationList(exampleVacations)
+			</main>
+		</body>
+	</html>
 }
 
 templ TimetableClassPage(date time.Time) {
-	@sidebarScaffold(1, []templ.Component{
-		classSelectList(exampleClasses),
-		timetable(date),
-	})
+	<!DOCTYPE html>
+	<html>
+		@head()
+		<body>
+			@sidebar(1)
+			<main class="ml-64 grid place-items-center space-y-8 p-4">
+				<div class="w-full max-w-4xl space-y-2">
+					<h2>
+						Orario di classe
+					</h2>
+					@timetable(date)
+				</div>
+				<div class="w-full max-w-4xl space-y-2">
+					<h2>
+						Tutte le classi
+					</h2>
+					@classTable(exampleClasses)
+				</div>
+			</main>
+		</body>
+	</html>
 }
 
 templ TermsPage() {
 	<!DOCTYPE html>
 	<html>
 		@head()
-		<body>
-			Periodi scolastici
+		<body class="grid place-items-center">
+			<main class="rounded-card max-w-4xl space-y-4 p-4 text-center">
+				<h2>
+					{{
+						rc := requestcontext.FromContext(ctx)
+						user, _ := rc.AuthenticatedUser()
+					}}
+					Benvenuto, { user.Username }!
+				</h2>
+				@termGrid(exampleTerms)
+			</main>
 		</body>
 	</html>
 }

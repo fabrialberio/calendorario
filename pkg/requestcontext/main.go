@@ -15,7 +15,11 @@ type requestContext struct {
 type requestContextKey struct{}
 
 func FromRequest(r *http.Request) requestContext {
-	return r.Context().Value(requestContextKey{}).(requestContext)
+	return FromContext(r.Context())
+}
+
+func FromContext(ctx context.Context) requestContext {
+	return ctx.Value(requestContextKey{}).(requestContext)
 }
 
 func New(

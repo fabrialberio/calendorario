@@ -26,12 +26,13 @@ CREATE TABLE "user" (
 CREATE TABLE "vacation" (
     "id" BIGSERIAL PRIMARY KEY,
     "name" TEXT NOT NULL,
-    "start_datetime" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
-    "end_datetime" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL
+    "start_date" DATE NOT NULL,
+    "end_date" DATE NOT NULL
 );
 CREATE TABLE "class" (
     "id" BIGSERIAL PRIMARY KEY,
-    "name" TEXT NOT NULL,
+    "grade" INT NOT NULL,
+    "section" TEXT NOT NULL,
     "term_id" BIGINT NOT NULL REFERENCES "term",
     "program_id" BIGINT NOT NULL REFERENCES "program"
 );

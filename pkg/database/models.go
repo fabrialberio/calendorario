@@ -55,7 +55,8 @@ func (ns NullRole) Value() (driver.Value, error) {
 
 type Class struct {
 	ID        int64
-	Name      string
+	Grade     int32
+	Section   string
 	TermID    int64
 	ProgramID int64
 }
@@ -112,8 +113,8 @@ type User struct {
 }
 
 type Vacation struct {
-	ID            int64
-	Name          string
-	StartDatetime time.Time
-	EndDatetime   time.Time
+	ID        int64
+	Name      string
+	StartDate time.Time
+	EndDate   time.Time
 }

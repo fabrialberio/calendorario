@@ -40,7 +40,7 @@ func timetable(date time.Time) templ.Component {
 		for monday.Weekday() != time.Monday {
 			monday = monday.AddDate(0, 0, -1)
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"flex flex-row gap-4\"><button class=\"btn-md bg-primary-container rounded-md\"><i class=\"fas fa-chalkboard\"></i> 1A <i class=\"fas fa-caret-down\"></i></button><div class=\"card-group\"><button class=\"bg-surface-highest btn-md\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"bg-surface-highest btn-md\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"flex flex-row gap-4\"><button class=\"button bg-primary-container rounded-md\"><i class=\"fas fa-chalkboard\"></i> 1A <i class=\"fas fa-caret-down\"></i></button><div class=\"card-group\"><button class=\"bg-surface-highest button\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"bg-surface-highest button\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -92,7 +92,7 @@ func timetable(date time.Time) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</button> <button class=\"bg-surface-highest btn-md\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"btn-md bg-surface-highest\" disabled><i class=\"fas fa-calendar-day\"></i> Oggi</button></div><div class=\"divide-outline min-h-120 rounded-card bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</button> <button class=\"bg-surface-highest button\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"button bg-surface-highest\" disabled><i class=\"fas fa-calendar-day\"></i> Oggi</button></div><div class=\"divide-outline min-h-120 rounded-card bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

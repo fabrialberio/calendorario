@@ -34,7 +34,7 @@ func table(headings []string, data [][]string, orderByCol int, orderDesc bool) t
 			return templ_7745c5c3_Err
 		}
 		for i := 0; i < len(headings); i++ {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<th class=\"p-1\"><button class=\"btn-md w-full justify-start py-1 pr-1\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<th class=\"p-1\"><button class=\"button w-full justify-start py-1 pr-1\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

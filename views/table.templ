@@ -6,7 +6,7 @@ templ table(headings []string, data [][]string, orderByCol int, orderDesc bool) 
 			<tr class="divide-outline divide-x">
 				for i := 0; i < len(headings); i++ {
 					<th class="p-1">
-						<button class="btn-md w-full justify-start py-1 pr-1">
+						<button class="button w-full justify-start py-1 pr-1">
 							{ headings[i] }
 							if i == orderByCol {
 								<div class="bg-primary-container ml-auto grid h-8 w-8 place-items-center rounded-full">

@@ -62,7 +62,7 @@ func calendar(year int, month time.Month) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"flex w-full flex-col gap-2\"><div class=\"flex flex-row gap-4\"><div class=\"card-group\"><button class=\"btn-md bg-surface-highest px-2\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"btn-md bg-surface-highest\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"flex w-full flex-col gap-2\"><div class=\"flex flex-row gap-4\"><div class=\"card-group\"><button class=\"button bg-surface-highest px-2\"><i class=\"fas fa-chevron-left\"></i></button> <button class=\"button bg-surface-highest\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -88,7 +88,7 @@ func calendar(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</button> <button class=\"btn-md bg-surface-highest px-2\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"btn-md bg-surface-highest\"><i class=\"fas fa-calendar-day\"></i> Oggi</button></div><div class=\"bg-surface-highest rounded-card divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</button> <button class=\"button bg-surface-highest px-2\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"button bg-surface-highest\"><i class=\"fas fa-calendar-day\"></i> Oggi</button></div><div class=\"bg-surface-highest rounded-card divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

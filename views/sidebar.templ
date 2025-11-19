@@ -33,7 +33,7 @@ templ sidebar(selectedIndex int) {
 							class={
 								templ.KV("bg-primary-container", i == selectedIndex),
 								templ.KV("clickable", i != selectedIndex),
-								"btn-lg w-full",
+								"button h-12 px-3 w-full",
 							}
 							if i != selectedIndex {
 								href={ sidebarRows[i].destination }

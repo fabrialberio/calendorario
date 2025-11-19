@@ -146,7 +146,7 @@ func vacationList(vacations []database.Vacation) templ.Component {
 			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div class=\"flex h-full basis-80 flex-col gap-2\"><div class=\"flex flex-row items-center\"><h4>Vacanze e festività</h4><button class=\"btn-md bg-primary text-on-primary ml-auto px-2\"><i class=\"fas fa-add\"></i></button></div><div class=\"card-group flex-col\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div class=\"flex h-full basis-80 flex-col gap-2\"><div class=\"flex flex-row items-center\"><h4>Vacanze e festività</h4><button class=\"button bg-primary text-on-primary ml-auto px-2\"><i class=\"fas fa-add\"></i></button></div><div class=\"card-group flex-col\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

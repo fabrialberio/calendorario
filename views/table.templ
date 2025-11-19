@@ -1,0 +1,39 @@
+package views
+
+templ table(headings []string, data [][]string, orderByCol int, orderDesc bool) {
+	<table class="border-outline w-full table-auto border-separate border-spacing-0 overflow-hidden rounded-3xl border">
+		<thead class="bg-surface-high font-bold">
+			<tr class="divide-outline divide-x">
+				for i := 0; i < len(headings); i++ {
+					<th class="p-1">
+						<button class="btn-md w-full justify-start py-1 pr-1">
+							{ headings[i] }
+							if i == orderByCol {
+								<div class="bg-primary-container ml-auto grid h-8 w-8 place-items-center rounded-full">
+									<i
+										class={
+											"fas",
+											templ.KV("fa-arrow-down", orderDesc),
+											templ.KV("fa-arrow-up", !orderDesc),
+										}
+									></i>
+								</div>
+							}
+						</button>
+					</th>
+				}
+			</tr>
+		</thead>
+		<tbody>
+			for i := 0; i < len(data); i++ {
+				<tr>
+					for j := 0; j < len(data[i]); j++ {
+						<td class="border-outline not-last:border-r border-t p-1">
+							{ data[i][j] }
+						</td>
+					}
+				</tr>
+			}
+		</tbody>
+	</table>
+}

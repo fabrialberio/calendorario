@@ -50,7 +50,7 @@ func CalendarPage(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<main class=\"rounded-tl-card ml-64 flex h-full flex-row gap-8 p-4\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<main class=\"ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -160,7 +160,7 @@ func TermsPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<body class=\"grid place-items-center\"><main class=\"rounded-card max-w-4xl space-y-4 p-4 text-center\"><h2>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<body class=\"grid place-items-center\"><main class=\"max-w-4xl space-y-4 rounded-lg p-4 text-center\"><h2>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

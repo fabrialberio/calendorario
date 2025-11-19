@@ -1,7 +1,7 @@
 package views
 
 templ table(headings []string, data [][]string, orderByCol int, orderDesc bool) {
-	<table class="border-outline w-full table-auto border-separate border-spacing-0 overflow-hidden rounded-3xl border">
+	<table class="border-outline w-full table-auto border-separate border-spacing-0 overflow-hidden rounded-md border">
 		<thead class="bg-surface-high font-bold">
 			<tr class="divide-outline divide-x">
 				for i := 0; i < len(headings); i++ {

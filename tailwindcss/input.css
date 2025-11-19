@@ -24,7 +24,13 @@
     --color-outline: rgb(195 200 187);
     --color-scrim: rgb(0 0 0);
 
-    --radius-card: 40px;
+    --radius-*: initial;
+    /* Used for button groups and chips. */
+    --radius-sm: 6px;
+    /* Used for small cards. */
+    --radius-md: 24px;
+    /* Used for large cards. */
+    --radius-lg: 40px;
 }
 
 @layer base {
@@ -49,7 +55,7 @@
     }
 
     input:not([type="checkbox"]), select {
-        @apply border-on-surface-dim placeholder-on-surface-dim text-on-surface h-10 w-full rounded-xl border px-3 py-2;
+        @apply border-on-surface-dim placeholder-on-surface-dim text-on-surface rounded-[12px] h-10 w-full border px-3 py-2;
 
         &:focus-visible {
             @apply border-on-surface ring-on-surface outline-none ring-1;
@@ -95,15 +101,15 @@
     }
 
     .card-group {
-        @apply rounded-4xl flex gap-1 overflow-hidden;
+        @apply flex gap-1 overflow-hidden rounded-md;
 
         &>* {
-            @apply rounded-md;
+            @apply rounded-sm;
         }
     }
 
     .checkbox {
-        @apply border-on-surface-dim text-on-primary clickable h-5 w-5 rounded-md border text-sm;
+        @apply border-on-surface-dim text-on-primary clickable h-5 w-5 rounded-sm border text-sm;
 
         &:has(input[type="checkbox"]:checked) {
             @apply border-none bg-primary

@@ -41,7 +41,7 @@ func sidebar(selectedIndex int) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside class=\"fixed left-0 top-0 z-40 h-full w-64 translate-x-0 transition-transform\"><nav class=\"h-full space-y-4 p-4\"><button class=\"clickable bg-surface flex h-16 w-full flex-row items-center rounded-3xl px-4 text-start\"><div class=\"w-full truncate\"><p class=\"text-on-surface-dim text-sm\">Periodo scolastico</p><p class=\"truncate font-bold\">Anno 2024-25</p></div><i class=\"fas fa-chevron-down\"></i></button><ul class=\"space-y-1\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside class=\"fixed left-0 top-0 z-40 h-full w-64 translate-x-0 transition-transform\"><nav class=\"h-full space-y-4 p-4\"><button class=\"clickable bg-surface flex h-16 w-full flex-row items-center rounded-md px-4 text-start\"><div class=\"w-full truncate\"><p class=\"text-on-surface-dim text-sm\">Periodo scolastico</p><p class=\"truncate font-bold\">Anno 2024-25</p></div><i class=\"fas fa-chevron-down\"></i></button><ul class=\"space-y-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -179,7 +179,7 @@ func sidebarScaffold(sidebarIndex int, content templ.Component) templ.Component 
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<main class=\"rounded-tl-card ml-64 flex h-full flex-row gap-8 p-4\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<main class=\"ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

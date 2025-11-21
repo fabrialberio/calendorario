@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"calendorario/pkg/auth"
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
 	"calendorario/views"
@@ -38,7 +37,7 @@ func LoginGet(w http.ResponseWriter, r *http.Request) {
 	s := session.FromContext(r.Context())
 	_, err := s.User()
 
-	if errors.Is(err, auth.ErrCookieExpired) {
+	if errors.Is(err, session.ErrCookieExpired) {
 		views.Login(false, true).Render(r.Context(), w)
 	} else if err != nil {
 		views.Login(r.URL.Query().Has(errorQueryParam), false).Render(r.Context(), w)
@@ -60,7 +59,7 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = auth.SetAuthenticatedUser(w, &user, []byte(password))
+	err = session.SetAuthenticatedUser(w, &user, []byte(password))
 	if err != nil {
 		http.Redirect(w, r, destLoginError, http.StatusSeeOther)
 		return
@@ -70,6 +69,6 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 }
 
 func LogoutGet(w http.ResponseWriter, r *http.Request) {
-	auth.UnsetAuthenticatedUser(w)
+	session.UnsetAuthenticatedUser(w)
 	http.Redirect(w, r, views.DestLogin, http.StatusSeeOther)
 }

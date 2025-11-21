@@ -1,10 +1,10 @@
 package main
 
 import (
-	"calendorario/pkg/auth"
 	"calendorario/pkg/database"
 	"calendorario/pkg/handlers"
 	"calendorario/pkg/middleware"
+	"calendorario/pkg/session"
 	"calendorario/views"
 	"context"
 
@@ -66,7 +66,7 @@ func createDatabase() *database.Queries {
 func addAdminUserIfNotExists(db *database.Queries) {
 	_, err := db.GetUserWithUsername(context.Background(), "admin")
 	if err == sql.ErrNoRows {
-		hash, err := auth.HashPassword(os.Getenv("ADMIN_PASSWORD"))
+		hash, err := session.HashPassword(os.Getenv("ADMIN_PASSWORD"))
 		if err != nil {
 			log.Fatalf("Error hashing admin password: %v", err)
 		}

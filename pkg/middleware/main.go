@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"calendorario/pkg/auth"
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
 	"calendorario/views"
@@ -19,7 +18,7 @@ func WithLogging(next http.Handler) http.Handler {
 
 func WithContext(database *database.Queries, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		user, err := auth.GetAuthenticatedUser(r)
+		user, err := session.GetAuthenticatedUser(r)
 
 		ctx := r.Context()
 		s := session.NewContext(ctx, database, user, err)

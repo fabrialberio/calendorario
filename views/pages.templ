@@ -5,6 +5,25 @@ import (
 	"time"
 )
 
+templ TermsPage() {
+	<!DOCTYPE html>
+	<html>
+		@head()
+		<body class="grid place-items-center">
+			<main class="bg-surface max-w-4xl space-y-4 rounded-lg p-4 text-center">
+				<h2>
+					{{
+						rc := requestcontext.FromContext(ctx)
+						user, _ := rc.AuthenticatedUser()
+					}}
+					Benvenuto, { user.Username }!
+				</h2>
+				@termGrid(exampleTerms)
+			</main>
+		</body>
+	</html>
+}
+
 templ CalendarPage(year int, month time.Month) {
 	<!DOCTYPE html>
 	<html>
@@ -38,25 +57,6 @@ templ TimetableClassPage(date time.Time) {
 					</h2>
 					@classTable(exampleClasses)
 				</div>
-			</main>
-		</body>
-	</html>
-}
-
-templ TermsPage() {
-	<!DOCTYPE html>
-	<html>
-		@head()
-		<body class="grid place-items-center">
-			<main class="max-w-4xl space-y-4 rounded-lg p-4 text-center">
-				<h2>
-					{{
-						rc := requestcontext.FromContext(ctx)
-						user, _ := rc.AuthenticatedUser()
-					}}
-					Benvenuto, { user.Username }!
-				</h2>
-				@termGrid(exampleTerms)
 			</main>
 		</body>
 	</html>

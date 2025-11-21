@@ -38,10 +38,6 @@
         @apply bg-surface-lowest text-on-surface h-screen w-screen overflow-x-hidden;
     }
 
-    main {
-        @apply bg-surface;
-    }
-
     h2 {
         @apply text-3xl font-extrabold
     }

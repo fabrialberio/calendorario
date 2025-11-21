@@ -9,6 +9,7 @@ type sessionContext struct {
 	Database          *database.Queries
 	AuthenticatedUser *database.User
 	AuthenticationErr error
+	TermID            int
 }
 
 type sessionContextKey struct{}
@@ -21,8 +22,14 @@ func New(
 	database *database.Queries,
 	authenticatedUser *database.User,
 	authenticationErr error,
+	termID int,
 ) sessionContext {
-	return sessionContext{database, authenticatedUser, authenticationErr}
+	return sessionContext{
+		database,
+		authenticatedUser,
+		authenticationErr,
+		termID,
+	}
 }
 
 func NewContext(
@@ -30,11 +37,17 @@ func NewContext(
 	database *database.Queries,
 	authenticatedUser *database.User,
 	authenticationErr error,
+	termID int,
 ) context.Context {
 	return context.WithValue(
 		ctx,
 		sessionContextKey{},
-		sessionContext{database, authenticatedUser, authenticationErr},
+		sessionContext{
+			database,
+			authenticatedUser,
+			authenticationErr,
+			termID,
+		},
 	)
 }
 

@@ -1,0 +1,59 @@
+package views
+
+import "time"
+
+templ formScaffold(title string, action string, hiddenID int, isNew bool, inputs []templ.Component) {
+	<!DOCTYPE html>
+	<html>
+		@head()
+		<body class="grid place-items-center">
+			<form
+				class="bg-surface space-y-4 rounded-md p-4"
+				method="post"
+				action={ action }
+			>
+				<h2>
+					{ title }
+				</h2>
+				<input type="hidden" name={ KeyTermID } value={ hiddenID }/>
+				for i := 0; i < len(inputs); i++ {
+					{{ inputFunc := func() templ.Component { return inputs[i] } }}
+					@inputFunc()
+				}
+				<div class="flex flex-row pt-4">
+					if isNew {
+						<button class="button bg-primary text-on-primary ml-auto" type="sumbit" name={ FlagCreate } autofocus>
+							<i class="fas fa-add"></i>
+							Crea
+						</button>
+					} else {
+						<button class="button bg-surface-highest" type="sumbit" name={ FlagDelete }>
+							<i class="fas fa-x"></i>
+							Elimina
+						</button>
+						<button class="button bg-primary text-on-primary ml-auto" type="sumbit" name={ FlagUpdate } autofocus>
+							<i class="fas fa-check"></i>
+							Salva
+						</button>
+					}
+				</div>
+			</form>
+		</body>
+	</html>
+}
+
+templ formInputText(label string, name string, value string) {
+	{{ id := name + "_input" }}
+	<div>
+		<label class="text-on-surface-dim" for={ id }>{ label }</label>
+		<input type="text" id={ id } name={ name } value={ value }/>
+	</div>
+}
+
+templ formInputDate(label string, name string, value time.Time) {
+	{{ id := name + "_input" }}
+	<div>
+		<label class="text-on-surface-dim" for={ id }>{ label }</label>
+		<input type="date" id={ id } name={ name } value={ value.Format(time.DateOnly) }/>
+	</div>
+}

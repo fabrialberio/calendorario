@@ -1,6 +1,7 @@
 package views
 
 import (
+	"calendorario/pkg/database"
 	"calendorario/pkg/requestcontext"
 	"time"
 )
@@ -11,18 +12,34 @@ templ TermsPage() {
 		@head()
 		<body class="grid place-items-center">
 			<main class="bg-surface max-w-4xl space-y-4 rounded-lg p-4 text-center">
+				{{
+					rc := requestcontext.FromContext(ctx)
+					authUser, _ := rc.User()
+
+					user, _ := rc.Database.GetUser(ctx, authUser.ID)
+					terms, _ := rc.Database.ListTerms(ctx)
+				}}
 				<h2>
-					{{
-						rc := requestcontext.FromContext(ctx)
-						authUser, _ := rc.User()
-						user, _ := rc.Database.GetUser(ctx, authUser.ID)
-					}}
 					Benvenuto, { user.Name }!
 				</h2>
-				@termGrid(exampleTerms)
+				@termGrid(terms)
 			</main>
 		</body>
 	</html>
+}
+
+templ TermEditPage(term database.Term, isNew bool) {
+	@formScaffold(
+		"Periodo scolastico",
+		DestAdminTerms,
+		int(term.ID),
+		isNew,
+		[]templ.Component{
+			formInputText("Nome del periodo", KeyTermName, term.Name),
+			formInputDate("Data di inizio", KeyTermStartDate, term.StartDate),
+			formInputDate("Data di fine", KeyTermEndDate, term.EndDate),
+		},
+	)
 }
 
 templ CalendarPage(year int, month time.Month) {

@@ -72,7 +72,7 @@
 }
 
 @utility clickable {
-    @apply cursor-pointer transition-shadow duration-200;
+    @apply pointer-events-auto cursor-pointer transition-shadow duration-200;
 
     &:hover {
         box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.1);

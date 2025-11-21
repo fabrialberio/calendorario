@@ -100,6 +100,7 @@ func setupRoutes(mux *http.ServeMux) {
 	adminMux.Handle("GET "+views.DestAdminCalendar, templ.Handler(views.CalendarPage(time.Now().Year(), time.Now().Month())))
 	adminMux.Handle("GET "+views.DestAdminClasses, templ.Handler(views.TimetableClassPage(time.Now())))
 
+	adminMux.HandleFunc("GET "+views.DestAdminTerms+"/{id}", handlers.AdminTermsGet)
 	adminMux.HandleFunc("POST "+views.DestAdminTerms, handlers.AdminTermsPost)
 
 	mux.Handle(views.DestAdmin, middleware.WithUserCheck(

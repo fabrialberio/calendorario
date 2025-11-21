@@ -1,8 +1,17 @@
 package views
 
-type LoginFormKey string
+const (
+	KeyUsername = "username"
+	KeyPassword = "password"
+
+	KeyTermID        = "id"
+	KeyTermName      = "name"
+	KeyTermStartDate = "start_date"
+	KeyTermEndDate   = "end_date"
+)
 
 const (
-	KeyUsername LoginFormKey = "username"
-	KeyPassword LoginFormKey = "password"
+	FlagCreate = "create"
+	FlagUpdate = "update"
+	FlagDelete = "delete"
 )

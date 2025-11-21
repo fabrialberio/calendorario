@@ -55,6 +55,7 @@ func SetAuthenticatedUser(w http.ResponseWriter, user *database.User, password [
 	http.SetCookie(w, &http.Cookie{
 		Name:     sessionCookieName,
 		Value:    token,
+		Path:     "/",
 		HttpOnly: true,
 	})
 

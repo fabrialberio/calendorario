@@ -15,7 +15,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed.", http.StatusMethodNotAllowed)
 	}
 
-	rc := requestcontext.FromRequest(r)
+	rc := requestcontext.FromContext(r.Context())
 	user, err := rc.User()
 
 	if err != nil {
@@ -35,7 +35,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 const errorQueryParam = "error"
 
 func LoginGet(w http.ResponseWriter, r *http.Request) {
-	rc := requestcontext.FromRequest(r)
+	rc := requestcontext.FromContext(r.Context())
 	_, err := rc.User()
 
 	if errors.Is(err, auth.ErrCookieExpired) {
@@ -53,7 +53,7 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 
 	var destLoginError = views.DestLogin + "?" + errorQueryParam
 
-	rc := requestcontext.FromRequest(r)
+	rc := requestcontext.FromContext(r.Context())
 	user, err := rc.Database.GetUserWithUsername(r.Context(), username)
 	if err != nil {
 		http.Redirect(w, r, destLoginError, http.StatusSeeOther)

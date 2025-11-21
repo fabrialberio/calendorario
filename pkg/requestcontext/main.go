@@ -3,7 +3,6 @@ package requestcontext
 import (
 	"calendorario/pkg/database"
 	"context"
-	"net/http"
 )
 
 type requestContext struct {
@@ -13,10 +12,6 @@ type requestContext struct {
 }
 
 type requestContextKey struct{}
-
-func FromRequest(r *http.Request) requestContext {
-	return FromContext(r.Context())
-}
 
 func FromContext(ctx context.Context) requestContext {
 	return ctx.Value(requestContextKey{}).(requestContext)

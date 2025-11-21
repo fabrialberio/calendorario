@@ -41,6 +41,6 @@ SET "username" = $2,
     "deleted" = $7
 WHERE "id" = $1
 RETURNING *;
--- name: DeleteAuthor :exec
+-- name: DeleteUser :exec
 DELETE FROM "user"
 WHERE "id" = $1;

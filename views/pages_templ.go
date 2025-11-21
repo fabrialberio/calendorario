@@ -104,7 +104,7 @@ func TermEditPage(term database.Term, isNew bool) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = formScaffold(
 			"Periodo scolastico",
-			DestAdminTerms,
+			DestAdminTerm,
 			int(term.ID),
 			isNew,
 			[]templ.Component{

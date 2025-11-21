@@ -97,11 +97,12 @@ func setupRoutes(mux *http.ServeMux) {
 
 	adminMux := http.NewServeMux()
 	adminMux.Handle("GET "+views.DestAdmin, templ.Handler(views.TermsPage()))
-	adminMux.Handle("GET "+views.DestAdminCalendar, templ.Handler(views.CalendarPage(time.Now().Year(), time.Now().Month())))
-	adminMux.Handle("GET "+views.DestAdminClasses, templ.Handler(views.TimetableClassPage(time.Now())))
 
-	adminMux.HandleFunc("GET "+views.DestAdminTerms+"/{id}", handlers.AdminTermsGet)
-	adminMux.HandleFunc("POST "+views.DestAdminTerms, handlers.AdminTermsPost)
+	adminMux.HandleFunc("GET "+views.DestAdminTerm+"/{id}", handlers.AdminTermGet)
+	adminMux.HandleFunc("POST "+views.DestAdminTerm, handlers.AdminTermPost)
+
+	adminMux.Handle("GET "+views.DestAdminCalendar, templ.Handler(views.CalendarPage(time.Now().Year(), time.Now().Month())))
+	adminMux.Handle("GET "+views.DestAdminTimetableClass, templ.Handler(views.TimetableClassPage(time.Now())))
 
 	mux.Handle(views.DestAdmin, middleware.WithUserCheck(
 		func(u *database.User) bool { return u.Role == database.RoleAdministrator },

@@ -31,7 +31,7 @@ templ TermsPage() {
 templ TermEditPage(term database.Term, isNew bool) {
 	@formScaffold(
 		"Periodo scolastico",
-		DestAdminTerms,
+		DestAdminTerm,
 		int(term.ID),
 		isNew,
 		[]templ.Component{

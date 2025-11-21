@@ -1,9 +1,9 @@
 package views
 
 const (
-	destTerms    = "/terms"
-	destCalendar = "/calendar"
-	destClasses  = "/classes"
+	destTerm           = "/term"
+	destCalendar       = "/calendar"
+	destTimetableClass = "/timetable_class"
 
 	destAdminBase     = "/admin"
 	destSecretaryBase = "/secretary"
@@ -14,10 +14,10 @@ const (
 	DestLogin  = "/login"
 	DestLogout = "/logout"
 
-	DestAdmin         = destAdminBase + "/"
-	DestAdminTerms    = destAdminBase + destTerms
-	DestAdminCalendar = destAdminBase + destCalendar
-	DestAdminClasses  = destAdminBase + destClasses
+	DestAdmin               = destAdminBase + "/"
+	DestAdminTerm           = destAdminBase + destTerm
+	DestAdminCalendar       = destAdminBase + destCalendar
+	DestAdminTimetableClass = destAdminBase + destTimetableClass
 
 	DestSecretary = destSecretaryBase + "/"
 

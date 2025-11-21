@@ -38,7 +38,7 @@ templ termCard(term database.Term) {
 			</p>
 			<a
 				class="clickable button bg-surface-high mt-auto w-fit"
-				href={ DestAdminTerms + "/" + strconv.Itoa(int(term.ID)) }
+				href={ DestAdminTerm + "/" + strconv.Itoa(int(term.ID)) }
 			>
 				<i class="fas fa-edit"></i>
 				Modifica
@@ -50,7 +50,7 @@ templ termCard(term database.Term) {
 templ newTermCard() {
 	<a
 		class="clickable border-on-surface-dim grid h-32 place-items-center rounded-md border border-dashed"
-		href={ DestAdminTerms + "/new" }
+		href={ DestAdminTerm + "/new" }
 	>
 		<div class="bg-primary-container button">
 			<i class="fa-add fas"></i>

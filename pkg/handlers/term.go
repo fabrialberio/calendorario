@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func AdminTermsGet(w http.ResponseWriter, r *http.Request) {
+func AdminTermGet(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
 		views.TermEditPage(database.Term{}, true).Render(r.Context(), w)
@@ -26,7 +26,7 @@ func AdminTermsGet(w http.ResponseWriter, r *http.Request) {
 	views.TermEditPage(term, false).Render(r.Context(), w)
 }
 
-func AdminTermsPost(w http.ResponseWriter, r *http.Request) {
+func AdminTermPost(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(r.FormValue(views.KeyTermID))
 	startDate, _ := time.Parse(time.DateOnly, r.FormValue(views.KeyTermStartDate))
 	endDate, _ := time.Parse(time.DateOnly, r.FormValue(views.KeyTermEndDate))
@@ -50,20 +50,5 @@ func AdminTermsPost(w http.ResponseWriter, r *http.Request) {
 		rc.Database.DeleteTerm(r.Context(), int64(id))
 	}
 
-	http.Redirect(w, r, views.DestAdmin, http.StatusSeeOther)
-}
-
-func AdminTermsPatch(w http.ResponseWriter, r *http.Request) {
-	startDate, _ := time.Parse(time.DateOnly, r.FormValue(views.KeyTermStartDate))
-	endDate, _ := time.Parse(time.DateOnly, r.FormValue(views.KeyTermEndDate))
-
-	termParams := database.UpdateTermParams{
-		Name:      r.FormValue(views.KeyTermName),
-		StartDate: startDate,
-		EndDate:   endDate,
-	}
-
-	rc := requestcontext.FromContext(r.Context())
-	rc.Database.UpdateTerm(r.Context(), termParams)
 	http.Redirect(w, r, views.DestAdmin, http.StatusSeeOther)
 }

@@ -15,6 +15,7 @@ const (
 	DestLogout = "/logout"
 
 	DestAdmin               = destAdminBase + "/"
+	DestAdminLoadTerm       = destAdminBase + "/load_term"
 	DestAdminTerm           = destAdminBase + destTerm
 	DestAdminCalendar       = destAdminBase + destCalendar
 	DestAdminTimetableClass = destAdminBase + destTimetableClass

@@ -5,14 +5,26 @@ import (
 	"strconv"
 )
 
-templ termGrid(terms []database.Term) {
+templ termGrid(terms []database.Term, currentTermID int) {
 	<div class="space-y-2 text-start">
+		for i := 0; i < len(terms); i++ {
+			if terms[i].ID == int64(currentTermID) {
+				<h3>
+					Ultimo periodo selezionato
+				</h3>
+				<div class="card-group mb-4 flex-col">
+					@termCard(terms[i])
+				</div>
+			}
+		}
 		<h3>
-			Periodi scolastici
+			Tutti i periodi scolastici
 		</h3>
 		<div class="card-group flex-col">
 			for i := 0; i < len(terms); i++ {
-				@termCard(terms[i])
+				if terms[i].ID != int64(currentTermID) {
+					@termCard(terms[i])
+				}
 			}
 		</div>
 		@newTermCard()
@@ -23,7 +35,7 @@ templ termCard(term database.Term) {
 	<div class="relative">
 		<a
 			class="bg-surface-highest clickable flex h-32 flex-row items-center pr-4"
-			href=""
+			href={ DestAdminLoadTerm + "/" + strconv.Itoa(int(term.ID)) }
 		>
 			<div class="bg-surface-high ml-auto grid h-8 w-8 place-items-center rounded-full">
 				<i class="fas fa-chevron-right"></i>

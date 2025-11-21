@@ -70,5 +70,6 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 
 func LogoutGet(w http.ResponseWriter, r *http.Request) {
 	session.UnsetAuthenticatedUser(w)
+	session.UnsetTermCookie(w)
 	http.Redirect(w, r, views.DestLogin, http.StatusSeeOther)
 }

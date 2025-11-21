@@ -52,3 +52,14 @@ func AdminTermPost(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, views.DestAdmin, http.StatusSeeOther)
 }
+
+func AdminLoadTermGet(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		http.Redirect(w, r, views.DestAdmin, http.StatusSeeOther)
+	}
+
+	session.SetTermCookie(w, id)
+
+	http.Redirect(w, r, views.DestAdminCalendar, http.StatusSeeOther)
+}

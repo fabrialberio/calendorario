@@ -7,9 +7,9 @@ import (
 )
 
 type requestContext struct {
-	database          *database.Queries
-	authenticatedUser *database.User
-	authenticationErr error
+	Database          *database.Queries
+	AuthenticatedUser *database.User
+	AuthenticationErr error
 }
 
 type requestContextKey struct{}
@@ -43,10 +43,6 @@ func NewContext(
 	)
 }
 
-func (rc *requestContext) Database() *database.Queries {
-	return rc.database
-}
-
-func (rc *requestContext) AuthenticatedUser() (*database.User, error) {
-	return rc.authenticatedUser, rc.authenticationErr
+func (rc *requestContext) User() (*database.User, error) {
+	return rc.AuthenticatedUser, rc.AuthenticationErr
 }

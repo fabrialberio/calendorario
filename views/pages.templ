@@ -14,9 +14,10 @@ templ TermsPage() {
 				<h2>
 					{{
 						rc := requestcontext.FromContext(ctx)
-						user, _ := rc.AuthenticatedUser()
+						authUser, _ := rc.User()
+						user, _ := rc.Database.GetUser(ctx, authUser.ID)
 					}}
-					Benvenuto, { user.Username }!
+					Benvenuto, { user.Name }!
 				</h2>
 				@termGrid(exampleTerms)
 			</main>

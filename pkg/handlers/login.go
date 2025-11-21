@@ -16,7 +16,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	rc := requestcontext.FromRequest(r)
-	user, err := rc.AuthenticatedUser()
+	user, err := rc.User()
 
 	if err != nil {
 		http.Redirect(w, r, views.DestLogin, http.StatusSeeOther)
@@ -36,7 +36,7 @@ const errorQueryParam = "error"
 
 func LoginGet(w http.ResponseWriter, r *http.Request) {
 	rc := requestcontext.FromRequest(r)
-	_, err := rc.AuthenticatedUser()
+	_, err := rc.User()
 
 	if errors.Is(err, auth.ErrCookieExpired) {
 		views.Login(false, true).Render(r.Context(), w)
@@ -54,7 +54,7 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 	var destLoginError = views.DestLogin + "?" + errorQueryParam
 
 	rc := requestcontext.FromRequest(r)
-	user, err := rc.Database().GetUserWithUsername(r.Context(), username)
+	user, err := rc.Database.GetUserWithUsername(r.Context(), username)
 	if err != nil {
 		http.Redirect(w, r, destLoginError, http.StatusSeeOther)
 		return

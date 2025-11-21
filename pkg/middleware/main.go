@@ -34,7 +34,7 @@ type UserCheckerFunc func(user *database.User) bool
 func WithUserCheck(checker UserCheckerFunc, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		rc := requestcontext.FromRequest(r)
-		user, err := rc.AuthenticatedUser()
+		user, err := rc.User()
 		if err != nil {
 			http.Redirect(w, r, views.DestLogout, http.StatusSeeOther)
 			return

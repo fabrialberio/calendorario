@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/requestcontext"
+	"calendorario/pkg/session"
 	"time"
 )
 
@@ -47,7 +47,7 @@ func TermsPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		rc := requestcontext.FromContext(ctx)
+		rc := session.FromContext(ctx)
 		authUser, _ := rc.User()
 
 		user, _ := rc.Database.GetUser(ctx, authUser.ID)

@@ -3,7 +3,7 @@ package middleware
 import (
 	"calendorario/pkg/auth"
 	"calendorario/pkg/database"
-	"calendorario/pkg/requestcontext"
+	"calendorario/pkg/session"
 	"calendorario/views"
 
 	"log"
@@ -22,8 +22,8 @@ func WithContext(database *database.Queries, next http.Handler) http.Handler {
 		user, err := auth.GetAuthenticatedUser(r)
 
 		ctx := r.Context()
-		rc := requestcontext.NewContext(ctx, database, user, err)
-		r = r.WithContext(rc)
+		s := session.NewContext(ctx, database, user, err)
+		r = r.WithContext(s)
 
 		next.ServeHTTP(w, r)
 	})
@@ -33,8 +33,8 @@ type UserCheckerFunc func(user *database.User) bool
 
 func WithUserCheck(checker UserCheckerFunc, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		rc := requestcontext.FromContext(r.Context())
-		user, err := rc.User()
+		s := session.FromContext(r.Context())
+		user, err := s.User()
 		if err != nil {
 			http.Redirect(w, r, views.DestLogout, http.StatusSeeOther)
 			return

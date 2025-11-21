@@ -2,7 +2,7 @@ package views
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/requestcontext"
+	"calendorario/pkg/session"
 	"time"
 )
 
@@ -13,7 +13,7 @@ templ TermsPage() {
 		<body class="grid place-items-center">
 			<main class="bg-surface max-w-4xl space-y-4 rounded-lg p-4 text-center">
 				{{
-					rc := requestcontext.FromContext(ctx)
+					rc := session.FromContext(ctx)
 					authUser, _ := rc.User()
 
 					user, _ := rc.Database.GetUser(ctx, authUser.ID)

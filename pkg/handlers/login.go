@@ -3,7 +3,7 @@ package handlers
 import (
 	"calendorario/pkg/auth"
 	"calendorario/pkg/database"
-	"calendorario/pkg/requestcontext"
+	"calendorario/pkg/session"
 	"calendorario/views"
 	"errors"
 
@@ -15,8 +15,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed.", http.StatusMethodNotAllowed)
 	}
 
-	rc := requestcontext.FromContext(r.Context())
-	user, err := rc.User()
+	s := session.FromContext(r.Context())
+	user, err := s.User()
 
 	if err != nil {
 		http.Redirect(w, r, views.DestLogin, http.StatusSeeOther)
@@ -35,8 +35,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 const errorQueryParam = "error"
 
 func LoginGet(w http.ResponseWriter, r *http.Request) {
-	rc := requestcontext.FromContext(r.Context())
-	_, err := rc.User()
+	s := session.FromContext(r.Context())
+	_, err := s.User()
 
 	if errors.Is(err, auth.ErrCookieExpired) {
 		views.Login(false, true).Render(r.Context(), w)
@@ -53,8 +53,8 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 
 	var destLoginError = views.DestLogin + "?" + errorQueryParam
 
-	rc := requestcontext.FromContext(r.Context())
-	user, err := rc.Database.GetUserWithUsername(r.Context(), username)
+	s := session.FromContext(r.Context())
+	user, err := s.Database.GetUserWithUsername(r.Context(), username)
 	if err != nil {
 		http.Redirect(w, r, destLoginError, http.StatusSeeOther)
 		return

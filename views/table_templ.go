@@ -34,7 +34,7 @@ func table(headings []string, data [][]string, orderByCol int, orderDesc bool) t
 			return templ_7745c5c3_Err
 		}
 		for i := 0; i < len(headings); i++ {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<th class=\"p-1\"><button class=\"button w-full justify-start py-1 pr-1\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<th class=\"p-1\"><button class=\"button w-full justify-start py-1 pl-2 pr-1\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -92,12 +92,12 @@ func table(headings []string, data [][]string, orderByCol int, orderDesc bool) t
 			return templ_7745c5c3_Err
 		}
 		for i := 0; i < len(data); i++ {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<tr>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<tr class=\"clickable\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			for j := 0; j < len(data[i]); j++ {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<td class=\"border-outline not-last:border-r border-t p-1\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<td class=\"border-outline not-last:border-r border-t py-1 px-3\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

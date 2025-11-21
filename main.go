@@ -32,7 +32,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    ":8080",
-		Handler: middleware.WithContext(db, middleware.WithLogging(mux)),
+		Handler: middleware.WithSession(db, middleware.WithLogging(mux)),
 	}
 
 	log.Println("Server started on port 8080.")

@@ -2,6 +2,7 @@ package views
 
 import (
 	"calendorario/pkg/database"
+	"calendorario/pkg/requestcontext"
 	"time"
 )
 
@@ -24,7 +25,7 @@ var exampleTerms = []database.Term{
 }
 
 templ termCard(term database.Term) {
-	<a class="clickable bg-surface-highest space-y-4 rounded-md p-4">
+	<a class="clickable bg-surface-highest w-48 space-y-4 rounded-md">
 		<p>
 			{ term.Name }
 		</p>
@@ -34,7 +35,25 @@ templ termCard(term database.Term) {
 	</a>
 }
 
+templ newTermCard() {
+	<form method="post" action={ DestAdminTerms }>
+		<button
+			type="submit"
+			class="border-on-surface-dim grid h-32 w-48 place-items-center rounded-md border border-dashed"
+		>
+			<div class="bg-primary-container button">
+				<i class="fa-add fas"></i>
+				Nuovo periodo
+			</div>
+		</button>
+	</form>
+}
+
 templ termGrid(terms []database.Term) {
+	{{
+		rc := requestcontext.FromContext(ctx)
+		terms, _ := rc.Database.ListTerms(ctx)
+	}}
 	<div class="space-y-2 text-start">
 		<h3>
 			Periodi scolastici
@@ -43,6 +62,7 @@ templ termGrid(terms []database.Term) {
 			for i := 0; i < len(terms); i++ {
 				@termCard(terms[i])
 			}
+			@newTermCard()
 		</div>
 	</div>
 }

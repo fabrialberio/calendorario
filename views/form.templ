@@ -20,20 +20,20 @@ templ formScaffold(title string, action string, hiddenID int, isNew bool, inputs
 					{{ inputFunc := func() templ.Component { return inputs[i] } }}
 					@inputFunc()
 				}
-				<div class="flex flex-row pt-4">
+				<div class="flex flex-row-reverse pt-4">
 					if isNew {
 						<button class="button bg-primary text-on-primary ml-auto" type="sumbit" name={ FlagCreate } autofocus>
 							<i class="fas fa-add"></i>
 							Crea
 						</button>
 					} else {
-						<button class="button bg-surface-highest" type="sumbit" name={ FlagDelete }>
-							<i class="fas fa-x"></i>
-							Elimina
-						</button>
 						<button class="button bg-primary text-on-primary ml-auto" type="sumbit" name={ FlagUpdate } autofocus>
 							<i class="fas fa-check"></i>
 							Salva
+						</button>
+						<button class="button bg-surface-highest" type="sumbit" name={ FlagDelete }>
+							<i class="fas fa-x"></i>
+							Elimina
 						</button>
 					}
 				</div>

@@ -5,7 +5,9 @@ WHERE "id" = $1
 LIMIT 1;
 -- name: ListTerms :many
 SELECT *
-FROM "term";
+FROM "term"
+ORDER BY "start_date" DESC,
+    "end_date" DESC;
 -- name: CreateTerm :one
 INSERT INTO "term" ("name", "start_date", "end_date")
 VALUES ($1, $2, $3)

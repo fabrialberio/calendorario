@@ -66,6 +66,8 @@ func (q *Queries) GetTerm(ctx context.Context, id int64) (Term, error) {
 const listTerms = `-- name: ListTerms :many
 SELECT id, name, start_date, end_date
 FROM "term"
+ORDER BY "start_date" DESC,
+    "end_date" DESC
 `
 
 func (q *Queries) ListTerms(ctx context.Context) ([]Term, error) {

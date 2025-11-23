@@ -10,7 +10,7 @@ templ termGrid(terms []database.Term, currentTermID int) {
 		for i := 0; i < len(terms); i++ {
 			if terms[i].ID == int64(currentTermID) {
 				<h3>
-					Ultimo periodo selezionato
+					Periodo scolastico selezionato
 				</h3>
 				<div class="card-group mb-4 flex-col">
 					@termCard(terms[i])

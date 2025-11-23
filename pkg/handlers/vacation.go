@@ -30,6 +30,7 @@ func AdminVacationPost(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(r.FormValue(views.KeyTermID))
 	startDate, _ := time.Parse(time.DateOnly, r.FormValue(views.KeyTermStartDate))
 	endDate, _ := time.Parse(time.DateOnly, r.FormValue(views.KeyTermEndDate))
+	termID, _ := strconv.Atoi(r.FormValue(views.KeyVacationTermID))
 
 	s := session.FromContext(r.Context())
 
@@ -38,6 +39,7 @@ func AdminVacationPost(w http.ResponseWriter, r *http.Request) {
 			Name:      r.FormValue(views.KeyTermName),
 			StartDate: startDate,
 			EndDate:   endDate,
+			TermID:    int64(termID),
 		})
 	} else if r.Form.Has(views.FlagUpdate) {
 		s.Database.UpdateVacation(r.Context(), database.UpdateVacationParams{
@@ -45,6 +47,7 @@ func AdminVacationPost(w http.ResponseWriter, r *http.Request) {
 			Name:      r.FormValue(views.KeyTermName),
 			StartDate: startDate,
 			EndDate:   endDate,
+			TermID:    int64(termID),
 		})
 	} else if r.Form.Has(views.FlagDelete) {
 		s.Database.DeleteVacation(r.Context(), int64(id))

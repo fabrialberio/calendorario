@@ -1,6 +1,7 @@
 package views
 
 import "time"
+import "calendorario/pkg/database"
 
 templ formScaffold(title string, action string, hiddenID int, isNew bool, inputs []templ.Component) {
 	<!DOCTYPE html>
@@ -46,7 +47,7 @@ templ formInputText(label string, name string, value string) {
 	{{ id := name + "_input" }}
 	<div>
 		<label class="text-on-surface-dim" for={ id }>{ label }</label>
-		<input type="text" id={ id } name={ name } value={ value }/>
+		<input type="text" id={ id } name={ name } value={ value } required/>
 	</div>
 }
 
@@ -54,6 +55,21 @@ templ formInputDate(label string, name string, value time.Time) {
 	{{ id := name + "_input" }}
 	<div>
 		<label class="text-on-surface-dim" for={ id }>{ label }</label>
-		<input type="date" id={ id } name={ name } value={ value.Format(time.DateOnly) }/>
+		<input type="date" id={ id } name={ name } value={ value.Format(time.DateOnly) } required/>
+	</div>
+}
+
+templ formInputSelectTerm(name string, selectedTermID int, terms []database.Term) {
+	{{ id := name + "_select" }}
+	<div>
+		<label class="text-on-surface-dim" for={ id }>Periodo scolastico</label>
+		<select id={ id } name={ name } required>
+			for i := 0; i < len(terms); i++ {
+				{{ t := terms[i] }}
+				<option value={ t.ID } selected={ t.ID == int64(selectedTermID) }>
+					{ t.Name }
+				</option>
+			}
+		</select>
 	</div>
 }

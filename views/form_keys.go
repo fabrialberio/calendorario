@@ -13,6 +13,7 @@ const (
 	KeyVacationName      = "name"
 	KeyVacationStartDate = "start_date"
 	KeyVacationEndDate   = "end_date"
+	KeyVacationTermID    = "term_id"
 )
 
 const (

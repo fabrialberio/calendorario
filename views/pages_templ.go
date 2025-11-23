@@ -150,6 +150,8 @@ func VacationEditPage(vacation database.Vacation, isNew bool) templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		s := session.FromContext(ctx)
+		terms, _ := s.Database.ListTerms(ctx)
 		templ_7745c5c3_Err = formScaffold(
 			"Vacanza o festività",
 			DestAdminVacation,
@@ -159,6 +161,7 @@ func VacationEditPage(vacation database.Vacation, isNew bool) templ.Component {
 				formInputText("Nome della vacanza", KeyVacationName, vacation.Name),
 				formInputDate("Data di inizio", KeyVacationStartDate, vacation.StartDate),
 				formInputDate("Data di fine", KeyVacationEndDate, vacation.EndDate),
+				formInputSelectTerm(KeyVacationTermID, int(vacation.TermID), terms),
 			},
 		).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -191,7 +194,7 @@ func CalendarPage(year int, month time.Month) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		s := session.FromContext(ctx)
 		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
-		vacations, _ := s.Database.ListVacations(ctx)
+		vacations, _ := s.Database.ListVacationWithTermID(ctx, term.ID)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<!doctype html><html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

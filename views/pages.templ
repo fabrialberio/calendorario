@@ -49,6 +49,10 @@ templ TermEditPage(term database.Term, isNew bool) {
 }
 
 templ VacationEditPage(vacation database.Vacation, isNew bool) {
+	{{
+		s := session.FromContext(ctx)
+		terms, _ := s.Database.ListTerms(ctx)
+	}}
 	@formScaffold(
 		"Vacanza o festività",
 		DestAdminVacation,
@@ -58,6 +62,7 @@ templ VacationEditPage(vacation database.Vacation, isNew bool) {
 			formInputText("Nome della vacanza", KeyVacationName, vacation.Name),
 			formInputDate("Data di inizio", KeyVacationStartDate, vacation.StartDate),
 			formInputDate("Data di fine", KeyVacationEndDate, vacation.EndDate),
+			formInputSelectTerm(KeyVacationTermID, int(vacation.TermID), terms),
 		},
 	)
 }
@@ -66,7 +71,7 @@ templ CalendarPage(year int, month time.Month) {
 	{{
 		s := session.FromContext(ctx)
 		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
-		vacations, _ := s.Database.ListVacations(ctx)
+		vacations, _ := s.Database.ListVacationWithTermID(ctx, term.ID)
 	}}
 	<!DOCTYPE html>
 	<html>

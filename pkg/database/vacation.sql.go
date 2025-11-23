@@ -71,6 +71,41 @@ func (q *Queries) GetVacation(ctx context.Context, id int64) (Vacation, error) {
 	return i, err
 }
 
+const listVacationWithTermID = `-- name: ListVacationWithTermID :many
+SELECT id, name, start_date, end_date, term_id
+FROM "vacation"
+WHERE "term_id" = $1
+`
+
+func (q *Queries) ListVacationWithTermID(ctx context.Context, termID int64) ([]Vacation, error) {
+	rows, err := q.db.QueryContext(ctx, listVacationWithTermID, termID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Vacation
+	for rows.Next() {
+		var i Vacation
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.StartDate,
+			&i.EndDate,
+			&i.TermID,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listVacations = `-- name: ListVacations :many
 SELECT id, name, start_date, end_date, term_id
 FROM "vacation"

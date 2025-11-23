@@ -6,6 +6,10 @@ LIMIT 1;
 -- name: ListVacations :many
 SELECT *
 FROM "vacation";
+-- name: ListVacationWithTermID :many
+SELECT *
+FROM "vacation"
+WHERE "term_id" = $1;
 -- name: CreateVacation :one
 INSERT INTO "vacation" ("name", "start_date", "end_date", "term_id")
 VALUES ($1, $2, $3, $4)

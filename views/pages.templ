@@ -7,18 +7,24 @@ import (
 )
 
 templ TermsPage() {
+	{{
+		s := session.FromContext(ctx)
+		authUser, _ := s.User()
+
+		user, _ := s.Database.GetUser(ctx, authUser.ID)
+		terms, _ := s.Database.ListTerms(ctx)
+	}}
 	<!DOCTYPE html>
 	<html>
 		@head()
 		<body class="grid place-items-center">
+			<header class="absolute top-0 left-0 w-full p-4 flex flex-row">
+				<a class="clickable button mr-auto h-12 px-3" href={ DestLogout }>
+					<i class="fa-arrow-right-from-bracket fas "></i>
+					Esci
+				</a>
+			</header>
 			<main class="bg-surface max-w-4xl space-y-4 rounded-lg p-4 text-center">
-				{{
-					s := session.FromContext(ctx)
-					authUser, _ := s.User()
-
-					user, _ := s.Database.GetUser(ctx, authUser.ID)
-					terms, _ := s.Database.ListTerms(ctx)
-				}}
 				<h2>
 					Benvenuto, { user.Name }!
 				</h2>
@@ -43,11 +49,15 @@ templ TermEditPage(term database.Term, isNew bool) {
 }
 
 templ CalendarPage(year int, month time.Month) {
+	{{
+		s := session.FromContext(ctx)
+		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
+	}}
 	<!DOCTYPE html>
 	<html>
 		@head()
 		<body>
-			@sidebar(0)
+			@sidebar(0, term)
 			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
 				@calendar(year, month)
 				@vacationList(exampleVacations)
@@ -57,11 +67,15 @@ templ CalendarPage(year int, month time.Month) {
 }
 
 templ TimetableClassPage(date time.Time) {
+	{{
+		s := session.FromContext(ctx)
+		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
+	}}
 	<!DOCTYPE html>
 	<html>
 		@head()
 		<body>
-			@sidebar(1)
+			@sidebar(1, term)
 			<main class="ml-64 grid place-items-center space-y-8 p-4">
 				<div class="w-full max-w-4xl space-y-2">
 					<h2>

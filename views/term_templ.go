@@ -40,7 +40,7 @@ func termGrid(terms []database.Term, currentTermID int) templ.Component {
 		}
 		for i := 0; i < len(terms); i++ {
 			if terms[i].ID == int64(currentTermID) {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<h3>Ultimo periodo selezionato</h3><div class=\"card-group mb-4 flex-col\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<h3>Periodo scolastico selezionato</h3><div class=\"card-group mb-4 flex-col\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

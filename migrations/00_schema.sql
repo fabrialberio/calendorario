@@ -27,7 +27,8 @@ CREATE TABLE "vacation" (
     "id" BIGSERIAL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "start_date" DATE NOT NULL,
-    "end_date" DATE NOT NULL
+    "end_date" DATE NOT NULL,
+    "term_id" BIGINT NOT NULL REFERENCES "term"
 );
 CREATE TABLE "class" (
     "id" BIGSERIAL PRIMARY KEY,

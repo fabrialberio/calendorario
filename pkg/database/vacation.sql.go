@@ -11,25 +11,32 @@ import (
 )
 
 const createVacation = `-- name: CreateVacation :one
-INSERT INTO "vacation" ("name", "start_date", "end_date")
-VALUES ($1, $2, $3)
-RETURNING id, name, start_date, end_date
+INSERT INTO "vacation" ("name", "start_date", "end_date", "term_id")
+VALUES ($1, $2, $3, $4)
+RETURNING id, name, start_date, end_date, term_id
 `
 
 type CreateVacationParams struct {
 	Name      string
 	StartDate time.Time
 	EndDate   time.Time
+	TermID    int64
 }
 
 func (q *Queries) CreateVacation(ctx context.Context, arg CreateVacationParams) (Vacation, error) {
-	row := q.db.QueryRowContext(ctx, createVacation, arg.Name, arg.StartDate, arg.EndDate)
+	row := q.db.QueryRowContext(ctx, createVacation,
+		arg.Name,
+		arg.StartDate,
+		arg.EndDate,
+		arg.TermID,
+	)
 	var i Vacation
 	err := row.Scan(
 		&i.ID,
 		&i.Name,
 		&i.StartDate,
 		&i.EndDate,
+		&i.TermID,
 	)
 	return i, err
 }
@@ -45,7 +52,7 @@ func (q *Queries) DeleteVacation(ctx context.Context, id int64) error {
 }
 
 const getVacation = `-- name: GetVacation :one
-SELECT id, name, start_date, end_date
+SELECT id, name, start_date, end_date, term_id
 FROM "vacation"
 WHERE "id" = $1
 LIMIT 1
@@ -59,12 +66,13 @@ func (q *Queries) GetVacation(ctx context.Context, id int64) (Vacation, error) {
 		&i.Name,
 		&i.StartDate,
 		&i.EndDate,
+		&i.TermID,
 	)
 	return i, err
 }
 
 const listVacations = `-- name: ListVacations :many
-SELECT id, name, start_date, end_date
+SELECT id, name, start_date, end_date, term_id
 FROM "vacation"
 `
 
@@ -82,6 +90,7 @@ func (q *Queries) ListVacations(ctx context.Context) ([]Vacation, error) {
 			&i.Name,
 			&i.StartDate,
 			&i.EndDate,
+			&i.TermID,
 		); err != nil {
 			return nil, err
 		}
@@ -100,9 +109,10 @@ const updateVacation = `-- name: UpdateVacation :one
 UPDATE "vacation"
 SET "name" = $2,
     "start_date" = $3,
-    "end_date" = $4
+    "end_date" = $4,
+    "term_id" = $5
 WHERE "id" = $1
-RETURNING id, name, start_date, end_date
+RETURNING id, name, start_date, end_date, term_id
 `
 
 type UpdateVacationParams struct {
@@ -110,6 +120,7 @@ type UpdateVacationParams struct {
 	Name      string
 	StartDate time.Time
 	EndDate   time.Time
+	TermID    int64
 }
 
 func (q *Queries) UpdateVacation(ctx context.Context, arg UpdateVacationParams) (Vacation, error) {
@@ -118,6 +129,7 @@ func (q *Queries) UpdateVacation(ctx context.Context, arg UpdateVacationParams) 
 		arg.Name,
 		arg.StartDate,
 		arg.EndDate,
+		arg.TermID,
 	)
 	var i Vacation
 	err := row.Scan(
@@ -125,6 +137,7 @@ func (q *Queries) UpdateVacation(ctx context.Context, arg UpdateVacationParams) 
 		&i.Name,
 		&i.StartDate,
 		&i.EndDate,
+		&i.TermID,
 	)
 	return i, err
 }

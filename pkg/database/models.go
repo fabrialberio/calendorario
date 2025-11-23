@@ -117,4 +117,5 @@ type Vacation struct {
 	Name      string
 	StartDate time.Time
 	EndDate   time.Time
+	TermID    int64
 }

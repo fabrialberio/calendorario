@@ -7,14 +7,15 @@ LIMIT 1;
 SELECT *
 FROM "vacation";
 -- name: CreateVacation :one
-INSERT INTO "vacation" ("name", "start_date", "end_date")
-VALUES ($1, $2, $3)
+INSERT INTO "vacation" ("name", "start_date", "end_date", "term_id")
+VALUES ($1, $2, $3, $4)
 RETURNING *;
 -- name: UpdateVacation :one
 UPDATE "vacation"
 SET "name" = $2,
     "start_date" = $3,
-    "end_date" = $4
+    "end_date" = $4,
+    "term_id" = $5
 WHERE "id" = $1
 RETURNING *;
 -- name: DeleteVacation :exec

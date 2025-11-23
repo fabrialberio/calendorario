@@ -2,6 +2,7 @@ package views
 
 const (
 	destTerm           = "/term"
+	destVacation       = "/vacation"
 	destCalendar       = "/calendar"
 	destTimetableClass = "/timetable_class"
 
@@ -17,6 +18,7 @@ const (
 	DestAdmin               = destAdminBase + "/"
 	DestAdminLoadTerm       = destAdminBase + "/load_term"
 	DestAdminTerm           = destAdminBase + destTerm
+	DestAdminVacation       = destAdminBase + destVacation
 	DestAdminCalendar       = destAdminBase + destCalendar
 	DestAdminTimetableClass = destAdminBase + destTimetableClass
 

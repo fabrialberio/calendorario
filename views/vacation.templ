@@ -2,35 +2,8 @@ package views
 
 import (
 	"calendorario/pkg/database"
-	"time"
+	"strconv"
 )
-
-var exampleVacations = []database.Vacation{
-	database.Vacation{
-		Name:      "Vacanze invernali",
-		StartDate: time.Date(2025, 12, 23, 0, 0, 0, 0, time.Local),
-		EndDate:   time.Date(2026, 1, 6, 0, 0, 0, 0, time.Local),
-	},
-	database.Vacation{
-		Name:      "Pasqua",
-		StartDate: time.Date(2026, 4, 5, 0, 0, 0, 0, time.Local),
-		EndDate:   time.Date(2026, 4, 6, 0, 0, 0, 0, time.Local),
-	},
-	database.Vacation{
-		Name:      "Liberazione",
-		StartDate: time.Date(2026, 4, 25, 0, 0, 0, 0, time.Local),
-		EndDate:   time.Date(2026, 4, 25, 0, 0, 0, 0, time.Local),
-	},
-}
-
-templ vacationCard(vacation database.Vacation) {
-	<div class="bg-surface-highest clickable p-4">
-		{ vacation.Name }
-		<p class="text-on-surface-dim">
-			{ vacation.StartDate.Day() } { nameToNick(monthNames[vacation.StartDate.Month()]) } - { vacation.EndDate.Day() } { nameToNick(monthNames[vacation.EndDate.Month()]) }
-		</p>
-	</div>
-}
 
 templ vacationList(vacations []database.Vacation) {
 	<div class="flex h-full basis-80 flex-col gap-2">
@@ -38,13 +11,25 @@ templ vacationList(vacations []database.Vacation) {
 			<h4>
 				Vacanze e festività
 			</h4>
-			<button class="button bg-primary text-on-primary ml-auto px-2">
+			<a
+				class="button bg-primary clickable text-on-primary ml-auto px-2"
+				href={ DestAdminVacation + "/new" }
+			>
 				<i class="fas fa-add"></i>
-			</button>
+			</a>
 		</div>
 		<div class="card-group flex-col">
 			for i := 0; i < len(vacations); i++ {
-				@vacationCard(vacations[i])
+				{{ v := vacations[i] }}
+				<a
+					class="bg-surface-highest clickable p-4"
+					href={ DestAdminVacation + "/" + strconv.Itoa(int(v.ID)) }
+				>
+					{ v.Name }
+					<p class="text-on-surface-dim">
+						{ v.StartDate.Day() } { nameToNick(monthNames[v.StartDate.Month()]) } - { v.EndDate.Day() } { nameToNick(monthNames[v.EndDate.Month()]) }
+					</p>
+				</a>
 			}
 		</div>
 	</div>

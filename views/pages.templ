@@ -48,10 +48,25 @@ templ TermEditPage(term database.Term, isNew bool) {
 	)
 }
 
+templ VacationEditPage(vacation database.Vacation, isNew bool) {
+	@formScaffold(
+		"Vacanza o festività",
+		DestAdminVacation,
+		int(vacation.ID),
+		isNew,
+		[]templ.Component{
+			formInputText("Nome della vacanza", KeyVacationName, vacation.Name),
+			formInputDate("Data di inizio", KeyVacationStartDate, vacation.StartDate),
+			formInputDate("Data di fine", KeyVacationEndDate, vacation.EndDate),
+		},
+	)
+}
+
 templ CalendarPage(year int, month time.Month) {
 	{{
 		s := session.FromContext(ctx)
 		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
+		vacations, _ := s.Database.ListVacations(ctx)
 	}}
 	<!DOCTYPE html>
 	<html>
@@ -60,7 +75,7 @@ templ CalendarPage(year int, month time.Month) {
 			@sidebar(0, term)
 			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
 				@calendar(year, month)
-				@vacationList(exampleVacations)
+				@vacationList(vacations)
 			</main>
 		</body>
 	</html>

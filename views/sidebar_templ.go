@@ -43,7 +43,7 @@ func sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside class=\"fixed left-0 top-0 z-40 h-full w-64 translate-x-0 transition-transform\"><nav class=\"h-full space-y-4 p-4\"><button class=\"clickable bg-surface flex gap-2 h-16 w-full flex-row items-center rounded-md px-4 text-start\"><div class=\"w-full truncate\"><p class=\"text-on-surface-dim text-sm\">Periodo scolastico</p><p class=\"truncate font-bold\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside class=\"fixed left-0 top-0 z-40 h-full w-64 translate-x-0 transition-transform\"><nav class=\"h-full space-y-4 p-4\"><button class=\"clickable bg-surface flex h-16 w-full flex-row items-center gap-2 rounded-md px-4 text-start\"><div class=\"w-full truncate\"><p class=\"text-on-surface-dim text-sm\">Periodo scolastico</p><p class=\"truncate font-bold\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -149,7 +149,7 @@ func sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</ul></nav></aside><div class=\"bg-surface fixed left-64 top-0 -z-50 h-full w-full rounded-tl-lg\"></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</ul></nav></aside><div class=\"bg-surface fixed left-64 top-0 -z-50 h-full w-full rounded-tl-lg shadow-sm\"></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

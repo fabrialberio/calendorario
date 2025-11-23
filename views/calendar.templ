@@ -52,7 +52,7 @@ templ calendar(year int, month time.Month) {
 				Oggi
 			</button>
 		</div>
-		<div class="bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg">
+		<div class="bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
 			{{
 				day := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 

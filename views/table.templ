@@ -28,7 +28,7 @@ templ table(headings []string, data [][]string, orderByCol int, orderDesc bool) 
 			for i := 0; i < len(data); i++ {
 				<tr class="clickable">
 					for j := 0; j < len(data[i]); j++ {
-						<td class="border-outline not-last:border-r border-t py-1 px-3">
+						<td class="border-outline not-last:border-r border-t px-3 py-1">
 							{ data[i][j] }
 						</td>
 					}

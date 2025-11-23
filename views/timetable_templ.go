@@ -92,7 +92,7 @@ func timetable(date time.Time) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</button> <button class=\"bg-surface-highest button\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"button bg-surface-highest\" disabled><i class=\"fas fa-calendar-day\"></i> Oggi</button></div><div class=\"divide-outline min-h-120 bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden rounded-lg\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</button> <button class=\"bg-surface-highest button\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"button bg-surface-highest\" disabled><i class=\"fas fa-calendar-day\"></i> Oggi</button></div><div class=\"divide-outline min-h-120 bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden rounded-lg shadow-sm\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

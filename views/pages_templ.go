@@ -48,7 +48,7 @@ func TermsPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"grid place-items-center\"><header class=\"absolute top-0 left-0 w-full p-4 flex flex-row\"><a class=\"clickable button mr-auto h-12 px-3\" href=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"grid place-items-center\"><header class=\"absolute left-0 top-0 flex w-full flex-row p-4\"><a class=\"clickable button mr-auto h-12 px-3\" href=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -61,7 +61,7 @@ func TermsPage() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><i class=\"fa-arrow-right-from-bracket fas \"></i> Esci</a></header><main class=\"bg-surface max-w-4xl space-y-4 rounded-lg p-4 text-center\"><h2>Benvenuto, ")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><i class=\"fa-arrow-right-from-bracket fas\"></i> Esci</a></header><main class=\"bg-surface max-w-4xl space-y-4 rounded-lg p-4 text-center shadow-sm\"><h2>Benvenuto, ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

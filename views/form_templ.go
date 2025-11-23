@@ -39,7 +39,7 @@ func formScaffold(title string, action string, hiddenID int, isNew bool, inputs 
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"grid place-items-center\"><form class=\"bg-surface space-y-4 rounded-md p-4\" method=\"post\" action=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<body class=\"grid place-items-center\"><form class=\"bg-surface space-y-4 rounded-lg p-4 shadow-sm\" method=\"post\" action=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

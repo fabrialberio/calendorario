@@ -88,7 +88,7 @@ func calendar(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</button> <button class=\"button bg-surface-highest px-2\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"button bg-surface-highest\"><i class=\"fas fa-calendar-day\"></i> Oggi</button></div><div class=\"bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</button> <button class=\"button bg-surface-highest px-2\"><i class=\"fas fa-chevron-right\"></i></button></div><button class=\"button bg-surface-highest\"><i class=\"fas fa-calendar-day\"></i> Oggi</button></div><div class=\"bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

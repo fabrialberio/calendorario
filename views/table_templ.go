@@ -97,7 +97,7 @@ func table(headings []string, data [][]string, orderByCol int, orderDesc bool) t
 				return templ_7745c5c3_Err
 			}
 			for j := 0; j < len(data[i]); j++ {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<td class=\"border-outline not-last:border-r border-t py-1 px-3\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<td class=\"border-outline not-last:border-r border-t px-3 py-1\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

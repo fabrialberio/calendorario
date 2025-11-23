@@ -1,37 +1,47 @@
 package views
 
-import (
-	"strings"
-	"time"
+import "time"
+
+var (
+	weekdayNames = []string{
+		"Lunedì",
+		"Martedì",
+		"Mercoledì",
+		"Giovedì",
+		"Venerdì",
+		"Sabato",
+		"Domenica",
+	}
+	weekdayNicks = []string{"lun", "mar", "mer", "gio", "ven", "sab", "dom"}
+	monthNames   = map[time.Month]string{
+		time.January:   "Gennaio",
+		time.February:  "Febbraio",
+		time.March:     "Marzo",
+		time.April:     "Aprile",
+		time.May:       "Maggio",
+		time.June:      "Giugno",
+		time.July:      "Luglio",
+		time.August:    "Agosto",
+		time.September: "Settembre",
+		time.October:   "Ottobre",
+		time.November:  "Novembre",
+		time.December:  "Dicembre",
+	}
+	monthNicks = map[time.Month]string{
+		time.January:   "gen",
+		time.February:  "feb",
+		time.March:     "mar",
+		time.April:     "apr",
+		time.May:       "mag",
+		time.June:      "giu",
+		time.July:      "lug",
+		time.August:    "ago",
+		time.September: "set",
+		time.October:   "ott",
+		time.November:  "nov",
+		time.December:  "dic",
+	}
 )
-
-var weekdayNames = []string{
-	"Lunedì",
-	"Martedì",
-	"Mercoledì",
-	"Giovedì",
-	"Venerdì",
-	"Sabato",
-	"Domenica",
-}
-var monthNames = map[time.Month]string{
-	time.January:   "Gennaio",
-	time.February:  "Febbraio",
-	time.March:     "Marzo",
-	time.April:     "Aprile",
-	time.May:       "Maggio",
-	time.June:      "Giugno",
-	time.July:      "Luglio",
-	time.August:    "Agosto",
-	time.September: "Settembre",
-	time.October:   "Ottobre",
-	time.November:  "Novembre",
-	time.December:  "Dicembre",
-}
-
-func nameToNick(name string) string {
-	return strings.ToLower(name[0:3])
-}
 
 templ calendar(year int, month time.Month) {
 	<div class="flex w-full flex-col gap-2">
@@ -77,13 +87,13 @@ templ calendar(year int, month time.Month) {
 						>
 							if i == 0 {
 								<p class="text-on-surface-dim">
-									{ nameToNick(weekdayNames[j]) }
+									{ weekdayNicks[j] }
 								</p>
 							}
 							<p class="text-sm">
 								{ day.Day() }
 								if day.Month() != month {
-									{ nameToNick(monthNames[day.Month()]) }
+									{ monthNicks[day.Month()] }
 								}
 							</p>
 						</div>

@@ -37,7 +37,7 @@ templ timetable(date time.Time) {
 			for i := 0; i < 7; i++ {
 				<div class="text-center">
 					<p class="text-on-surface-dim">
-						{ nameToNick(weekdayNames[i]) }
+						{ weekdayNicks[i] }
 					</p>
 					<p class="text-sm">
 						{ monday.AddDate(0, 0, i).Day() }

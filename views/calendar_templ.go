@@ -8,38 +8,48 @@ package views
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	"strings"
-	"time"
+import "time"
+
+var (
+	weekdayNames = []string{
+		"Lunedì",
+		"Martedì",
+		"Mercoledì",
+		"Giovedì",
+		"Venerdì",
+		"Sabato",
+		"Domenica",
+	}
+	weekdayNicks = []string{"lun", "mar", "mer", "gio", "ven", "sab", "dom"}
+	monthNames   = map[time.Month]string{
+		time.January:   "Gennaio",
+		time.February:  "Febbraio",
+		time.March:     "Marzo",
+		time.April:     "Aprile",
+		time.May:       "Maggio",
+		time.June:      "Giugno",
+		time.July:      "Luglio",
+		time.August:    "Agosto",
+		time.September: "Settembre",
+		time.October:   "Ottobre",
+		time.November:  "Novembre",
+		time.December:  "Dicembre",
+	}
+	monthNicks = map[time.Month]string{
+		time.January:   "gen",
+		time.February:  "feb",
+		time.March:     "mar",
+		time.April:     "apr",
+		time.May:       "mag",
+		time.June:      "giu",
+		time.July:      "lug",
+		time.August:    "ago",
+		time.September: "set",
+		time.October:   "ott",
+		time.November:  "nov",
+		time.December:  "dic",
+	}
 )
-
-var weekdayNames = []string{
-	"Lunedì",
-	"Martedì",
-	"Mercoledì",
-	"Giovedì",
-	"Venerdì",
-	"Sabato",
-	"Domenica",
-}
-var monthNames = map[time.Month]string{
-	time.January:   "Gennaio",
-	time.February:  "Febbraio",
-	time.March:     "Marzo",
-	time.April:     "Aprile",
-	time.May:       "Maggio",
-	time.June:      "Giugno",
-	time.July:      "Luglio",
-	time.August:    "Agosto",
-	time.September: "Settembre",
-	time.October:   "Ottobre",
-	time.November:  "Novembre",
-	time.December:  "Dicembre",
-}
-
-func nameToNick(name string) string {
-	return strings.ToLower(name[0:3])
-}
 
 func calendar(year int, month time.Month) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -69,7 +79,7 @@ func calendar(year int, month time.Month) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(monthNames[month])
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 44, Col: 24}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 54, Col: 24}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -82,7 +92,7 @@ func calendar(year int, month time.Month) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(year)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 44, Col: 33}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 54, Col: 33}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -137,9 +147,9 @@ func calendar(year int, month time.Month) templ.Component {
 						return templ_7745c5c3_Err
 					}
 					var templ_7745c5c3_Var6 string
-					templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(nameToNick(weekdayNames[j]))
+					templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(weekdayNicks[j])
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 80, Col: 38}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 90, Col: 26}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 					if templ_7745c5c3_Err != nil {
@@ -157,7 +167,7 @@ func calendar(year int, month time.Month) templ.Component {
 				var templ_7745c5c3_Var7 string
 				templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(day.Day())
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 84, Col: 19}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 94, Col: 19}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 				if templ_7745c5c3_Err != nil {
@@ -169,9 +179,9 @@ func calendar(year int, month time.Month) templ.Component {
 				}
 				if day.Month() != month {
 					var templ_7745c5c3_Var8 string
-					templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(nameToNick(monthNames[day.Month()]))
+					templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(monthNicks[day.Month()])
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 86, Col: 46}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 96, Col: 34}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 					if templ_7745c5c3_Err != nil {

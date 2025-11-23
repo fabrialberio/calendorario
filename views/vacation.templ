@@ -27,7 +27,7 @@ templ vacationList(vacations []database.Vacation) {
 				>
 					{ v.Name }
 					<p class="text-on-surface-dim">
-						{ v.StartDate.Day() } { nameToNick(monthNames[v.StartDate.Month()]) } - { v.EndDate.Day() } { nameToNick(monthNames[v.EndDate.Month()]) }
+						{ v.StartDate.Day() } { monthNicks[v.StartDate.Month()] } - { v.EndDate.Day() } { monthNicks[v.EndDate.Month()] }
 					</p>
 				</a>
 			}

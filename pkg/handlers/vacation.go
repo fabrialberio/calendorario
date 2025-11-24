@@ -10,16 +10,22 @@ import (
 )
 
 func AdminVacationGet(w http.ResponseWriter, r *http.Request) {
+	s := session.FromContext(r.Context())
+	defaultVacation := database.Vacation{
+		StartDate: time.Now(),
+		EndDate:   time.Now().AddDate(0, 0, 1),
+		TermID:    int64(s.TermID),
+	}
+
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
-		views.VacationEditPage(database.Vacation{}, true).Render(r.Context(), w)
+		views.VacationEditPage(defaultVacation, true).Render(r.Context(), w)
 		return
 	}
 
-	s := session.FromContext(r.Context())
 	vacation, err := s.Database.GetVacation(r.Context(), int64(id))
 	if err != nil {
-		views.VacationEditPage(database.Vacation{}, true).Render(r.Context(), w)
+		views.VacationEditPage(defaultVacation, true).Render(r.Context(), w)
 		return
 	}
 

@@ -194,7 +194,7 @@ func CalendarPage(year int, month time.Month) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		s := session.FromContext(ctx)
 		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
-		vacations, _ := s.Database.ListVacationWithTermID(ctx, term.ID)
+		vacations, _ := s.Database.ListVacationsWithTermID(ctx, term.ID)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<!doctype html><html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

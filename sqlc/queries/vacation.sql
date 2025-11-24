@@ -6,7 +6,7 @@ LIMIT 1;
 -- name: ListVacations :many
 SELECT *
 FROM "vacation";
--- name: ListVacationWithTermID :many
+-- name: ListVacationsWithTermID :many
 SELECT *
 FROM "vacation"
 WHERE "term_id" = $1;

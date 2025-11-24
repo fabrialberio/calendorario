@@ -71,14 +71,13 @@ func (q *Queries) GetVacation(ctx context.Context, id int64) (Vacation, error) {
 	return i, err
 }
 
-const listVacationWithTermID = `-- name: ListVacationWithTermID :many
+const listVacations = `-- name: ListVacations :many
 SELECT id, name, start_date, end_date, term_id
 FROM "vacation"
-WHERE "term_id" = $1
 `
 
-func (q *Queries) ListVacationWithTermID(ctx context.Context, termID int64) ([]Vacation, error) {
-	rows, err := q.db.QueryContext(ctx, listVacationWithTermID, termID)
+func (q *Queries) ListVacations(ctx context.Context) ([]Vacation, error) {
+	rows, err := q.db.QueryContext(ctx, listVacations)
 	if err != nil {
 		return nil, err
 	}
@@ -106,13 +105,14 @@ func (q *Queries) ListVacationWithTermID(ctx context.Context, termID int64) ([]V
 	return items, nil
 }
 
-const listVacations = `-- name: ListVacations :many
+const listVacationsWithTermID = `-- name: ListVacationsWithTermID :many
 SELECT id, name, start_date, end_date, term_id
 FROM "vacation"
+WHERE "term_id" = $1
 `
 
-func (q *Queries) ListVacations(ctx context.Context) ([]Vacation, error) {
-	rows, err := q.db.QueryContext(ctx, listVacations)
+func (q *Queries) ListVacationsWithTermID(ctx context.Context, termID int64) ([]Vacation, error) {
+	rows, err := q.db.QueryContext(ctx, listVacationsWithTermID, termID)
 	if err != nil {
 		return nil, err
 	}

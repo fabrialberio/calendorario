@@ -66,7 +66,7 @@ templ formInputSelectTerm(name string, selectedTermID int, terms []database.Term
 		<select id={ id } name={ name } required>
 			for i := 0; i < len(terms); i++ {
 				{{ t := terms[i] }}
-				<option value={ t.ID } selected={ t.ID == int64(selectedTermID) }>
+				<option value={ t.ID } selected?={ t.ID == int64(selectedTermID) }>
 					{ t.Name }
 				</option>
 			}

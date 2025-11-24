@@ -4,6 +4,8 @@ const (
 	KeyUsername = "username"
 	KeyPassword = "password"
 
+	KeyCalendarDate = "date"
+
 	KeyTermID        = "id"
 	KeyTermName      = "name"
 	KeyTermStartDate = "start_date"

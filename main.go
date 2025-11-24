@@ -95,6 +95,8 @@ func setupRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET "+views.DestLogout, handlers.LogoutGet)
 	mux.Handle("GET /public/", http.FileServerFS(publicFS))
 
+	mux.HandleFunc("GET "+views.DestMonth, handlers.CalendarGet)
+
 	adminMux := http.NewServeMux()
 	adminMux.Handle("GET "+views.DestAdmin, templ.Handler(views.TermsPage()))
 

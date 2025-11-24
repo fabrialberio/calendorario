@@ -43,28 +43,60 @@ var (
 	}
 )
 
-templ calendar(year int, month time.Month) {
-	<div class="flex w-full flex-col gap-2">
-		<div class="flex flex-row gap-4">
+func fetchMonthURL(date time.Time) string {
+	return DestMonth + "?" + KeyCalendarDate + "=" + date.Format(time.DateOnly)
+}
+
+templ calendarView(year int, month time.Month) {
+	{{ id := "calendar" }}
+	<div
+		id={ id }
+		class="flex w-full h-full flex-col gap-2"
+		x-data={ "{ initial: document.getElementById('" + id + "').innerHTML, month: null }" }
+		x-html={ "month == null ? initial : month.text()" }
+	>
+		@Calendar(year, month)
+	</div>
+}
+
+templ Calendar(year int, month time.Month) {
+	{{
+		id := "calendar"
+		date := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+	}}
+	<div
+		id={ id }
+		class="flex w-full h-full flex-col gap-2"
+	>
+		<div class="flex flex-row items-center gap-4">
 			<div class="card-group">
-				<button class="button bg-surface-highest px-2">
+				<button
+					class="button bg-surface-highest px-2"
+					x-on:click={ "month = await fetch('" + fetchMonthURL(date.AddDate(0, -1, 0)) + "')" }
+				>
 					<i class="fas fa-chevron-left"></i>
 				</button>
-				<button class="button bg-surface-highest">
-					{ monthNames[month] } { year }
-				</button>
-				<button class="button bg-surface-highest px-2">
+				<button
+					class="button bg-surface-highest px-2"
+					x-on:click={ "month = await fetch('" + fetchMonthURL(date.AddDate(0, 1, 0)) + "')" }
+				>
 					<i class="fas fa-chevron-right"></i>
 				</button>
 			</div>
-			<button class="button bg-surface-highest">
+			<h4>
+				{ monthNames[month] } { year }
+			</h4>
+			<button
+				class="button bg-surface-highest"
+				x-on:click={ "month = await fetch('" + fetchMonthURL(time.Now()) + "')" }
+			>
 				<i class="fas fa-calendar-day"></i>
 				Oggi
 			</button>
 		</div>
-		<div class="bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
+		<div class="bg-surface-highest divide-outline h-full flex flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
 			{{
-				day := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+				day := date
 
 				for day.Weekday() != time.Monday {
 					day = day.AddDate(0, 0, -1)

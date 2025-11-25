@@ -5,11 +5,15 @@ WHERE "id" = $1
 LIMIT 1;
 -- name: ListVacations :many
 SELECT *
-FROM "vacation";
+FROM "vacation"
+ORDER BY "start_date" ASC,
+    "end_date" ASC;
 -- name: ListVacationsWithTermID :many
 SELECT *
 FROM "vacation"
-WHERE "term_id" = $1;
+WHERE "term_id" = $1
+ORDER BY "start_date" ASC,
+    "end_date" ASC;
 -- name: CreateVacation :one
 INSERT INTO "vacation" ("name", "start_date", "end_date", "term_id")
 VALUES ($1, $2, $3, $4)

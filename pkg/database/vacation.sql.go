@@ -74,6 +74,8 @@ func (q *Queries) GetVacation(ctx context.Context, id int64) (Vacation, error) {
 const listVacations = `-- name: ListVacations :many
 SELECT id, name, start_date, end_date, term_id
 FROM "vacation"
+ORDER BY "start_date" ASC,
+    "end_date" ASC
 `
 
 func (q *Queries) ListVacations(ctx context.Context) ([]Vacation, error) {
@@ -109,6 +111,8 @@ const listVacationsWithTermID = `-- name: ListVacationsWithTermID :many
 SELECT id, name, start_date, end_date, term_id
 FROM "vacation"
 WHERE "term_id" = $1
+ORDER BY "start_date" ASC,
+    "end_date" ASC
 `
 
 func (q *Queries) ListVacationsWithTermID(ctx context.Context, termID int64) ([]Vacation, error) {

@@ -79,7 +79,7 @@ templ CalendarPage(year int, month time.Month) {
 		<body>
 			@sidebar(0, term)
 			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
-				@calendarView(year, month)
+				@calendarView(year, month, term, vacations)
 				@vacationList(vacations)
 			</main>
 		</body>

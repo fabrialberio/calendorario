@@ -1,6 +1,10 @@
 package views
 
-import "time"
+import (
+	"calendorario/pkg/database"
+	"strconv"
+	"time"
+)
 
 var (
 	weekdayNames = []string{
@@ -47,26 +51,36 @@ func fetchMonthURL(date time.Time) string {
 	return DestMonth + "?" + KeyCalendarDate + "=" + date.Format(time.DateOnly)
 }
 
-templ calendarView(year int, month time.Month) {
+templ calendarView(
+	year int,
+	month time.Month,
+	term database.Term,
+	vacations []database.Vacation,
+) {
 	{{ id := "calendar" }}
 	<div
 		id={ id }
-		class="flex w-full h-full flex-col gap-2"
+		class="flex h-full w-full flex-col gap-2"
 		x-data={ "{ initial: document.getElementById('" + id + "').innerHTML, month: null }" }
 		x-html={ "month == null ? initial : month.text()" }
 	>
-		@Calendar(year, month)
+		@Calendar(year, month, term, vacations)
 	</div>
 }
 
-templ Calendar(year int, month time.Month) {
+templ Calendar(
+	year int,
+	month time.Month,
+	term database.Term,
+	vacations []database.Vacation,
+) {
 	{{
 		id := "calendar"
 		date := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 	}}
 	<div
 		id={ id }
-		class="flex w-full h-full flex-col gap-2"
+		class="flex h-full w-full flex-col gap-2"
 	>
 		<div class="flex flex-row items-center gap-4">
 			<div class="card-group">
@@ -83,7 +97,7 @@ templ Calendar(year int, month time.Month) {
 					<i class="fas fa-chevron-right"></i>
 				</button>
 			</div>
-			<h4>
+			<h4 class="min-w-32">
 				{ monthNames[month] } { year }
 			</h4>
 			<button
@@ -94,7 +108,7 @@ templ Calendar(year int, month time.Month) {
 				Oggi
 			</button>
 		</div>
-		<div class="bg-surface-highest divide-outline h-full flex flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
+		<div class="bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
 			{{
 				day := date
 
@@ -109,30 +123,80 @@ templ Calendar(year int, month time.Month) {
 						break
 					}
 				}}
-				<div class="divide-outline flex flex-auto flex-row divide-x">
-					for j := 0; j < 7; j++ {
-						<div
-							class={
-								templ.KV("bg-surface-high", day.Month() != month),
-								"text-center w-full clickable",
-							}
-						>
-							if i == 0 {
-								<p class="text-on-surface-dim">
-									{ weekdayNicks[j] }
-								</p>
-							}
-							<p class="text-sm">
-								{ day.Day() }
-								if day.Month() != month {
-									{ monthNicks[day.Month()] }
-								}
-							</p>
-						</div>
-						{{ day = day.AddDate(0, 0, 1) }}
-					}
-				</div>
+				@calendarRow(day, i == 0, vacations)
+				{{ day = day.AddDate(0, 0, 7) }}
 			}
 		</div>
 	</div>
+}
+
+templ calendarRow(monday time.Time, isFirstRow bool, vacations []database.Vacation) {
+	{{
+		day := monday
+		month := monday.Month()
+	}}
+	<div class="pointer-events-none relative flex flex-auto flex-row">
+		<div class="absolute bottom-0 top-14 z-20 grid w-full grid-cols-7">
+			for j := 0; j < len(vacations); j++ {
+				{{
+					v := vacations[j]
+					sunday := monday.AddDate(0, 0, 7)
+				}}
+				if v.EndDate.After(monday) && v.StartDate.Before(sunday) {
+					{{
+						startCol := 0
+						endCol := 7
+
+						if v.StartDate.After(monday) && v.StartDate.Before(sunday) {
+							startCol = int(v.StartDate.Sub(monday).Hours() / 24)
+						}
+
+						if v.EndDate.After(monday) && v.EndDate.Before(sunday) {
+							endCol = int(v.EndDate.Sub(monday).Hours() / 24)
+						}
+					}}
+					<div
+						class="h-full overflow-hidden p-2 pt-0"
+						style={
+							templ.KV("grid-column-start", strconv.Itoa(startCol+1)),
+							templ.KV("grid-column-end", strconv.Itoa(endCol+1)),
+						}
+					>
+						@calendarEvent(v.Name, DestAdminVacation+"/"+strconv.Itoa(int(v.ID)))
+					</div>
+				}
+			}
+		</div>
+		<div class="clickable absolute left-0 top-0 z-10 h-full w-full"></div>
+		for j := 0; j < 7; j++ {
+			<div
+				class={
+					templ.KV("bg-surface-high", day.Month() != month),
+					"text-center w-full relative p-1 not-last-of-type:border-r border-outline",
+				}
+			>
+				<p class="text-sm">
+					if isFirstRow {
+						<p class="text-on-surface-dim max-h-16 w-full text-center">
+							{ weekdayNicks[j] }
+						</p>
+					}
+					{ day.Day() }
+					if day.Month() != month {
+						{ monthNicks[day.Month()] }
+					}
+				</p>
+			</div>
+			{{ day = day.AddDate(0, 0, 1) }}
+		}
+	</div>
+}
+
+templ calendarEvent(title string, destination string) {
+	<a
+		href={ destination }
+		class="bg-error clickable block h-full truncate rounded-sm p-1"
+	>
+		{ title }
+	</a>
 }

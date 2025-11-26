@@ -112,6 +112,7 @@
         }
     }
 
+    /* Needed to round bottom event corners in calendar. */
     .last-child-rounded-bl {
         &:last-child>* {
             overflow: hidden;

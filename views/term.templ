@@ -12,7 +12,7 @@ templ termGrid(terms []database.Term, currentTermID int) {
 				<h3>
 					Periodo scolastico selezionato
 				</h3>
-				<div class="card-group mb-4 flex-col">
+				<div class="card-group-col mb-4">
 					@termCard(terms[i])
 				</div>
 			}
@@ -20,7 +20,7 @@ templ termGrid(terms []database.Term, currentTermID int) {
 		<h3>
 			Tutti i periodi scolastici
 		</h3>
-		<div class="card-group flex-col">
+		<div class="card-group-col">
 			for i := 0; i < len(terms); i++ {
 				if terms[i].ID != int64(currentTermID) {
 					@termCard(terms[i])
@@ -32,7 +32,7 @@ templ termGrid(terms []database.Term, currentTermID int) {
 }
 
 templ termCard(term database.Term) {
-	<div class="relative">
+	<div class="relative overflow-hidden">
 		<a
 			class="bg-surface-highest clickable flex h-32 flex-row items-center pr-4"
 			href={ DestAdminLoadTerm + "/" + strconv.Itoa(int(term.ID)) }

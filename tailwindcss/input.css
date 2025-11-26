@@ -96,11 +96,19 @@
         }
     }
 
-    .card-group {
-        @apply flex gap-1 overflow-hidden rounded-md;
+    .card-group-row {
+        @apply flex flex-row gap-1;
 
         &>* {
-            @apply rounded-sm;
+            @apply not-first:rounded-l-sm not-last:rounded-r-sm first:rounded-l-md last:rounded-r-md;
+        }
+    }
+
+    .card-group-col {
+        @apply flex flex-col gap-1;
+
+        &>* {
+            @apply not-first:rounded-t-sm not-last:rounded-b-sm first:rounded-t-md last:rounded-b-md;
         }
     }
 

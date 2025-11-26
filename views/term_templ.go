@@ -40,7 +40,7 @@ func termGrid(terms []database.Term, currentTermID int) templ.Component {
 		}
 		for i := 0; i < len(terms); i++ {
 			if terms[i].ID == int64(currentTermID) {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<h3>Periodo scolastico selezionato</h3><div class=\"card-group mb-4 flex-col\">")
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<h3>Periodo scolastico selezionato</h3><div class=\"card-group-col mb-4\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -54,7 +54,7 @@ func termGrid(terms []database.Term, currentTermID int) templ.Component {
 				}
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<h3>Tutti i periodi scolastici</h3><div class=\"card-group flex-col\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<h3>Tutti i periodi scolastici</h3><div class=\"card-group-col\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -103,7 +103,7 @@ func termCard(term database.Term) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div class=\"relative\"><a class=\"bg-surface-highest clickable flex h-32 flex-row items-center pr-4\" href=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div class=\"relative overflow-hidden\"><a class=\"bg-surface-highest clickable flex h-32 flex-row items-center pr-4\" href=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

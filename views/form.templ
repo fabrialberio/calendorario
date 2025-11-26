@@ -59,6 +59,23 @@ templ formInputDate(label string, name string, value time.Time) {
 	</div>
 }
 
+templ formInputTwoDates(
+	label string,
+	firstName string,
+	firstValue time.Time,
+	secondName string,
+	secondValue time.Time,
+) {
+	{{ firstId := firstName + "_input" }}
+	<div>
+		<label class="text-on-surface-dim" for={ firstId }>{ label }</label>
+		<div class="flex flex-row gap-2">
+			<input type="date" id={ firstId } name={ firstName } value={ firstValue.Format(time.DateOnly) } required/>
+			<input type="date" name={ secondName } value={ secondValue.Format(time.DateOnly) } required/>
+		</div>
+	</div>
+}
+
 templ formInputSelectTerm(name string, selectedTermID int, terms []database.Term) {
 	{{ id := name + "_select" }}
 	<div>

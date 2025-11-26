@@ -118,8 +118,13 @@ func TermEditPage(term database.Term, isNew bool) templ.Component {
 			isNew,
 			[]templ.Component{
 				formInputText("Nome del periodo", KeyTermName, term.Name),
-				formInputDate("Data di inizio", KeyTermStartDate, term.StartDate),
-				formInputDate("Data di fine", KeyTermEndDate, term.EndDate),
+				formInputTwoDates(
+					"Date di inizio e fine",
+					KeyTermStartDate,
+					term.StartDate,
+					KeyTermEndDate,
+					term.EndDate,
+				),
 			},
 		).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -159,8 +164,13 @@ func VacationEditPage(vacation database.Vacation, isNew bool) templ.Component {
 			isNew,
 			[]templ.Component{
 				formInputText("Nome della vacanza", KeyVacationName, vacation.Name),
-				formInputDate("Data di inizio", KeyVacationStartDate, vacation.StartDate),
-				formInputDate("Data di fine", KeyVacationEndDate, vacation.EndDate),
+				formInputTwoDates(
+					"Date di inizio e fine",
+					KeyVacationStartDate,
+					vacation.StartDate,
+					KeyVacationEndDate,
+					vacation.EndDate,
+				),
 				formInputSelectTerm(KeyVacationTermID, int(vacation.TermID), terms),
 			},
 		).Render(ctx, templ_7745c5c3_Buffer)

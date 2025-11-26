@@ -25,6 +25,7 @@
     --color-primary: rgb(66 104 52);
     --color-on-primary: rgb(255 255 255);
     --color-primary-container: rgb(195 239 173);
+    --color-secondary-container: rgb(175 242 196);
     --color-error: rgb(186 26 26);
     --color-surface-highest: rgb(255 255 255);
     --color-surface-high: rgb(242 245 234);
@@ -246,14 +247,8 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
-  .top-12 {
-    top: calc(var(--spacing) * 12);
-  }
   .top-14 {
     top: calc(var(--spacing) * 14);
-  }
-  .top-16 {
-    top: calc(var(--spacing) * 16);
   }
   .bottom-0 {
     bottom: calc(var(--spacing) * 0);
@@ -275,12 +270,6 @@
   }
   .z-40 {
     z-index: 40;
-  }
-  .col-start-3 {
-    grid-column-start: 3;
-  }
-  .m-2 {
-    margin: calc(var(--spacing) * 2);
   }
   .mt-auto {
     margin-top: auto;
@@ -321,20 +310,8 @@
   .table {
     display: table;
   }
-  .h-3 {
-    height: calc(var(--spacing) * 3);
-  }
-  .h-3\/4 {
-    height: calc(3/4 * 100%);
-  }
-  .h-3\/5 {
-    height: calc(3/5 * 100%);
-  }
   .h-8 {
     height: calc(var(--spacing) * 8);
-  }
-  .h-10 {
-    height: calc(var(--spacing) * 10);
   }
   .h-12 {
     height: calc(var(--spacing) * 12);
@@ -432,9 +409,6 @@
   .justify-start {
     justify-content: flex-start;
   }
-  .gap-1 {
-    gap: calc(var(--spacing) * 1);
-  }
   .gap-2 {
     gap: calc(var(--spacing) * 2);
   }
@@ -517,12 +491,39 @@
   .rounded-tl-lg {
     border-top-left-radius: var(--radius-lg);
   }
+  .rounded-tr-lg {
+    border-top-right-radius: var(--radius-lg);
+  }
+  .rounded-b-full {
+    border-bottom-right-radius: calc(infinity * 1px);
+    border-bottom-left-radius: calc(infinity * 1px);
+  }
   .rounded-b-lg {
     border-bottom-right-radius: var(--radius-lg);
     border-bottom-left-radius: var(--radius-lg);
   }
-  .rounded-b-md {
+  .rounded-br-\[32px\] {
+    border-bottom-right-radius: 32px;
+  }
+  .rounded-br-lg {
+    border-bottom-right-radius: var(--radius-lg);
+  }
+  .rounded-br-md {
     border-bottom-right-radius: var(--radius-md);
+  }
+  .rounded-bl-\[--rounded-lg-8px\] {
+    border-bottom-left-radius: --rounded-lg-8px;
+  }
+  .rounded-bl-\[32px\] {
+    border-bottom-left-radius: 32px;
+  }
+  .rounded-bl-\[var\(--rounded-lg\)-8px\] {
+    border-bottom-left-radius: var(--rounded-lg)-8px;
+  }
+  .rounded-bl-lg {
+    border-bottom-left-radius: var(--radius-lg);
+  }
+  .rounded-bl-md {
     border-bottom-left-radius: var(--radius-md);
   }
   .border {
@@ -546,11 +547,17 @@
   .bg-error {
     background-color: var(--color-error);
   }
+  .bg-outline {
+    background-color: var(--color-outline);
+  }
   .bg-primary {
     background-color: var(--color-primary);
   }
   .bg-primary-container {
     background-color: var(--color-primary-container);
+  }
+  .bg-secondary-container {
+    background-color: var(--color-secondary-container);
   }
   .bg-surface {
     background-color: var(--color-surface);
@@ -587,9 +594,6 @@
   }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
-  }
-  .pt-12 {
-    padding-top: calc(var(--spacing) * 12);
   }
   .pr-1 {
     padding-right: calc(var(--spacing) * 1);

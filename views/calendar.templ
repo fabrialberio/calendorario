@@ -111,92 +111,105 @@ templ Calendar(
 		<div class="bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
 			{{
 				day := date
+				numRows := 5
 
 				for day.Weekday() != time.Monday {
 					day = day.AddDate(0, 0, -1)
 				}
+
+				if day.AddDate(0, 0, 7*5).Month() == month {
+					numRows++
+				}
 			}}
-			for i := 0; i < 6; i++ {
-				{{
-					// Skip adding sixt row if the month ends before.
-					if i == 5 && day.Month() != month {
-						break
-					}
-				}}
-				@calendarRow(day, i == 0, vacations)
+			for i := 0; i < numRows; i++ {
+				<div class="pointer-events-none relative flex flex-auto flex-row">
+					<div class="absolute bottom-0 top-14 z-20 grid w-full grid-cols-7">
+						for j := 0; j < len(vacations); j++ {
+							@calendarRowVacation(day, i+1 == numRows, vacations[j])
+						}
+					</div>
+					@calendarRowBackground(day, i == 0)
+				</div>
 				{{ day = day.AddDate(0, 0, 7) }}
 			}
 		</div>
 	</div>
 }
 
-templ calendarRow(monday time.Time, isFirstRow bool, vacations []database.Vacation) {
+templ calendarRowVacation(monday time.Time, isLastRow bool, vacation database.Vacation) {
+	{{ sunday := monday.AddDate(0, 0, 7) }}
+	if vacation.EndDate.After(monday) && vacation.StartDate.Before(sunday) {
+		{{
+			startCol := 0
+			endCol := 7
+
+			if vacation.StartDate.After(monday) {
+				startCol = int(vacation.StartDate.Sub(monday).Hours() / 24)
+			}
+
+			if vacation.EndDate.Before(sunday) {
+				endCol = int(vacation.EndDate.Sub(monday).Hours() / 24)
+			}
+		}}
+		<div
+			class="h-full p-2 pt-0"
+			style={
+				templ.KV("grid-column-start", strconv.Itoa(startCol+1)),
+				templ.KV("grid-column-end", strconv.Itoa(endCol+1)),
+			}
+		>
+			<div
+				class={
+					"h-full overflow-hidden",
+					templ.KV("rounded-bl-[32px]", startCol == 0 && isLastRow),
+					templ.KV("rounded-br-[32px]", endCol == 7 && isLastRow),
+				}
+			>
+				@calendarEvent(
+					vacation.Name,
+					DestAdminVacation+"/"+strconv.Itoa(int(vacation.ID)),
+				)
+			</div>
+		</div>
+	}
+}
+
+templ calendarRowBackground(monday time.Time, isFirstRow bool) {
 	{{
 		day := monday
 		month := monday.Month()
 	}}
-	<div class="pointer-events-none relative flex flex-auto flex-row">
-		<div class="absolute bottom-0 top-14 z-20 grid w-full grid-cols-7">
-			for j := 0; j < len(vacations); j++ {
-				{{
-					v := vacations[j]
-					sunday := monday.AddDate(0, 0, 7)
-				}}
-				if v.EndDate.After(monday) && v.StartDate.Before(sunday) {
-					{{
-						startCol := 0
-						endCol := 7
-
-						if v.StartDate.After(monday) && v.StartDate.Before(sunday) {
-							startCol = int(v.StartDate.Sub(monday).Hours() / 24)
-						}
-
-						if v.EndDate.After(monday) && v.EndDate.Before(sunday) {
-							endCol = int(v.EndDate.Sub(monday).Hours() / 24)
-						}
-					}}
-					<div
-						class="h-full overflow-hidden p-2 pt-0"
-						style={
-							templ.KV("grid-column-start", strconv.Itoa(startCol+1)),
-							templ.KV("grid-column-end", strconv.Itoa(endCol+1)),
-						}
-					>
-						@calendarEvent(v.Name, DestAdminVacation+"/"+strconv.Itoa(int(v.ID)))
-					</div>
-				}
+	<div class="clickable absolute left-0 top-0 z-10 h-full w-full"></div>
+	for j := 0; j < 7; j++ {
+		<div
+			class={
+				templ.KV("bg-surface-high", day.Month() != month),
+				"text-center w-full relative p-1 not-last-of-type:border-r border-outline",
 			}
-		</div>
-		<div class="clickable absolute left-0 top-0 z-10 h-full w-full"></div>
-		for j := 0; j < 7; j++ {
-			<div
-				class={
-					templ.KV("bg-surface-high", day.Month() != month),
-					"text-center w-full relative p-1 not-last-of-type:border-r border-outline",
+		>
+			<p class="text-sm">
+				if isFirstRow {
+					<p class="text-on-surface-dim max-h-16 w-full text-center">
+						{ weekdayNicks[j] }
+					</p>
 				}
-			>
-				<p class="text-sm">
-					if isFirstRow {
-						<p class="text-on-surface-dim max-h-16 w-full text-center">
-							{ weekdayNicks[j] }
-						</p>
-					}
-					{ day.Day() }
-					if day.Month() != month {
-						{ monthNicks[day.Month()] }
-					}
-				</p>
-			</div>
-			{{ day = day.AddDate(0, 0, 1) }}
-		}
-	</div>
+				{ day.Day() }
+				if day.Month() != month {
+					{ monthNicks[day.Month()] }
+				}
+			</p>
+		</div>
+		{{ day = day.AddDate(0, 0, 1) }}
+	}
 }
 
 templ calendarEvent(title string, destination string) {
 	<a
 		href={ destination }
-		class="bg-error clickable block h-full truncate rounded-sm p-1"
+		class="bg-outline clickable block h-full rounded-sm px-2 py-1"
 	>
-		{ title }
+		<p class="font-bold truncate">
+			{ title }
+		</p>
 	</a>
 }

@@ -192,6 +192,8 @@ func CalendarPage(year int, month time.Month) templ.Component {
 			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		today := time.Now()
+
 		s := session.FromContext(ctx)
 		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
 		vacations, _ := s.Database.ListVacationsWithTermID(ctx, term.ID)
@@ -215,7 +217,7 @@ func CalendarPage(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = calendarView(year, month, term, vacations).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = calendarView(year, month, today, term, vacations).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

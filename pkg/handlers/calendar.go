@@ -17,5 +17,5 @@ func CalendarGet(w http.ResponseWriter, r *http.Request) {
 	term, _ := s.Database.GetTerm(r.Context(), int64(s.TermID))
 	vacations, _ := s.Database.ListVacationsWithTermID(r.Context(), term.ID)
 
-	views.Calendar(date.Year(), date.Month(), term, vacations).Render(r.Context(), w)
+	views.Calendar(date.Year(), date.Month(), time.Now(), term, vacations).Render(r.Context(), w)
 }

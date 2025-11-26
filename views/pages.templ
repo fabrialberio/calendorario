@@ -69,6 +69,8 @@ templ VacationEditPage(vacation database.Vacation, isNew bool) {
 
 templ CalendarPage(year int, month time.Month) {
 	{{
+		today := time.Now()
+
 		s := session.FromContext(ctx)
 		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
 		vacations, _ := s.Database.ListVacationsWithTermID(ctx, term.ID)
@@ -79,7 +81,7 @@ templ CalendarPage(year int, month time.Month) {
 		<body>
 			@sidebar(0, term)
 			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
-				@calendarView(year, month, term, vacations)
+				@calendarView(year, month, today, term, vacations)
 				@vacationList(vacations)
 			</main>
 		</body>

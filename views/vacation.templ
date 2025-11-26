@@ -24,9 +24,12 @@ templ vacationList(term database.Term, vacations []database.Vacation) {
 					class="bg-surface-highest clickable space-y-2 p-4"
 					href={ DestAdminVacation + "/" + strconv.Itoa(int(v.ID)) }
 				>
-					<p class="line-clamp-2 font-bold">
-						{ v.Name }
-					</p>
+					<div class="flex flex-row gap-2">
+						<div class="bg-surface-dim h-4 w-4 rounded-full"></div>
+						<p class="-mt-1 line-clamp-2 font-bold">
+							{ v.Name }
+						</p>
+					</div>
 					<p class="text-on-surface-dim">
 						{ intervalString(v.StartDate, v.EndDate) }
 					</p>

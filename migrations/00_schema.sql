@@ -7,7 +7,8 @@ CREATE TABLE "term" (
     "id" BIGSERIAL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "start_date" DATE NOT NULL,
-    "end_date" DATE NOT NULL
+    "end_date" DATE NOT NULL,
+    CHECK ("start_date" < "end_date")
 );
 CREATE TABLE "program" (
     "id" BIGSERIAL PRIMARY KEY,
@@ -28,6 +29,7 @@ CREATE TABLE "vacation" (
     "name" TEXT NOT NULL,
     "start_date" DATE NOT NULL,
     "end_date" DATE NOT NULL,
+    CHECK ("start_date" < "end_date"),
     "term_id" BIGINT NOT NULL REFERENCES "term"
 );
 CREATE TABLE "class" (
@@ -53,8 +55,10 @@ CREATE TABLE "lesson" (
     "teacher_id" BIGINT NOT NULL REFERENCES "teacher",
     "start_time" TIME(0) WITHOUT TIME ZONE NOT NULL,
     "end_time" TIME(0) WITHOUT TIME ZONE NOT NULL,
+    CHECK ("start_time" < "end_time"),
     "first_date" DATE NOT NULL,
-    "last_date" DATE NOT NULL
+    "last_date" DATE NOT NULL,
+    CHECK ("first_date" < "last_date")
 );
 CREATE TABLE "teacher_subject_assignment" (
     "term_id" BIGINT NOT NULL REFERENCES "term",

@@ -108,6 +108,14 @@ templ Calendar(
 					<i class="fas fa-chevron-left"></i>
 				</button>
 				<button
+					class="button bg-surface-highest"
+					disabled?={ today.Month() == month }
+					x-on:click={ "month = await fetch('" + fetchMonthURL(today) + "')" }
+				>
+					<i class="fas fa-calendar-day"></i>
+					Oggi
+				</button>
+				<button
 					class="button bg-surface-highest px-2"
 					x-on:click={ "month = await fetch('" + fetchMonthURL(date.AddDate(0, 1, 0)) + "')" }
 				>
@@ -117,13 +125,6 @@ templ Calendar(
 			<h4 class="min-w-32">
 				{ monthNames[month] } { year }
 			</h4>
-			<button
-				class="button bg-surface-highest"
-				x-on:click={ "month = await fetch('" + fetchMonthURL(time.Now()) + "')" }
-			>
-				<i class="fas fa-calendar-day"></i>
-				Oggi
-			</button>
 		</div>
 		<div class="bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
 			{{
@@ -223,7 +224,7 @@ templ calendarRowBackground(
 				class={
 					"rounded-full py-1 px-1 truncate",
 					templ.KV(
-						"bg-primary text-on-primary font-bold",
+						"bg-primary-container font-bold",
 						day.Day() == today.Day() && day.Month() == today.Month(),
 					),
 				}
@@ -241,7 +242,7 @@ templ calendarRowBackground(
 templ calendarEvent(title string, destination string) {
 	<a
 		href={ destination }
-		class="bg-outline clickable block h-full rounded-sm px-2 py-1"
+		class="bg-surface-dim clickable block h-full rounded-sm px-2 py-1"
 	>
 		<p class="truncate text-sm font-bold">
 			{ title }

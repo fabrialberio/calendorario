@@ -92,7 +92,7 @@
         @apply min-h-10 min-w-10 flex items-center justify-center gap-2 truncate rounded-full px-3 py-2 font-bold;
 
         &:disabled {
-            @apply bg-surface-dim text-on-surface-dim;
+            @apply opacity-50;
         }
     }
 

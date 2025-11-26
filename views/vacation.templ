@@ -5,8 +5,8 @@ import (
 	"strconv"
 )
 
-templ vacationList(vacations []database.Vacation) {
-	<div class="flex h-full basis-80 flex-col gap-2">
+templ vacationList(term database.Term, vacations []database.Vacation) {
+	<div class="flex h-full max-h-screen basis-80 flex-col gap-2">
 		<div class="flex flex-row items-center">
 			<h4>
 				Vacanze e festività
@@ -18,14 +18,13 @@ templ vacationList(vacations []database.Vacation) {
 				<i class="fas fa-add"></i>
 			</a>
 		</div>
-		<div class="card-group flex-col">
-			for i := 0; i < len(vacations); i++ {
-				{{ v := vacations[i] }}
+		<div class="card-group-col">
+			for _, v := range vacations {
 				<a
-					class="bg-surface-highest clickable p-4"
+					class="bg-surface-highest clickable space-y-2 p-4"
 					href={ DestAdminVacation + "/" + strconv.Itoa(int(v.ID)) }
 				>
-					<p class="line-clamp-2">
+					<p class="line-clamp-2 font-bold">
 						{ v.Name }
 					</p>
 					<p class="text-on-surface-dim">
@@ -34,5 +33,42 @@ templ vacationList(vacations []database.Vacation) {
 				</a>
 			}
 		</div>
+		<dl class="border-outline divide-outline mt-auto divide-y rounded-md border">
+			{{
+				termDays := int(term.EndDate.Sub(term.StartDate).Hours() / 24)
+				vacationDays := 0
+
+				for day := term.StartDate; day.Before(term.EndDate); day = day.AddDate(0, 0, 1) {
+					inVacation := false
+					for _, v := range vacations {
+						if v.StartDate.AddDate(0, 0, -1).Before(day) && v.EndDate.After(day) {
+							inVacation = true
+							break
+						}
+					}
+
+					if inVacation {
+						vacationDays++
+					}
+				}
+
+				// TODO: Ore di lezione totali e tenere conto dei weekend.
+
+				titles := []string{
+					"Giorni di lezione totali",
+					"Giorni di vacanza totali",
+				}
+				values := []string{
+					strconv.Itoa(termDays - vacationDays),
+					strconv.Itoa(vacationDays),
+				}
+			}}
+			for i, title := range titles {
+				<div class="p-2 px-3">
+					<dt class="text-on-surface-dim">{ title }</dt>
+					<dd>{ values[i] }</dd>
+				</div>
+			}
+		</dl>
 	</div>
 }

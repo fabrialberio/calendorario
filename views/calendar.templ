@@ -54,6 +54,7 @@ func fetchMonthURL(date time.Time) string {
 templ calendarView(
 	year int,
 	month time.Month,
+	today time.Time,
 	term database.Term,
 	vacations []database.Vacation,
 ) {
@@ -64,13 +65,14 @@ templ calendarView(
 		x-data={ "{ initial: document.getElementById('" + id + "').innerHTML, month: null }" }
 		x-html={ "month == null ? initial : month.text()" }
 	>
-		@Calendar(year, month, term, vacations)
+		@Calendar(year, month, today, term, vacations)
 	</div>
 }
 
 templ Calendar(
 	year int,
 	month time.Month,
+	today time.Time,
 	term database.Term,
 	vacations []database.Vacation,
 ) {
@@ -122,13 +124,20 @@ templ Calendar(
 				}
 			}}
 			for i := 0; i < numRows; i++ {
-				<div class="pointer-events-none relative flex flex-auto flex-row">
-					<div class="absolute bottom-0 top-14 z-20 grid w-full grid-cols-7">
+				<div class="pointer-events-none relative grid h-full grid-cols-7">
+					<div
+						class={
+							"absolute z-20 grid w-full bottom-0 overflow-y-auto grid-cols-7 place-items-end",
+							templ.KV("top-15", i == 0),
+							templ.KV("top-11", i != 0),
+						}
+					>
 						for j := 0; j < len(vacations); j++ {
 							@calendarRowVacation(day, i+1 == numRows, vacations[j])
 						}
 					</div>
-					@calendarRowBackground(day, i == 0)
+					<a class="clickable absolute left-0 top-0 z-10 block h-full w-full"></a>
+					@calendarRowBackground(day, month, today, i == 0)
 				</div>
 				{{ day = day.AddDate(0, 0, 7) }}
 			}
@@ -136,7 +145,11 @@ templ Calendar(
 	</div>
 }
 
-templ calendarRowVacation(monday time.Time, isLastRow bool, vacation database.Vacation) {
+templ calendarRowVacation(
+	monday time.Time,
+	isLastRow bool,
+	vacation database.Vacation,
+) {
 	{{ sunday := monday.AddDate(0, 0, 7) }}
 	if vacation.EndDate.After(monday) && vacation.StartDate.Before(sunday) {
 		{{
@@ -152,19 +165,17 @@ templ calendarRowVacation(monday time.Time, isLastRow bool, vacation database.Va
 			}
 		}}
 		<div
-			class="h-full p-2 pt-0"
+			class={
+				"h-full max-h-20 w-full px-2 pt-1 last:pb-2",
+				templ.KV("last-child-rounded-bl", startCol == 0 && isLastRow),
+				templ.KV("last-child-rounded-br", endCol == 7 && isLastRow),
+			}
 			style={
 				templ.KV("grid-column-start", strconv.Itoa(startCol+1)),
 				templ.KV("grid-column-end", strconv.Itoa(endCol+1)),
 			}
 		>
-			<div
-				class={
-					"h-full overflow-hidden",
-					templ.KV("rounded-bl-[32px]", startCol == 0 && isLastRow),
-					templ.KV("rounded-br-[32px]", endCol == 7 && isLastRow),
-				}
-			>
+			<div class="h-full">
 				@calendarEvent(
 					vacation.Name,
 					DestAdminVacation+"/"+strconv.Itoa(int(vacation.ID)),
@@ -174,30 +185,39 @@ templ calendarRowVacation(monday time.Time, isLastRow bool, vacation database.Va
 	}
 }
 
-templ calendarRowBackground(monday time.Time, isFirstRow bool) {
-	{{
-		day := monday
-		month := monday.Month()
-	}}
-	<div class="clickable absolute left-0 top-0 z-10 h-full w-full"></div>
+templ calendarRowBackground(
+	monday time.Time,
+	month time.Month,
+	today time.Time,
+	isFirstRow bool,
+) {
+	{{ day := monday }}
 	for j := 0; j < 7; j++ {
 		<div
 			class={
 				templ.KV("bg-surface-high", day.Month() != month),
-				"text-center w-full relative p-1 not-last-of-type:border-r border-outline",
+				"text-center w-full relative h-full p-2 py-2 not-last-of-type:border-r border-outline",
 			}
 		>
-			<p class="text-sm">
-				if isFirstRow {
-					<p class="text-on-surface-dim max-h-16 w-full text-center">
-						{ weekdayNicks[j] }
-					</p>
+			if isFirstRow {
+				<p class="text-on-surface-dim -mt-1 max-h-16 w-full text-center text-sm">
+					{ weekdayNicks[j] }
+				</p>
+			}
+			<div
+				class={
+					"rounded-full py-1 px-1 truncate",
+					templ.KV(
+						"bg-primary text-on-primary font-bold",
+						day.Day() == today.Day() && day.Month() == today.Month(),
+					),
 				}
+			>
 				{ day.Day() }
 				if day.Month() != month {
 					{ monthNicks[day.Month()] }
 				}
-			</p>
+			</div>
 		</div>
 		{{ day = day.AddDate(0, 0, 1) }}
 	}
@@ -208,7 +228,7 @@ templ calendarEvent(title string, destination string) {
 		href={ destination }
 		class="bg-outline clickable block h-full rounded-sm px-2 py-1"
 	>
-		<p class="font-bold truncate">
+		<p class="truncate text-sm font-bold">
 			{ title }
 		</p>
 	</a>

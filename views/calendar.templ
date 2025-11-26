@@ -47,6 +47,21 @@ var (
 	}
 )
 
+func intervalString(start time.Time, end time.Time) string {
+	showYear := start.Year() != end.Year()
+
+	result := strconv.Itoa(start.Day()) + " " + monthNicks[start.Month()]
+	if showYear {
+		result += " " + strconv.Itoa(start.Year())
+	}
+	result += " - " + strconv.Itoa(end.Day()) + " " + monthNicks[end.Month()]
+	if showYear {
+		result += " " + strconv.Itoa(end.Year())
+	}
+
+	return result
+}
+
 func fetchMonthURL(date time.Time) string {
 	return DestMonth + "?" + KeyCalendarDate + "=" + date.Format(time.DateOnly)
 }

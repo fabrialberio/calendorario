@@ -25,9 +25,11 @@ templ vacationList(vacations []database.Vacation) {
 					class="bg-surface-highest clickable p-4"
 					href={ DestAdminVacation + "/" + strconv.Itoa(int(v.ID)) }
 				>
-					{ v.Name }
+					<p class="line-clamp-2">
+						{ v.Name }
+					</p>
 					<p class="text-on-surface-dim">
-						{ v.StartDate.Day() } { monthNicks[v.StartDate.Month()] } - { v.EndDate.Day() } { monthNicks[v.EndDate.Month()] }
+						{ intervalString(v.StartDate, v.EndDate) }
 					</p>
 				</a>
 			}

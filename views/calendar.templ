@@ -176,7 +176,7 @@ templ calendarRowVacation(
 			}
 
 			if vacation.EndDate.Before(sunday) {
-				endCol = int(vacation.EndDate.Sub(monday).Hours() / 24)
+				endCol = int(vacation.EndDate.AddDate(0, 0, 1).Sub(monday).Hours() / 24)
 			}
 		}}
 		<div

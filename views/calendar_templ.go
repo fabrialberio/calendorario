@@ -371,7 +371,7 @@ func calendarRowVacation(
 			}
 
 			if vacation.EndDate.Before(sunday) {
-				endCol = int(vacation.EndDate.Sub(monday).Hours() / 24)
+				endCol = int(vacation.EndDate.AddDate(0, 0, 1).Sub(monday).Hours() / 24)
 			}
 			var templ_7745c5c3_Var15 = []any{"h-full max-h-20 w-full px-2 pt-1 last:pb-2",
 				templ.KV("last-child-rounded-bl", startCol == 0 && isLastRow),

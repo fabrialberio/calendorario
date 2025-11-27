@@ -113,13 +113,13 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		termDays := int(term.EndDate.Sub(term.StartDate).Hours() / 24)
+		termDays := int(term.EndDate.AddDate(0, 0, 1).Sub(term.StartDate).Hours() / 24)
 		vacationDays := 0
 
-		for day := term.StartDate; day.Before(term.EndDate); day = day.AddDate(0, 0, 1) {
+		for day := term.StartDate; day.Compare(term.EndDate) <= 0; day = day.AddDate(0, 0, 1) {
 			inVacation := false
 			for _, v := range vacations {
-				if v.StartDate.AddDate(0, 0, -1).Before(day) && v.EndDate.After(day) {
+				if v.StartDate.Compare(day) <= 0 && v.EndDate.Compare(day) >= 0 {
 					inVacation = true
 					break
 				}

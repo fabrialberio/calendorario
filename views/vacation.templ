@@ -25,7 +25,10 @@ templ vacationList(term database.Term, vacations []database.Vacation) {
 					href={ DestAdminVacation + "/" + strconv.Itoa(int(v.ID)) }
 				>
 					<div class="flex flex-row gap-2">
-						<div class="bg-surface-dim h-4 w-4 rounded-full"></div>
+						<div
+							class="h-4 w-4 rounded-full"
+							style={ templ.KV("background-color", vacationEventColor) }
+						></div>
 						<p class="-mt-1 line-clamp-2 font-bold">
 							{ v.Name }
 						</p>

@@ -151,15 +151,18 @@ templ Calendar(
 						for j := 0; j < len(vacations); j++ {
 							@calendarRowVacation(day, i+1 == numRows, vacations[j])
 						}
+						@calendarRowTermBounds(day, term)
 					</div>
 					<a class="clickable absolute left-0 top-0 z-10 block h-full w-full"></a>
-					@calendarRowBackground(day, month, today, i == 0)
+					@calendarRowBackground(day, month, today, i == 0, term)
 				</div>
 				{{ day = day.AddDate(0, 0, 7) }}
 			}
 		</div>
 	</div>
 }
+
+const vacationEventColor = "#d8dbd1"
 
 templ calendarRowVacation(
 	monday time.Time,
@@ -195,10 +198,66 @@ templ calendarRowVacation(
 				@calendarEvent(
 					vacation.Name,
 					DestAdminVacation+"/"+strconv.Itoa(int(vacation.ID)),
+					vacationEventColor,
 				)
 			</div>
 		</div>
 	}
+}
+
+templ calendarRowTermBounds(monday time.Time, term database.Term) {
+	{{
+		sunday := monday.AddDate(0, 0, 7)
+
+		isStart := term.StartDate.AddDate(0, 0, 1).After(monday) && term.StartDate.Before(sunday)
+		isEnd := term.EndDate.AddDate(0, 0, 1).After(monday) && term.EndDate.Before(sunday)
+	}}
+	if isStart {
+		{{ boundCol := int(term.StartDate.Sub(monday).Hours() / 24) }}
+		@calendarRowMessage("Inizio del periodo scolastico", term.Name, boundCol)
+	}
+	if isEnd {
+		{{ boundCol := int(term.EndDate.AddDate(0, 0, 1).Sub(monday).Hours() / 24) }}
+		@calendarRowMessage("Fine del periodo scolastico", term.Name, boundCol)
+	}
+}
+
+templ calendarRowMessage(title string, value string, boundCol int) {
+	{{
+		alignLeft := boundCol <= 7/2
+
+		var startCol, endCol int
+		if alignLeft {
+			startCol = boundCol
+			endCol = 7
+		} else {
+			startCol = 0
+			endCol = boundCol
+		}
+	}}
+	<div
+		class={
+			"px-2 pb-2",
+			templ.KV("justify-self-start", alignLeft),
+		}
+		style={
+			templ.KV("grid-column-start", strconv.Itoa(startCol+1)),
+			templ.KV("grid-column-end", strconv.Itoa(endCol+1)),
+		}
+	>
+		<div
+			class={
+				"bg-surface-highest rounded-sm px-2 py-1",
+				templ.KV("text-start", alignLeft),
+				templ.KV("text-end", !alignLeft),
+			}
+		>
+			<p class="text-on-surface-dim line-clamp-2">
+				{ title }
+			</p>
+			{ value }
+		</div>
+	</div>
 }
 
 templ calendarRowBackground(
@@ -206,12 +265,14 @@ templ calendarRowBackground(
 	month time.Month,
 	today time.Time,
 	isFirstRow bool,
+	term database.Term,
 ) {
 	{{ day := monday }}
 	for j := 0; j < 7; j++ {
 		<div
 			class={
 				templ.KV("bg-surface-high", day.Month() != month),
+				templ.KV("striped-outline", day.Before(term.StartDate) || day.After(term.EndDate)),
 				"text-center w-full relative h-full p-2 py-2 not-last-of-type:border-r border-outline",
 			}
 		>
@@ -225,7 +286,7 @@ templ calendarRowBackground(
 					"rounded-full py-1 px-1 truncate",
 					templ.KV(
 						"bg-primary-container font-bold",
-						day.Day() == today.Day() && day.Month() == today.Month(),
+						day.Day() == today.Day() && day.Month() == today.Month() && day.Year() == today.Year(),
 					),
 				}
 			>
@@ -239,10 +300,11 @@ templ calendarRowBackground(
 	}
 }
 
-templ calendarEvent(title string, destination string) {
+templ calendarEvent(title string, destination string, colorHex string) {
 	<a
 		href={ destination }
-		class="bg-surface-dim clickable block h-full rounded-sm px-2 py-1"
+		class="clickable block h-full rounded-sm px-2 py-1"
+		style={ templ.KV("background-color", colorHex) }
 	>
 		<p class="truncate text-sm font-bold">
 			{ title }

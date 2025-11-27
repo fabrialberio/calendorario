@@ -324,14 +324,11 @@
   .h-4 {
     height: calc(var(--spacing) * 4);
   }
-  .h-5 {
-    height: calc(var(--spacing) * 5);
-  }
-  .h-6 {
-    height: calc(var(--spacing) * 6);
-  }
   .h-8 {
     height: calc(var(--spacing) * 8);
+  }
+  .h-10 {
+    height: calc(var(--spacing) * 10);
   }
   .h-12 {
     height: calc(var(--spacing) * 12);
@@ -348,6 +345,9 @@
   .h-screen {
     height: 100vh;
   }
+  .max-h-12 {
+    max-height: calc(var(--spacing) * 12);
+  }
   .max-h-16 {
     max-height: calc(var(--spacing) * 16);
   }
@@ -363,14 +363,14 @@
   .w-4 {
     width: calc(var(--spacing) * 4);
   }
-  .w-5 {
-    width: calc(var(--spacing) * 5);
-  }
-  .w-6 {
-    width: calc(var(--spacing) * 6);
-  }
   .w-8 {
     width: calc(var(--spacing) * 8);
+  }
+  .w-10 {
+    width: calc(var(--spacing) * 10);
+  }
+  .w-12 {
+    width: calc(var(--spacing) * 12);
   }
   .w-64 {
     width: calc(var(--spacing) * 64);
@@ -395,6 +395,9 @@
   }
   .flex-auto {
     flex: auto;
+  }
+  .flex-none {
+    flex: none;
   }
   .basis-80 {
     flex-basis: calc(var(--spacing) * 80);
@@ -443,9 +446,6 @@
   }
   .items-center {
     align-items: center;
-  }
-  .items-start {
-    align-items: flex-start;
   }
   .justify-start {
     justify-content: flex-start;
@@ -509,6 +509,18 @@
       border-color: var(--color-outline);
     }
   }
+  .place-self-end {
+    place-self: end;
+  }
+  .place-self-start {
+    place-self: start;
+  }
+  .justify-self-end {
+    justify-self: flex-end;
+  }
+  .justify-self-start {
+    justify-self: flex-start;
+  }
   .truncate {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -553,6 +565,9 @@
   .border-outline {
     border-color: var(--color-outline);
   }
+  .bg-error {
+    background-color: var(--color-error);
+  }
   .bg-primary {
     background-color: var(--color-primary);
   }
@@ -562,14 +577,19 @@
   .bg-surface {
     background-color: var(--color-surface);
   }
-  .bg-surface-dim {
-    background-color: var(--color-surface-dim);
-  }
   .bg-surface-high {
     background-color: var(--color-surface-high);
   }
   .bg-surface-highest {
     background-color: var(--color-surface-highest);
+  }
+  .striped-error {
+    background-image: repeating-linear-gradient(45deg, var(--color-error) 0, var(--color-error) 1px, transparent 0, transparent 50%);
+    background-size: 8px 8px;
+  }
+  .striped-outline {
+    background-image: repeating-linear-gradient(45deg, var(--color-outline) 0, var(--color-outline) 1px, transparent 0, transparent 50%);
+    background-size: 8px 8px;
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
@@ -601,9 +621,6 @@
   .pt-1 {
     padding-top: calc(var(--spacing) * 1);
   }
-  .pt-3 {
-    padding-top: calc(var(--spacing) * 3);
-  }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
   }
@@ -613,11 +630,17 @@
   .pr-4 {
     padding-right: calc(var(--spacing) * 4);
   }
+  .pb-2 {
+    padding-bottom: calc(var(--spacing) * 2);
+  }
   .pl-2 {
     padding-left: calc(var(--spacing) * 2);
   }
   .text-center {
     text-align: center;
+  }
+  .text-end {
+    text-align: end;
   }
   .text-start {
     text-align: start;
@@ -641,10 +664,6 @@
   }
   .text-on-surface-dim {
     color: var(--color-on-surface-dim);
-  }
-  .tabular-nums {
-    --tw-numeric-spacing: tabular-nums;
-    font-variant-numeric: var(--tw-ordinal,) var(--tw-slashed-zero,) var(--tw-numeric-figure,) var(--tw-numeric-spacing,) var(--tw-numeric-fraction,);
   }
   .underline {
     text-decoration-line: underline;
@@ -1022,26 +1041,6 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-ordinal {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-slashed-zero {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-numeric-figure {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-numeric-spacing {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-numeric-fraction {
-  syntax: "*";
-  inherits: false;
-}
 @property --tw-outline-style {
   syntax: "*";
   inherits: false;
@@ -1080,11 +1079,6 @@
       --tw-border-style: solid;
       --tw-divide-y-reverse: 0;
       --tw-font-weight: initial;
-      --tw-ordinal: initial;
-      --tw-slashed-zero: initial;
-      --tw-numeric-figure: initial;
-      --tw-numeric-spacing: initial;
-      --tw-numeric-fraction: initial;
       --tw-outline-style: solid;
     }
   }

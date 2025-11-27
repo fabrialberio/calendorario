@@ -87,6 +87,15 @@
     }
 }
 
+@utility striped-* {
+    background-image: repeating-linear-gradient(45deg,
+            --value(--color-*) 0,
+            --value(--color-*) 1px,
+            transparent 0,
+            transparent 50%);
+    background-size: 8px 8px;
+}
+
 @layer components {
     .button {
         @apply min-h-10 min-w-10 flex items-center justify-center gap-2 truncate rounded-full px-3 py-2 font-bold;

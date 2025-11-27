@@ -15,9 +15,15 @@ var sidebarRows = []sidebarRow{
 }
 
 templ sidebar(selectedIndex int, currentTerm database.Term) {
-	<aside class="fixed left-0 top-0 z-40 h-full w-64 translate-x-0 transition-transform">
+	<aside class="fixed left-0 top-0 z-10 h-full w-64 translate-x-0 transition-transform">
 		<nav class="h-full space-y-4 p-4">
-			<button class="clickable bg-surface flex h-16 w-full flex-row items-center gap-2 rounded-md px-4 text-start">
+			<a
+				class="clickable h-16 w-full flex flex-row items-center gap-2 rounded-md pr-4 text-start"
+				href={ DestAdmin }
+			>
+				<div class="button flex-none bg-surface-high px-2">
+					<i class="fas fa-arrow-left"></i>
+				</div>
 				<div class="w-full truncate">
 					<p class="text-on-surface-dim text-sm">
 						Periodo scolastico
@@ -26,8 +32,7 @@ templ sidebar(selectedIndex int, currentTerm database.Term) {
 						{ currentTerm.Name }
 					</p>
 				</div>
-				<i class="fas fa-chevron-down"></i>
-			</button>
+			</a>
 			<ul class="space-y-1">
 				for i := 0; i < len(sidebarRows); i++ {
 					<li>

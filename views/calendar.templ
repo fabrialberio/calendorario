@@ -7,62 +7,6 @@ import (
 	"time"
 )
 
-var (
-	weekdayNames = []string{
-		"Lunedì",
-		"Martedì",
-		"Mercoledì",
-		"Giovedì",
-		"Venerdì",
-		"Sabato",
-		"Domenica",
-	}
-	weekdayNicks = []string{"lun", "mar", "mer", "gio", "ven", "sab", "dom"}
-	monthNames   = map[time.Month]string{
-		time.January:   "Gennaio",
-		time.February:  "Febbraio",
-		time.March:     "Marzo",
-		time.April:     "Aprile",
-		time.May:       "Maggio",
-		time.June:      "Giugno",
-		time.July:      "Luglio",
-		time.August:    "Agosto",
-		time.September: "Settembre",
-		time.October:   "Ottobre",
-		time.November:  "Novembre",
-		time.December:  "Dicembre",
-	}
-	monthNicks = map[time.Month]string{
-		time.January:   "gen",
-		time.February:  "feb",
-		time.March:     "mar",
-		time.April:     "apr",
-		time.May:       "mag",
-		time.June:      "giu",
-		time.July:      "lug",
-		time.August:    "ago",
-		time.September: "set",
-		time.October:   "ott",
-		time.November:  "nov",
-		time.December:  "dic",
-	}
-)
-
-func intervalString(start time.Time, end time.Time) string {
-	showYear := start.Year() != end.Year()
-
-	result := strconv.Itoa(start.Day()) + " " + monthNicks[start.Month()]
-	if showYear {
-		result += " " + strconv.Itoa(start.Year())
-	}
-	result += " - " + strconv.Itoa(end.Day()) + " " + monthNicks[end.Month()]
-	if showYear {
-		result += " " + strconv.Itoa(end.Year())
-	}
-
-	return result
-}
-
 func fetchMonthURL(date time.Time) string {
 	return DestMonth + "?" + KeyCalendarDate + "=" + date.Format(time.DateOnly)
 }
@@ -124,7 +68,7 @@ templ Calendar(
 				</button>
 			</div>
 			<h4 class="min-w-32">
-				{ monthNames[month] } { year }
+				{ interval.MonthNames[date.Month()] } { date.Year() }
 			</h4>
 		</div>
 		<div class="bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
@@ -285,7 +229,7 @@ templ calendarRowBackground(
 		>
 			if isFirstRow {
 				<p class="text-on-surface-dim -mt-1 max-h-16 w-full text-center text-sm">
-					{ weekdayNicks[j] }
+					{ interval.WeekdayNicks[j] }
 				</p>
 			}
 			<div
@@ -299,7 +243,7 @@ templ calendarRowBackground(
 			>
 				{ day.Day() }
 				if day.Month() != month {
-					{ monthNicks[day.Month()] }
+					{ interval.MonthNicks[day.Month()] }
 				}
 			</div>
 		</div>

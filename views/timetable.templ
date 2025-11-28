@@ -1,6 +1,7 @@
 package views
 
 import "time"
+import "calendorario/pkg/interval"
 
 templ timetable(date time.Time) {
 	<div class="flex w-full flex-col gap-2">
@@ -22,7 +23,7 @@ templ timetable(date time.Time) {
 					<i class="fas fa-chevron-left"></i>
 				</button>
 				<button class="bg-surface-highest button">
-					{ monday.Day() }-{ monday.AddDate(0, 0, 6).Day() } { monthNames[date.Month()] } { date.Year() }
+					{ monday.Day() }-{ monday.AddDate(0, 0, 6).Day() } { interval.MonthNames[date.Month()] } { date.Year() }
 				</button>
 				<button class="bg-surface-highest button">
 					<i class="fas fa-chevron-right"></i>
@@ -37,7 +38,7 @@ templ timetable(date time.Time) {
 			for i := 0; i < 7; i++ {
 				<div class="text-center">
 					<p class="text-on-surface-dim">
-						{ weekdayNicks[i] }
+						{ interval.WeekdayNicks[i] }
 					</p>
 					<p class="text-sm">
 						{ monday.AddDate(0, 0, i).Day() }

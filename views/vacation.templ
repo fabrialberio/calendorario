@@ -35,7 +35,7 @@ templ vacationList(term database.Term, vacations []database.Vacation) {
 						</p>
 					</div>
 					<p class="text-on-surface-dim">
-						{ intervalString(v.StartDate, v.EndDate) }
+						{ interval.Dates(v.StartDate, v.EndDate).String() }
 					</p>
 				</a>
 			}

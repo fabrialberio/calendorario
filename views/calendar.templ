@@ -39,6 +39,13 @@ templ Calendar(
 	{{
 		id := "calendar"
 		firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+		termInterval := dates.Interval(term.StartDate, term.EndDate)
+
+		if !termInterval.Contains(firstDay) {
+			year = term.StartDate.Year()
+			month = term.StartDate.Month()
+			firstDay = time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+		}
 	}}
 	<div
 		id={ id }
@@ -48,13 +55,14 @@ templ Calendar(
 			<div class="card-group-row">
 				<button
 					class="button bg-surface-highest px-2"
+					disabled?={ !termInterval.Contains(firstDay.AddDate(0, 0, -1)) }
 					x-on:click={ "month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, -1, 0)) + "')" }
 				>
 					<i class="fas fa-chevron-left"></i>
 				</button>
 				<button
 					class="button bg-surface-highest"
-					disabled?={ today.Month() == month }
+					disabled?={ !termInterval.Contains(today) }
 					x-on:click={ "month = await fetch('" + fetchMonthURL(today) + "')" }
 				>
 					<i class="fas fa-calendar-day"></i>
@@ -62,6 +70,7 @@ templ Calendar(
 				</button>
 				<button
 					class="button bg-surface-highest px-2"
+					disabled?={ !termInterval.Contains(firstDay.AddDate(0, 1, 0)) }
 					x-on:click={ "month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, 1, 0)) + "')" }
 				>
 					<i class="fas fa-chevron-right"></i>

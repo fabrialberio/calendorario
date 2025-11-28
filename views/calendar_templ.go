@@ -651,7 +651,7 @@ func calendarRowBackground(
 			var templ_7745c5c3_Var30 = []any{"rounded-full py-1 px-1 truncate",
 				templ.KV(
 					"bg-primary-container font-bold",
-					day.Truncate(time.Hour).Equal(today.Truncate(time.Hour)),
+					day.Year() == today.Year() && day.Month() == today.Month() && day.Day() == today.Day(),
 				),
 			}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var30...)

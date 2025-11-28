@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/interval"
+	"calendorario/pkg/dates"
 	"strconv"
 	"time"
 )
@@ -130,7 +130,7 @@ func Calendar(
 		}
 		ctx = templ.ClearChildren(ctx)
 		id := "calendar"
-		date := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+		firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -149,9 +149,9 @@ func Calendar(
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 string
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("month = await fetch('" + fetchMonthURL(date.AddDate(0, -1, 0)) + "')")
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, -1, 0)) + "')")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 51, Col: 88}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 51, Col: 92}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -185,9 +185,9 @@ func Calendar(
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs("month = await fetch('" + fetchMonthURL(date.AddDate(0, 1, 0)) + "')")
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs("month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, 1, 0)) + "')")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 65, Col: 87}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 65, Col: 91}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -198,9 +198,9 @@ func Calendar(
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var10 string
-		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(interval.MonthNames[date.Month()])
+		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(dates.MonthNames[firstDay.Month()])
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 71, Col: 39}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 71, Col: 40}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
@@ -211,9 +211,9 @@ func Calendar(
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
-		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(date.Year())
+		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(firstDay.Year())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 71, Col: 55}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 71, Col: 60}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
@@ -223,7 +223,7 @@ func Calendar(
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		day := date
+		day := firstDay
 		numRows := 5
 
 		for day.Weekday() != time.Monday {
@@ -322,18 +322,18 @@ func calendarRowVacation(
 			templ_7745c5c3_Var14 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		weekInterval := interval.Dates(monday, monday.AddDate(0, 0, 6))
-		vacationInterval := interval.Dates(vacation.StartDate, vacation.EndDate)
+		weekInterval := dates.Interval(monday, monday.AddDate(0, 0, 6))
+		vacationInterval := dates.Interval(vacation.StartDate, vacation.EndDate)
 		if vacationInterval.Overlaps(weekInterval) {
 			startCol := 0
 			endCol := 7
 
 			if weekInterval.Contains(vacation.StartDate) {
-				startCol = interval.Dates(monday, vacation.StartDate).Days() - 1
+				startCol = dates.Interval(monday, vacation.StartDate).Days() - 1
 			}
 
 			if weekInterval.Contains(vacation.EndDate) {
-				endCol = interval.Dates(monday, vacation.EndDate).Days()
+				endCol = dates.Interval(monday, vacation.EndDate).Days()
 			}
 			var templ_7745c5c3_Var15 = []any{"h-full max-h-20 w-full px-2 pt-1 last:pb-2",
 				templ.KV("last-child-rounded-bl", startCol == 0 && isLastRow),
@@ -413,19 +413,19 @@ func calendarRowTermBounds(monday time.Time, term database.Term) templ.Component
 			templ_7745c5c3_Var18 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		weekInterval := interval.Dates(monday, monday.AddDate(0, 0, 6))
+		weekInterval := dates.Interval(monday, monday.AddDate(0, 0, 6))
 
 		isStart := weekInterval.Contains(term.StartDate)
 		isEnd := weekInterval.Contains(term.EndDate)
 		if isStart {
-			boundCol := interval.Dates(monday, term.StartDate).Days() - 1
+			boundCol := dates.Interval(monday, term.StartDate).Days() - 1
 			templ_7745c5c3_Err = calendarRowMessage("Inizio del periodo scolastico", term.Name, boundCol).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
 		if isEnd {
-			boundCol := interval.Dates(monday, term.EndDate).Days()
+			boundCol := dates.Interval(monday, term.EndDate).Days()
 			templ_7745c5c3_Err = calendarRowMessage("Fine del periodo scolastico", term.Name, boundCol).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -588,7 +588,7 @@ func calendarRowBackground(
 		}
 		ctx = templ.ClearChildren(ctx)
 		day := monday
-		termInterval := interval.Dates(term.StartDate, term.EndDate)
+		termInterval := dates.Interval(term.StartDate, term.EndDate)
 		for j := 0; j < 7; j++ {
 			var templ_7745c5c3_Var28 = []any{templ.KV("bg-surface-high", day.Month() != month),
 				templ.KV("striped-outline", !termInterval.Contains(day)),
@@ -621,9 +621,9 @@ func calendarRowBackground(
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var30 string
-				templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs(interval.WeekdayNicks[j])
+				templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs(dates.WeekdayNicks[j])
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 232, Col: 31}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 232, Col: 28}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var30))
 				if templ_7745c5c3_Err != nil {
@@ -676,9 +676,9 @@ func calendarRowBackground(
 			}
 			if day.Month() != month {
 				var templ_7745c5c3_Var34 string
-				templ_7745c5c3_Var34, templ_7745c5c3_Err = templ.JoinStringErrs(interval.MonthNicks[day.Month()])
+				templ_7745c5c3_Var34, templ_7745c5c3_Err = templ.JoinStringErrs(dates.MonthNicks[day.Month()])
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 246, Col: 39}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/calendar.templ`, Line: 246, Col: 36}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var34))
 				if templ_7745c5c3_Err != nil {

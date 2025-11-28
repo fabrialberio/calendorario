@@ -2,7 +2,7 @@ package views
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/interval"
+	"calendorario/pkg/dates"
 	"strconv"
 )
 
@@ -35,21 +35,21 @@ templ vacationList(term database.Term, vacations []database.Vacation) {
 						</p>
 					</div>
 					<p class="text-on-surface-dim">
-						{ interval.Dates(v.StartDate, v.EndDate).String() }
+						{ dates.Interval(v.StartDate, v.EndDate).String() }
 					</p>
 				</a>
 			}
 		</div>
 		<dl class="border-outline divide-outline mt-auto divide-y rounded-md border">
 			{{
-				termInterval := interval.Dates(term.StartDate, term.EndDate)
+				termInterval := dates.Interval(term.StartDate, term.EndDate)
 				termDays := termInterval.Days()
 				vacationDays := 0
 
 				for day := term.StartDate; termInterval.Contains(day); day = day.AddDate(0, 0, 1) {
 					inVacation := false
 					for _, v := range vacations {
-						vi := interval.Dates(v.StartDate, v.EndDate)
+						vi := dates.Interval(v.StartDate, v.EndDate)
 
 						if vi.Contains(day) {
 							inVacation = true

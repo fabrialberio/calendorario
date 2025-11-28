@@ -1,4 +1,4 @@
-package interval
+package dates
 
 import (
 	"time"
@@ -10,7 +10,7 @@ type DateInterval struct {
 	End   time.Time
 }
 
-func Dates(start time.Time, end time.Time) DateInterval {
+func Interval(start time.Time, end time.Time) DateInterval {
 	return DateInterval{start.Truncate(time.Hour), end.Truncate(time.Hour)}
 }
 

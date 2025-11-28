@@ -2,7 +2,7 @@ package views
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/interval"
+	"calendorario/pkg/dates"
 	"strconv"
 	"time"
 )
@@ -38,7 +38,7 @@ templ Calendar(
 ) {
 	{{
 		id := "calendar"
-		date := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+		firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 	}}
 	<div
 		id={ id }
@@ -48,7 +48,7 @@ templ Calendar(
 			<div class="card-group-row">
 				<button
 					class="button bg-surface-highest px-2"
-					x-on:click={ "month = await fetch('" + fetchMonthURL(date.AddDate(0, -1, 0)) + "')" }
+					x-on:click={ "month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, -1, 0)) + "')" }
 				>
 					<i class="fas fa-chevron-left"></i>
 				</button>
@@ -62,18 +62,18 @@ templ Calendar(
 				</button>
 				<button
 					class="button bg-surface-highest px-2"
-					x-on:click={ "month = await fetch('" + fetchMonthURL(date.AddDate(0, 1, 0)) + "')" }
+					x-on:click={ "month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, 1, 0)) + "')" }
 				>
 					<i class="fas fa-chevron-right"></i>
 				</button>
 			</div>
 			<h4 class="min-w-32">
-				{ interval.MonthNames[date.Month()] } { date.Year() }
+				{ dates.MonthNames[firstDay.Month()] } { firstDay.Year() }
 			</h4>
 		</div>
 		<div class="bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
 			{{
-				day := date
+				day := firstDay
 				numRows := 5
 
 				for day.Weekday() != time.Monday {
@@ -115,8 +115,8 @@ templ calendarRowVacation(
 	vacation database.Vacation,
 ) {
 	{{
-		weekInterval := interval.Dates(monday, monday.AddDate(0, 0, 6))
-		vacationInterval := interval.Dates(vacation.StartDate, vacation.EndDate)
+		weekInterval := dates.Interval(monday, monday.AddDate(0, 0, 6))
+		vacationInterval := dates.Interval(vacation.StartDate, vacation.EndDate)
 	}}
 	if vacationInterval.Overlaps(weekInterval) {
 		{{
@@ -124,11 +124,11 @@ templ calendarRowVacation(
 			endCol := 7
 
 			if weekInterval.Contains(vacation.StartDate) {
-				startCol = interval.Dates(monday, vacation.StartDate).Days() - 1
+				startCol = dates.Interval(monday, vacation.StartDate).Days() - 1
 			}
 
 			if weekInterval.Contains(vacation.EndDate) {
-				endCol = interval.Dates(monday, vacation.EndDate).Days()
+				endCol = dates.Interval(monday, vacation.EndDate).Days()
 			}
 		}}
 		<div
@@ -155,17 +155,17 @@ templ calendarRowVacation(
 
 templ calendarRowTermBounds(monday time.Time, term database.Term) {
 	{{
-		weekInterval := interval.Dates(monday, monday.AddDate(0, 0, 6))
+		weekInterval := dates.Interval(monday, monday.AddDate(0, 0, 6))
 
 		isStart := weekInterval.Contains(term.StartDate)
 		isEnd := weekInterval.Contains(term.EndDate)
 	}}
 	if isStart {
-		{{ boundCol := interval.Dates(monday, term.StartDate).Days() - 1 }}
+		{{ boundCol := dates.Interval(monday, term.StartDate).Days() - 1 }}
 		@calendarRowMessage("Inizio del periodo scolastico", term.Name, boundCol)
 	}
 	if isEnd {
-		{{ boundCol := interval.Dates(monday, term.EndDate).Days() }}
+		{{ boundCol := dates.Interval(monday, term.EndDate).Days() }}
 		@calendarRowMessage("Fine del periodo scolastico", term.Name, boundCol)
 	}
 }
@@ -217,7 +217,7 @@ templ calendarRowBackground(
 ) {
 	{{
 		day := monday
-		termInterval := interval.Dates(term.StartDate, term.EndDate)
+		termInterval := dates.Interval(term.StartDate, term.EndDate)
 	}}
 	for j := 0; j < 7; j++ {
 		<div
@@ -229,7 +229,7 @@ templ calendarRowBackground(
 		>
 			if isFirstRow {
 				<p class="text-on-surface-dim -mt-1 max-h-16 w-full text-center text-sm">
-					{ interval.WeekdayNicks[j] }
+					{ dates.WeekdayNicks[j] }
 				</p>
 			}
 			<div
@@ -243,7 +243,7 @@ templ calendarRowBackground(
 			>
 				{ day.Day() }
 				if day.Month() != month {
-					{ interval.MonthNicks[day.Month()] }
+					{ dates.MonthNicks[day.Month()] }
 				}
 			</div>
 		</div>

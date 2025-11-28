@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/interval"
+	"calendorario/pkg/dates"
 	"strconv"
 )
 
@@ -97,7 +97,7 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(interval.Dates(v.StartDate, v.EndDate).String())
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(dates.Interval(v.StartDate, v.EndDate).String())
 			if templ_7745c5c3_Err != nil {
 				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/vacation.templ`, Line: 38, Col: 55}
 			}
@@ -114,14 +114,14 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		termInterval := interval.Dates(term.StartDate, term.EndDate)
+		termInterval := dates.Interval(term.StartDate, term.EndDate)
 		termDays := termInterval.Days()
 		vacationDays := 0
 
 		for day := term.StartDate; termInterval.Contains(day); day = day.AddDate(0, 0, 1) {
 			inVacation := false
 			for _, v := range vacations {
-				vi := interval.Dates(v.StartDate, v.EndDate)
+				vi := dates.Interval(v.StartDate, v.EndDate)
 
 				if vi.Contains(day) {
 					inVacation = true

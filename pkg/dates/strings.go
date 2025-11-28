@@ -61,5 +61,8 @@ func DayString(date time.Time, showWeekDay bool, showDay bool, showYear bool) st
 	}
 
 	return result
+}
 
+func MonthString(year int, month time.Month) string {
+	return MonthNames[month] + " " + strconv.Itoa(year)
 }

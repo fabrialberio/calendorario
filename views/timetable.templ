@@ -25,7 +25,7 @@ templ timetable(date time.Time) {
 					<i class="fas fa-chevron-left"></i>
 				</button>
 				<button class="bg-surface-highest button">
-					{ monday.Day() }-{ monday.AddDate(0, 0, 6).Day() } { dates.MonthNames[date.Month()] } { date.Year() }
+					{ dates.MonthString(date.Year(), date.Month()) }
 				</button>
 				<button class="bg-surface-highest button">
 					<i class="fas fa-chevron-right"></i>

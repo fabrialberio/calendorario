@@ -31,7 +31,6 @@
     --color-surface: rgb(236 239 229);
     --color-surface-lowest: rgb(225 228 218);
     --color-on-surface: rgb(25 29 23);
-    --color-surface-dim: rgb(216 219 209);
     --color-on-surface-dim: rgb(115 121 110);
     --color-outline: rgb(195 200 187);
     --radius-sm: 6px;
@@ -273,9 +272,6 @@
   .z-20 {
     z-index: 20;
   }
-  .z-40 {
-    z-index: 40;
-  }
   .-mt-1 {
     margin-top: calc(var(--spacing) * -1);
   }
@@ -321,17 +317,11 @@
   .inline {
     display: inline;
   }
-  .table {
-    display: table;
-  }
   .h-4 {
     height: calc(var(--spacing) * 4);
   }
   .h-8 {
     height: calc(var(--spacing) * 8);
-  }
-  .h-10 {
-    height: calc(var(--spacing) * 10);
   }
   .h-12 {
     height: calc(var(--spacing) * 12);
@@ -347,9 +337,6 @@
   }
   .h-screen {
     height: 100vh;
-  }
-  .max-h-12 {
-    max-height: calc(var(--spacing) * 12);
   }
   .max-h-16 {
     max-height: calc(var(--spacing) * 16);
@@ -368,12 +355,6 @@
   }
   .w-8 {
     width: calc(var(--spacing) * 8);
-  }
-  .w-10 {
-    width: calc(var(--spacing) * 10);
-  }
-  .w-12 {
-    width: calc(var(--spacing) * 12);
   }
   .w-64 {
     width: calc(var(--spacing) * 64);
@@ -408,9 +389,6 @@
   .table-auto {
     table-layout: auto;
   }
-  .border-collapse {
-    border-collapse: collapse;
-  }
   .border-separate {
     border-collapse: separate;
   }
@@ -425,9 +403,6 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
-  }
-  .resize {
-    resize: both;
   }
   .grid-cols-7 {
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -512,15 +487,6 @@
       border-color: var(--color-outline);
     }
   }
-  .place-self-end {
-    place-self: end;
-  }
-  .place-self-start {
-    place-self: start;
-  }
-  .justify-self-end {
-    justify-self: flex-end;
-  }
   .justify-self-start {
     justify-self: flex-start;
   }
@@ -568,9 +534,6 @@
   .border-outline {
     border-color: var(--color-outline);
   }
-  .bg-error {
-    background-color: var(--color-error);
-  }
   .bg-primary {
     background-color: var(--color-primary);
   }
@@ -585,10 +548,6 @@
   }
   .bg-surface-highest {
     background-color: var(--color-surface-highest);
-  }
-  .striped-error {
-    background-image: repeating-linear-gradient(45deg, var(--color-error) 0, var(--color-error) 1px, transparent 0, transparent 50%);
-    background-size: 8px 8px;
   }
   .striped-outline {
     background-image: repeating-linear-gradient(45deg, var(--color-outline) 0, var(--color-outline) 1px, transparent 0, transparent 50%);
@@ -611,9 +570,6 @@
   }
   .px-3 {
     padding-inline: calc(var(--spacing) * 3);
-  }
-  .px-4 {
-    padding-inline: calc(var(--spacing) * 4);
   }
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
@@ -668,16 +624,9 @@
   .text-on-surface-dim {
     color: var(--color-on-surface-dim);
   }
-  .underline {
-    text-decoration-line: underline;
-  }
   .shadow-sm {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
   }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
@@ -1044,11 +993,6 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
@@ -1082,7 +1026,6 @@
       --tw-border-style: solid;
       --tw-divide-y-reverse: 0;
       --tw-font-weight: initial;
-      --tw-outline-style: solid;
     }
   }
 }

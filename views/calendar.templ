@@ -2,6 +2,7 @@ package views
 
 import (
 	"calendorario/pkg/database"
+	"calendorario/pkg/interval"
 	"strconv"
 	"time"
 )
@@ -169,18 +170,21 @@ templ calendarRowVacation(
 	isLastRow bool,
 	vacation database.Vacation,
 ) {
-	{{ sunday := monday.AddDate(0, 0, 7) }}
-	if vacation.EndDate.After(monday) && vacation.StartDate.Before(sunday) {
+	{{
+		weekInterval := interval.Dates(monday, monday.AddDate(0, 0, 6))
+		vacationInterval := interval.Dates(vacation.StartDate, vacation.EndDate)
+	}}
+	if vacationInterval.Overlaps(weekInterval) {
 		{{
 			startCol := 0
 			endCol := 7
 
-			if vacation.StartDate.After(monday) {
-				startCol = int(vacation.StartDate.Sub(monday).Hours() / 24)
+			if weekInterval.Contains(vacation.StartDate) {
+				startCol = interval.Dates(monday, vacation.StartDate).Days() - 1
 			}
 
-			if vacation.EndDate.Before(sunday) {
-				endCol = int(vacation.EndDate.AddDate(0, 0, 1).Sub(monday).Hours() / 24)
+			if weekInterval.Contains(vacation.EndDate) {
+				endCol = interval.Dates(monday, vacation.EndDate).Days()
 			}
 		}}
 		<div
@@ -207,17 +211,17 @@ templ calendarRowVacation(
 
 templ calendarRowTermBounds(monday time.Time, term database.Term) {
 	{{
-		sunday := monday.AddDate(0, 0, 7)
+		weekInterval := interval.Dates(monday, monday.AddDate(0, 0, 6))
 
-		isStart := term.StartDate.AddDate(0, 0, 1).After(monday) && term.StartDate.Before(sunday)
-		isEnd := term.EndDate.AddDate(0, 0, 1).After(monday) && term.EndDate.Before(sunday)
+		isStart := weekInterval.Contains(term.StartDate)
+		isEnd := weekInterval.Contains(term.EndDate)
 	}}
 	if isStart {
-		{{ boundCol := int(term.StartDate.Sub(monday).Hours() / 24) }}
+		{{ boundCol := interval.Dates(monday, term.StartDate).Days() - 1 }}
 		@calendarRowMessage("Inizio del periodo scolastico", term.Name, boundCol)
 	}
 	if isEnd {
-		{{ boundCol := int(term.EndDate.AddDate(0, 0, 1).Sub(monday).Hours() / 24) }}
+		{{ boundCol := interval.Dates(monday, term.EndDate).Days() }}
 		@calendarRowMessage("Fine del periodo scolastico", term.Name, boundCol)
 	}
 }
@@ -267,12 +271,15 @@ templ calendarRowBackground(
 	isFirstRow bool,
 	term database.Term,
 ) {
-	{{ day := monday }}
+	{{
+		day := monday
+		termInterval := interval.Dates(term.StartDate, term.EndDate)
+	}}
 	for j := 0; j < 7; j++ {
 		<div
 			class={
 				templ.KV("bg-surface-high", day.Month() != month),
-				templ.KV("striped-outline", day.Before(term.StartDate) || day.After(term.EndDate)),
+				templ.KV("striped-outline", !termInterval.Contains(day)),
 				"text-center w-full relative h-full p-2 py-2 not-last-of-type:border-r border-outline",
 			}
 		>
@@ -286,7 +293,7 @@ templ calendarRowBackground(
 					"rounded-full py-1 px-1 truncate",
 					templ.KV(
 						"bg-primary-container font-bold",
-						day.Day() == today.Day() && day.Month() == today.Month() && day.Year() == today.Year(),
+						day.Truncate(time.Hour).Equal(today.Truncate(time.Hour)),
 					),
 				}
 			>

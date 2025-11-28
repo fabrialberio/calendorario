@@ -561,7 +561,7 @@ func calendarRowMessage(title string, value string, boundCol int) templ.Componen
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var23 = []any{"bg-surface-highest rounded-sm px-2 py-1",
+		var templ_7745c5c3_Var23 = []any{"bg-surface-highest rounded-sm px-2 py-1 pointer-events-auto",
 			templ.KV("text-start", alignLeft),
 			templ.KV("text-end", !alignLeft),
 		}

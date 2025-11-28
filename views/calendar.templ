@@ -251,7 +251,7 @@ templ calendarRowMessage(title string, value string, boundCol int) {
 	>
 		<div
 			class={
-				"bg-surface-highest rounded-sm px-2 py-1",
+				"bg-surface-highest rounded-sm px-2 py-1 pointer-events-auto",
 				templ.KV("text-start", alignLeft),
 				templ.KV("text-end", !alignLeft),
 			}

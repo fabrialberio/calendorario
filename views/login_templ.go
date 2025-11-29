@@ -96,7 +96,7 @@ func Login(wrongUsernamePassword bool, sessionExpired bool) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" x-bind:type=\"show_password ? 'text' : 'password'\" autocomplete=\"current-password\" placeholder=\"Password\"></div><div><button class=\"checkbox align-middle\" type=\"button\" x-on:click=\"show_password = !show_password\"><i class=\"fa-check fas\" x-show=\"show_password\"></i> <input id=\"checkbox\" type=\"checkbox\" tabindex=\"-1\" hidden x-bind:checked=\"show_password\"></button> <label class=\"ml-1\" for=\"checkbox\">Mostra password</label></div></div><button type=\"submit\" class=\"button bg-primary text-on-primary h-12 w-full\">Accedi</button></form></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\" x-bind:type=\"show_password ? 'text' : 'password'\" autocomplete=\"current-password\" placeholder=\"Password\"></div><div class=\"select-none space-x-1\"><button class=\"checkbox align-middle\" type=\"button\" x-on:click=\"show_password = !show_password\"><i class=\"fa-check fas\" x-show=\"show_password\"></i> <input id=\"checkbox\" type=\"checkbox\" tabindex=\"-1\" hidden x-bind:checked=\"show_password\"></button> <label for=\"checkbox\">Mostra password</label></div></div><button type=\"submit\" class=\"button bg-primary text-on-primary h-12 w-full\">Accedi</button></form></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

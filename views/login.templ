@@ -41,7 +41,7 @@ templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 							placeholder="Password"
 						/>
 					</div>
-					<div>
+					<div class="select-none space-x-1">
 						<button
 							class="checkbox align-middle"
 							type="button"
@@ -56,7 +56,7 @@ templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 								x-bind:checked="show_password"
 							/>
 						</button>
-						<label class="ml-1" for="checkbox">Mostra password</label>
+						<label for="checkbox">Mostra password</label>
 					</div>
 				</div>
 				<button type="submit" class="button bg-primary text-on-primary h-12 w-full">

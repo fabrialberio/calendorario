@@ -8,22 +8,35 @@ import (
 	"net/http"
 )
 
+type Handler struct{}
+
+func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		h.Get(w, r)
+	case http.MethodPost:
+		h.Post(w, r)
+	default:
+		http.Error(w, "Method not allowed.", http.StatusMethodNotAllowed)
+	}
+}
+
 const errorQueryParam = "error"
 
-func Get(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	s := session.FromContext(r.Context())
 	_, err := s.User()
 
 	if errors.Is(err, session.ErrCookieExpired) {
-		Login(false, true).Render(r.Context(), w)
+		View(false, true).Render(r.Context(), w)
 	} else if err != nil {
-		Login(r.URL.Query().Has(errorQueryParam), false).Render(r.Context(), w)
+		View(r.URL.Query().Has(errorQueryParam), false).Render(r.Context(), w)
 	} else {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 }
 
-func Post(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue(string(routes.KeyUsername))
 	password := r.FormValue(string(routes.KeyPassword))
 

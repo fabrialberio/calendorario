@@ -59,27 +59,6 @@ templ VacationEditPage(vacation database.Vacation, isNew bool) {
 	)
 }
 
-templ CalendarPage(year int, month time.Month) {
-	{{
-		today := time.Now()
-
-		s := session.FromContext(ctx)
-		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
-		vacations, _ := s.Database.ListVacationsWithTermID(ctx, term.ID)
-	}}
-	<!DOCTYPE html>
-	<html>
-		@Head()
-		<body>
-			@sidebar(0, term)
-			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
-				@calendarView(year, month, today, term, vacations)
-				@vacationList(term, vacations)
-			</main>
-		</body>
-	</html>
-}
-
 templ TimetableClassPage(date time.Time) {
 	{{
 		s := session.FromContext(ctx)
@@ -89,7 +68,7 @@ templ TimetableClassPage(date time.Time) {
 	<html>
 		@Head()
 		<body>
-			@sidebar(1, term)
+			@Sidebar(1, term)
 			<main class="ml-64 grid place-items-center space-y-8 p-4">
 				<div class="w-full max-w-4xl space-y-2">
 					<h2>

@@ -1,0 +1,29 @@
+package calendar
+
+import (
+	"calendorario/pkg/session"
+	"calendorario/routes"
+	monthRoute "calendorario/routes/month"
+	"time"
+)
+
+templ View(year int, month time.Month) {
+	{{
+		today := time.Now()
+
+		s := session.FromContext(ctx)
+		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
+		vacations, _ := s.Database.ListVacationsWithTermID(ctx, term.ID)
+	}}
+	<!DOCTYPE html>
+	<html>
+		@routes.Head()
+		<body>
+			@routes.Sidebar(0, term)
+			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
+				@monthRoute.View(year, month, today, term, vacations)
+				@VacationList(term, vacations)
+			</main>
+		</body>
+	</html>
+}

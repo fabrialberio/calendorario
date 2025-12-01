@@ -1,16 +1,17 @@
-package routes
+package month
 
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/dates"
+	"calendorario/routes"
 	"time"
 )
 
 func fetchMonthURL(date time.Time) string {
-	return RouteMonth + "?" + KeyCalendarDate + "=" + date.Format(time.DateOnly)
+	return routes.RouteMonth + "?" + routes.KeyCalendarDate + "=" + date.Format(time.DateOnly)
 }
 
-templ calendarView(
+templ View(
 	year int,
 	month time.Month,
 	today time.Time,
@@ -24,11 +25,11 @@ templ calendarView(
 		x-data={ "{ initial: document.getElementById('" + id + "').innerHTML, month: null }" }
 		x-html={ "month == null ? initial : month.text()" }
 	>
-		@Calendar(year, month, today, term, vacations)
+		@innerView(year, month, today, term, vacations)
 	</div>
 }
 
-templ Calendar(
+templ innerView(
 	year int,
 	month time.Month,
 	today time.Time,
@@ -114,8 +115,6 @@ templ Calendar(
 		</div>
 	</div>
 }
-
-const vacationEventColor = "#d8dbd1"
 
 templ calendarEvent(title string, destination string, colorHex string) {
 	<a

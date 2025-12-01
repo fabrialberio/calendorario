@@ -1,8 +1,9 @@
-package routes
+package month
 
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/dates"
+	"calendorario/routes"
 	"strconv"
 	"time"
 )
@@ -43,8 +44,8 @@ templ calendarRowVacation(
 			<div class="h-full">
 				@calendarEvent(
 					vacation.Name,
-					RouteAdminVacation+"/"+strconv.Itoa(int(vacation.ID)),
-					vacationEventColor,
+					routes.RouteAdminVacation+"/"+strconv.Itoa(int(vacation.ID)),
+					EventColorVacation,
 				)
 			</div>
 		</div>

@@ -14,7 +14,7 @@ var sidebarRows = []sidebarRow{
 	sidebarRow{"fa-arrow-right-from-bracket", "Esci", RouteLogout},
 }
 
-templ sidebar(selectedIndex int, currentTerm database.Term) {
+templ Sidebar(selectedIndex int, currentTerm database.Term) {
 	<aside class="fixed left-0 top-0 z-10 h-full w-64 translate-x-0 transition-transform">
 		<nav class="h-full space-y-4 p-4">
 			<a
@@ -57,7 +57,7 @@ templ sidebar(selectedIndex int, currentTerm database.Term) {
 	<div class="bg-surface fixed left-64 top-0 -z-50 h-full w-full rounded-tl-lg shadow-sm"></div>
 }
 
-templ sidebarScaffold(
+templ SidebarScaffold(
 	sidebarIndex int,
 	currentTerm database.Term,
 	content templ.Component,
@@ -66,10 +66,9 @@ templ sidebarScaffold(
 	<html>
 		@Head()
 		<body>
-			@sidebar(sidebarIndex, currentTerm)
+			@Sidebar(sidebarIndex, currentTerm)
 			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
-				{{ contentFunc := func() templ.Component { return content } }}
-				@contentFunc()
+				@content
 			</main>
 		</body>
 	</html>

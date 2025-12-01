@@ -22,7 +22,7 @@ var sidebarRows = []sidebarRow{
 	sidebarRow{"fa-arrow-right-from-bracket", "Esci", RouteLogout},
 }
 
-func sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
+func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -170,7 +170,7 @@ func sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 	})
 }
 
-func sidebarScaffold(
+func SidebarScaffold(
 	sidebarIndex int,
 	currentTerm database.Term,
 	content templ.Component,
@@ -207,7 +207,7 @@ func sidebarScaffold(
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = sidebar(sidebarIndex, currentTerm).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Sidebar(sidebarIndex, currentTerm).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -215,8 +215,7 @@ func sidebarScaffold(
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		contentFunc := func() templ.Component { return content }
-		templ_7745c5c3_Err = contentFunc().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = content.Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -203,9 +203,9 @@ func newTermCard() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 templ.SafeURL
-		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinURLErrs(DestAdminTerm + "/new")
+		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinURLErrs(DestAdminTerm)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 66, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 66, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {

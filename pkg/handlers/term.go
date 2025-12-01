@@ -10,10 +10,10 @@ import (
 func AdminLoadTermGet(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
-		http.Redirect(w, r, routes.DestAdmin, http.StatusSeeOther)
+		http.Redirect(w, r, routes.RouteAdmin, http.StatusSeeOther)
 	}
 
 	session.SetTermCookie(w, id)
 
-	http.Redirect(w, r, routes.DestAdminCalendar, http.StatusSeeOther)
+	http.Redirect(w, r, routes.RouteAdminCalendar, http.StatusSeeOther)
 }

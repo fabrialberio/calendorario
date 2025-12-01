@@ -70,5 +70,5 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 		s.Database.DeleteTerm(r.Context(), int64(id))
 	}
 
-	http.Redirect(w, r, routes.DestAdmin, http.StatusSeeOther)
+	http.Redirect(w, r, routes.RouteAdmin, http.StatusSeeOther)
 }

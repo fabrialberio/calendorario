@@ -19,15 +19,15 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	user, err := s.User()
 
 	if err != nil {
-		http.Redirect(w, r, routes.DestLogin, http.StatusSeeOther)
+		http.Redirect(w, r, routes.RouteLogin, http.StatusSeeOther)
 	} else {
 		switch user.Role {
 		case database.RoleAdministrator:
-			http.Redirect(w, r, routes.DestAdmin, http.StatusSeeOther)
+			http.Redirect(w, r, routes.RouteAdmin, http.StatusSeeOther)
 		case database.RoleSecretary:
-			http.Redirect(w, r, routes.DestSecretary, http.StatusSeeOther)
+			http.Redirect(w, r, routes.RouteSecretary, http.StatusSeeOther)
 		case database.RoleTeacher:
-			http.Redirect(w, r, routes.DestTeacher, http.StatusSeeOther)
+			http.Redirect(w, r, routes.RouteTeacher, http.StatusSeeOther)
 		}
 	}
 }

@@ -36,7 +36,7 @@ func WithUserCheck(checker UserCheckerFunc, next http.Handler) http.Handler {
 		s := session.FromContext(r.Context())
 		user, err := s.User()
 		if err != nil {
-			http.Redirect(w, r, routes.DestLogout, http.StatusSeeOther)
+			http.Redirect(w, r, routes.RouteLogout, http.StatusSeeOther)
 			return
 		}
 

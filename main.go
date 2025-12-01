@@ -94,26 +94,26 @@ func addAdminUserIfNotExists(db *database.Queries) {
 
 func setupRoutes(mux *http.ServeMux) {
 	mux.Handle("/", &index.Handler{})
-	mux.Handle(routes.DestLogin, &login.Handler{})
-	mux.Handle(routes.DestLogout, &logout.Handler{})
+	mux.Handle(routes.RouteLogin, &login.Handler{})
+	mux.Handle(routes.RouteLogout, &logout.Handler{})
 	mux.Handle("GET /public/", http.FileServerFS(publicFS))
 
-	mux.HandleFunc("GET "+routes.DestMonth, handlers.CalendarGet)
+	mux.HandleFunc("GET "+routes.RouteMonth, handlers.CalendarGet)
 
 	adminMux := http.NewServeMux()
-	adminMux.Handle(routes.DestAdmin, templ.Handler(routes.TermsPage()))
+	adminMux.Handle(routes.RouteAdmin, templ.Handler(routes.TermsPage()))
 	//adminMux.Handle("GET "+routes.DestAdmin, templ.Handler(routes.TermsPage()))
 
-	adminMux.Handle(routes.DestAdminTerm, &term.Handler{})
-	adminMux.HandleFunc("GET "+routes.DestAdminLoadTerm+"/{id}", handlers.AdminLoadTermGet)
+	adminMux.Handle(routes.RouteAdminTerm, &term.Handler{})
+	adminMux.HandleFunc("GET "+routes.RouteAdminLoadTerm+"/{id}", handlers.AdminLoadTermGet)
 
-	adminMux.HandleFunc("GET "+routes.DestAdminVacation+"/{id}", handlers.AdminVacationGet)
-	adminMux.HandleFunc("POST "+routes.DestAdminVacation, handlers.AdminVacationPost)
+	adminMux.HandleFunc("GET "+routes.RouteAdminVacation+"/{id}", handlers.AdminVacationGet)
+	adminMux.HandleFunc("POST "+routes.RouteAdminVacation, handlers.AdminVacationPost)
 
-	adminMux.Handle("GET "+routes.DestAdminCalendar, templ.Handler(routes.CalendarPage(time.Now().Year(), time.Now().Month())))
-	adminMux.Handle("GET "+routes.DestAdminTimetableClass, templ.Handler(routes.TimetableClassPage(time.Now())))
+	adminMux.Handle("GET "+routes.RouteAdminCalendar, templ.Handler(routes.CalendarPage(time.Now().Year(), time.Now().Month())))
+	adminMux.Handle("GET "+routes.RouteAdminTimetableClass, templ.Handler(routes.TimetableClassPage(time.Now())))
 
-	mux.Handle(routes.DestAdmin, middleware.WithUserCheck(
+	mux.Handle(routes.RouteAdmin, middleware.WithUserCheck(
 		func(u *database.User) bool { return u.Role == database.RoleAdministrator },
 		adminMux,
 	))

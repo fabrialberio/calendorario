@@ -19,7 +19,7 @@ templ TermsPage() {
 		@Head()
 		<body class="grid place-items-center">
 			<header class="absolute left-0 top-0 flex w-full flex-row p-4">
-				<a class="clickable button mr-auto h-12 px-3" href={ DestLogout }>
+				<a class="clickable button mr-auto h-12 px-3" href={ RouteLogout }>
 					<i class="fa-arrow-right-from-bracket fas"></i>
 					Esci
 				</a>
@@ -41,7 +41,7 @@ templ VacationEditPage(vacation database.Vacation, isNew bool) {
 	}}
 	@FormScaffold(
 		"Vacanza o festività",
-		DestAdminVacation,
+		RouteAdminVacation,
 		int(vacation.ID),
 		KeyVacationID,
 		isNew,

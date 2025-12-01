@@ -44,7 +44,7 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue(string(KeyUsername))
 	password := r.FormValue(string(KeyPassword))
 
-	var destLoginError = routes.DestLogin + "?" + errorQueryParam
+	var destLoginError = routes.RouteLogin + "?" + errorQueryParam
 
 	s := session.FromContext(r.Context())
 	user, err := s.Database.GetUserWithUsername(r.Context(), username)

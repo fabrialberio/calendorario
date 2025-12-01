@@ -59,5 +59,5 @@ func AdminVacationPost(w http.ResponseWriter, r *http.Request) {
 		s.Database.DeleteVacation(r.Context(), int64(id))
 	}
 
-	http.Redirect(w, r, routes.DestAdminCalendar, http.StatusSeeOther)
+	http.Redirect(w, r, routes.RouteAdminCalendar, http.StatusSeeOther)
 }

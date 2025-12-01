@@ -95,7 +95,7 @@ func calendarRowVacation(
 			}
 			templ_7745c5c3_Err = calendarEvent(
 				vacation.Name,
-				DestAdminVacation+"/"+strconv.Itoa(int(vacation.ID)),
+				RouteAdminVacation+"/"+strconv.Itoa(int(vacation.ID)),
 				vacationEventColor,
 			).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {

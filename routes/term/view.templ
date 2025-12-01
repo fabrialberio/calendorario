@@ -8,7 +8,7 @@ import (
 templ View(term database.Term, isNew bool) {
 	@routes.FormScaffold(
 		"Periodo scolastico",
-		routes.DestAdminTerm,
+		routes.RouteAdminTerm,
 		int(term.ID),
 		KeyID,
 		isNew,

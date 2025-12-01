@@ -15,7 +15,7 @@ import (
 )
 
 func fetchMonthURL(date time.Time) string {
-	return DestMonth + "?" + KeyCalendarDate + "=" + date.Format(time.DateOnly)
+	return RouteMonth + "?" + KeyCalendarDate + "=" + date.Format(time.DateOnly)
 }
 
 func calendarView(

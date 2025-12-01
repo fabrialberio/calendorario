@@ -1,4 +1,4 @@
-package handlers
+package index
 
 import (
 	"calendorario/pkg/database"
@@ -8,7 +8,9 @@ import (
 	"net/http"
 )
 
-func Index(w http.ResponseWriter, r *http.Request) {
+type Handler struct{}
+
+func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed.", http.StatusMethodNotAllowed)
 	}
@@ -28,10 +30,4 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, routes.DestTeacher, http.StatusSeeOther)
 		}
 	}
-}
-
-func LogoutGet(w http.ResponseWriter, r *http.Request) {
-	session.UnsetAuthenticatedUser(w)
-	session.UnsetTermCookie(w)
-	http.Redirect(w, r, routes.DestLogin, http.StatusSeeOther)
 }

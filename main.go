@@ -6,7 +6,9 @@ import (
 	"calendorario/pkg/middleware"
 	"calendorario/pkg/session"
 	"calendorario/routes"
+	"calendorario/routes/index"
 	"calendorario/routes/login"
+	"calendorario/routes/logout"
 	"context"
 
 	"github.com/a-h/templ"
@@ -90,10 +92,9 @@ func addAdminUserIfNotExists(db *database.Queries) {
 }
 
 func setupRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("/", handlers.Index)
-	mux.HandleFunc("GET "+routes.DestLogin, login.Get)
-	mux.HandleFunc("POST "+routes.DestLogin, login.Post)
-	mux.HandleFunc("GET "+routes.DestLogout, handlers.LogoutGet)
+	mux.Handle("/", &index.Handler{})
+	mux.Handle(routes.DestLogin, &login.Handler{})
+	mux.Handle(routes.DestLogout, &logout.Handler{})
 	mux.Handle("GET /public/", http.FileServerFS(publicFS))
 
 	mux.HandleFunc("GET "+routes.DestMonth, handlers.CalendarGet)

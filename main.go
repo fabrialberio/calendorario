@@ -9,6 +9,7 @@ import (
 	"calendorario/routes/index"
 	"calendorario/routes/login"
 	"calendorario/routes/logout"
+	"calendorario/routes/term"
 	"context"
 
 	"github.com/a-h/templ"
@@ -102,8 +103,7 @@ func setupRoutes(mux *http.ServeMux) {
 	adminMux := http.NewServeMux()
 	adminMux.Handle("GET "+routes.DestAdmin, templ.Handler(routes.TermsPage()))
 
-	adminMux.HandleFunc("GET "+routes.DestAdminTerm+"/{id}", handlers.AdminTermGet)
-	adminMux.HandleFunc("POST "+routes.DestAdminTerm, handlers.AdminTermPost)
+	adminMux.Handle(routes.DestAdminTerm+"/{id}", &term.Handler{})
 	adminMux.HandleFunc("GET "+routes.DestAdminLoadTerm+"/{id}", handlers.AdminLoadTermGet)
 
 	adminMux.HandleFunc("GET "+routes.DestAdminVacation+"/{id}", handlers.AdminVacationGet)

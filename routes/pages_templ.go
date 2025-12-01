@@ -90,7 +90,7 @@ func TermsPage() templ.Component {
 	})
 }
 
-func TermEditPage(term database.Term, isNew bool) templ.Component {
+func VacationEditPage(vacation database.Vacation, isNew bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -111,67 +111,23 @@ func TermEditPage(term database.Term, isNew bool) templ.Component {
 			templ_7745c5c3_Var4 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = formScaffold(
-			"Periodo scolastico",
-			DestAdminTerm,
-			int(term.ID),
-			isNew,
-			[]templ.Component{
-				formInputText("Nome del periodo", KeyTermName, term.Name),
-				formInputTwoDates(
-					"Date di inizio e fine",
-					KeyTermStartDate,
-					term.StartDate,
-					KeyTermEndDate,
-					term.EndDate,
-				),
-			},
-		).Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		return nil
-	})
-}
-
-func VacationEditPage(vacation database.Vacation, isNew bool) templ.Component {
-	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
-			return templ_7745c5c3_CtxErr
-		}
-		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-		if !templ_7745c5c3_IsBuffer {
-			defer func() {
-				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err == nil {
-					templ_7745c5c3_Err = templ_7745c5c3_BufErr
-				}
-			}()
-		}
-		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var5 == nil {
-			templ_7745c5c3_Var5 = templ.NopComponent
-		}
-		ctx = templ.ClearChildren(ctx)
 		s := session.FromContext(ctx)
 		terms, _ := s.Database.ListTerms(ctx)
-		templ_7745c5c3_Err = formScaffold(
+		templ_7745c5c3_Err = FormScaffold(
 			"Vacanza o festività",
 			DestAdminVacation,
 			int(vacation.ID),
 			isNew,
 			[]templ.Component{
-				formInputText("Nome della vacanza", KeyVacationName, vacation.Name),
-				formInputTwoDates(
+				FormInputText("Nome della vacanza", KeyVacationName, vacation.Name),
+				FormInputTwoDates(
 					"Date di inizio e fine",
 					KeyVacationStartDate,
 					vacation.StartDate,
 					KeyVacationEndDate,
 					vacation.EndDate,
 				),
-				formInputSelectTerm(KeyVacationTermID, int(vacation.TermID), terms),
+				FormInputSelectTerm(KeyVacationTermID, int(vacation.TermID), terms),
 			},
 		).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
@@ -197,9 +153,9 @@ func CalendarPage(year int, month time.Month) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var6 == nil {
-			templ_7745c5c3_Var6 = templ.NopComponent
+		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var5 == nil {
+			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		today := time.Now()
@@ -259,9 +215,9 @@ func TimetableClassPage(date time.Time) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var7 == nil {
-			templ_7745c5c3_Var7 = templ.NopComponent
+		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var6 == nil {
+			templ_7745c5c3_Var6 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		s := session.FromContext(ctx)

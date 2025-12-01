@@ -34,45 +34,26 @@ templ TermsPage() {
 	</html>
 }
 
-templ TermEditPage(term database.Term, isNew bool) {
-	@formScaffold(
-		"Periodo scolastico",
-		DestAdminTerm,
-		int(term.ID),
-		isNew,
-		[]templ.Component{
-			formInputText("Nome del periodo", KeyTermName, term.Name),
-			formInputTwoDates(
-				"Date di inizio e fine",
-				KeyTermStartDate,
-				term.StartDate,
-				KeyTermEndDate,
-				term.EndDate,
-			),
-		},
-	)
-}
-
 templ VacationEditPage(vacation database.Vacation, isNew bool) {
 	{{
 		s := session.FromContext(ctx)
 		terms, _ := s.Database.ListTerms(ctx)
 	}}
-	@formScaffold(
+	@FormScaffold(
 		"Vacanza o festività",
 		DestAdminVacation,
 		int(vacation.ID),
 		isNew,
 		[]templ.Component{
-			formInputText("Nome della vacanza", KeyVacationName, vacation.Name),
-			formInputTwoDates(
+			FormInputText("Nome della vacanza", KeyVacationName, vacation.Name),
+			FormInputTwoDates(
 				"Date di inizio e fine",
 				KeyVacationStartDate,
 				vacation.StartDate,
 				KeyVacationEndDate,
 				vacation.EndDate,
 			),
-			formInputSelectTerm(KeyVacationTermID, int(vacation.TermID), terms),
+			FormInputSelectTerm(KeyVacationTermID, int(vacation.TermID), terms),
 		},
 	)
 }

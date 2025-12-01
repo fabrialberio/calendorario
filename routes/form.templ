@@ -3,7 +3,7 @@ package routes
 import "time"
 import "calendorario/pkg/database"
 
-templ formScaffold(title string, action string, hiddenID int, isNew bool, inputs []templ.Component) {
+templ FormScaffold(title string, action string, hiddenID int, isNew bool, inputs []templ.Component) {
 	<!DOCTYPE html>
 	<html>
 		@Head()
@@ -18,8 +18,7 @@ templ formScaffold(title string, action string, hiddenID int, isNew bool, inputs
 				</h2>
 				<input type="hidden" name={ KeyTermID } value={ hiddenID }/>
 				for i := 0; i < len(inputs); i++ {
-					{{ inputFunc := func() templ.Component { return inputs[i] } }}
-					@inputFunc()
+					@inputs[i]
 				}
 				<div class="flex flex-row-reverse pt-4">
 					if isNew {
@@ -43,7 +42,7 @@ templ formScaffold(title string, action string, hiddenID int, isNew bool, inputs
 	</html>
 }
 
-templ formInputText(label string, name string, value string) {
+templ FormInputText(label string, name string, value string) {
 	{{ id := name + "_input" }}
 	<div>
 		<label class="text-on-surface-dim" for={ id }>{ label }</label>
@@ -51,7 +50,7 @@ templ formInputText(label string, name string, value string) {
 	</div>
 }
 
-templ formInputDate(label string, name string, value time.Time) {
+templ FormInputDate(label string, name string, value time.Time) {
 	{{ id := name + "_input" }}
 	<div>
 		<label class="text-on-surface-dim" for={ id }>{ label }</label>
@@ -59,7 +58,7 @@ templ formInputDate(label string, name string, value time.Time) {
 	</div>
 }
 
-templ formInputTwoDates(
+templ FormInputTwoDates(
 	label string,
 	firstName string,
 	firstValue time.Time,
@@ -76,7 +75,7 @@ templ formInputTwoDates(
 	</div>
 }
 
-templ formInputSelectTerm(name string, selectedTermID int, terms []database.Term) {
+templ FormInputSelectTerm(name string, selectedTermID int, terms []database.Term) {
 	{{ id := name + "_select" }}
 	<div>
 		<label class="text-on-surface-dim" for={ id }>Periodo scolastico</label>

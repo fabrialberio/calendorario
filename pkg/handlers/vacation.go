@@ -33,16 +33,16 @@ func AdminVacationGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func AdminVacationPost(w http.ResponseWriter, r *http.Request) {
-	id, _ := strconv.Atoi(r.FormValue(routes.KeyTermID))
-	startDate, _ := time.Parse(time.DateOnly, r.FormValue(routes.KeyTermStartDate))
-	endDate, _ := time.Parse(time.DateOnly, r.FormValue(routes.KeyTermEndDate))
+	id, _ := strconv.Atoi(r.FormValue(routes.KeyVacationID))
+	startDate, _ := time.Parse(time.DateOnly, r.FormValue(routes.KeyVacationStartDate))
+	endDate, _ := time.Parse(time.DateOnly, r.FormValue(routes.KeyVacationEndDate))
 	termID, _ := strconv.Atoi(r.FormValue(routes.KeyVacationTermID))
 
 	s := session.FromContext(r.Context())
 
 	if r.Form.Has(routes.FlagCreate) {
 		s.Database.CreateVacation(r.Context(), database.CreateVacationParams{
-			Name:      r.FormValue(routes.KeyTermName),
+			Name:      r.FormValue(routes.KeyVacationName),
 			StartDate: startDate,
 			EndDate:   endDate,
 			TermID:    int64(termID),
@@ -50,7 +50,7 @@ func AdminVacationPost(w http.ResponseWriter, r *http.Request) {
 	} else if r.Form.Has(routes.FlagUpdate) {
 		s.Database.UpdateVacation(r.Context(), database.UpdateVacationParams{
 			ID:        int64(id),
-			Name:      r.FormValue(routes.KeyTermName),
+			Name:      r.FormValue(routes.KeyVacationName),
 			StartDate: startDate,
 			EndDate:   endDate,
 			TermID:    int64(termID),

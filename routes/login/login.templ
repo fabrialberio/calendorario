@@ -1,14 +1,16 @@
-package routes
+package login
+
+import "calendorario/routes"
 
 templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 	<!DOCTYPE html>
 	<html>
-		@head()
+		@routes.Head()
 		<body class="fixed grid h-screen w-screen place-items-center">
 			<form
 				class="bg-surface w-full max-w-sm space-y-8 rounded-lg p-4 shadow-sm"
 				method="POST"
-				action={ DestLogin }
+				action={ routes.DestLogin }
 			>
 				<div class="space-y-2">
 					<h2>Calendorario</h2>
@@ -25,7 +27,7 @@ templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 						<label for="username" class="sr-only">Username</label>
 						<input
 							id="username"
-							name={ KeyUsername }
+							name={ routes.KeyUsername }
 							type="username"
 							autocomplete="username"
 							placeholder="Username"
@@ -35,7 +37,7 @@ templ Login(wrongUsernamePassword bool, sessionExpired bool) {
 						<label for="password" class="sr-only">Password</label>
 						<input
 							id="password"
-							name={ KeyPassword }
+							name={ routes.KeyPassword }
 							x-bind:type="show_password ? 'text' : 'password'"
 							autocomplete="current-password"
 							placeholder="Password"

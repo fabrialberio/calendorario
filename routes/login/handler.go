@@ -8,6 +8,12 @@ import (
 	"net/http"
 )
 
+const (
+	KeyUsername     = "username"
+	KeyPassword     = "password"
+	errorQueryParam = "error"
+)
+
 type Handler struct{}
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -20,8 +26,6 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed.", http.StatusMethodNotAllowed)
 	}
 }
-
-const errorQueryParam = "error"
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	s := session.FromContext(r.Context())
@@ -37,8 +41,8 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
-	username := r.FormValue(string(routes.KeyUsername))
-	password := r.FormValue(string(routes.KeyPassword))
+	username := r.FormValue(string(KeyUsername))
+	password := r.FormValue(string(KeyPassword))
 
 	var destLoginError = routes.DestLogin + "?" + errorQueryParam
 

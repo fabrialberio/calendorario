@@ -1,15 +1,7 @@
 package routes
 
 const (
-	KeyUsername = "username"
-	KeyPassword = "password"
-
 	KeyCalendarDate = "date"
-
-	KeyTermID        = "id"
-	KeyTermName      = "name"
-	KeyTermStartDate = "start_date"
-	KeyTermEndDate   = "end_date"
 
 	KeyVacationID        = "id"
 	KeyVacationName      = "name"

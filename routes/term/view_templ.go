@@ -38,14 +38,15 @@ func View(term database.Term, isNew bool) templ.Component {
 			"Periodo scolastico",
 			routes.DestAdminTerm,
 			int(term.ID),
+			KeyID,
 			isNew,
 			[]templ.Component{
-				routes.FormInputText("Nome del periodo", routes.KeyTermName, term.Name),
+				routes.FormInputText("Nome del periodo", KeyName, term.Name),
 				routes.FormInputTwoDates(
 					"Date di inizio e fine",
-					routes.KeyTermStartDate,
+					KeyStartDate,
 					term.StartDate,
-					routes.KeyTermEndDate,
+					KeyEndDate,
 					term.EndDate,
 				),
 			},

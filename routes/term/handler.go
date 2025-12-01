@@ -9,6 +9,13 @@ import (
 	"time"
 )
 
+const (
+	KeyID        = "id"
+	KeyName      = "name"
+	KeyStartDate = "start_date"
+	KeyEndDate   = "end_date"
+)
+
 type Handler struct{}
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -23,7 +30,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.FormValue(routes.KeyTermID))
+	id, err := strconv.Atoi(r.FormValue(KeyID))
 	if err != nil {
 		View(database.Term{}, true).Render(r.Context(), w)
 		return
@@ -40,22 +47,22 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
-	id, _ := strconv.Atoi(r.FormValue(routes.KeyTermID))
-	startDate, _ := time.Parse(time.DateOnly, r.FormValue(routes.KeyTermStartDate))
-	endDate, _ := time.Parse(time.DateOnly, r.FormValue(routes.KeyTermEndDate))
+	id, _ := strconv.Atoi(r.FormValue(KeyID))
+	startDate, _ := time.Parse(time.DateOnly, r.FormValue(KeyStartDate))
+	endDate, _ := time.Parse(time.DateOnly, r.FormValue(KeyEndDate))
 
 	s := session.FromContext(r.Context())
 
 	if r.Form.Has(routes.FlagCreate) {
 		s.Database.CreateTerm(r.Context(), database.CreateTermParams{
-			Name:      r.FormValue(routes.KeyTermName),
+			Name:      r.FormValue(KeyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 		})
 	} else if r.Form.Has(routes.FlagUpdate) {
 		s.Database.UpdateTerm(r.Context(), database.UpdateTermParams{
 			ID:        int64(id),
-			Name:      r.FormValue(routes.KeyTermName),
+			Name:      r.FormValue(KeyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 		})

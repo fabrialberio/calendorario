@@ -5,7 +5,7 @@ import (
 	"calendorario/pkg/handlers"
 	"calendorario/pkg/middleware"
 	"calendorario/pkg/session"
-	"calendorario/views"
+	"calendorario/routes"
 	"context"
 
 	"github.com/a-h/templ"
@@ -90,27 +90,27 @@ func addAdminUserIfNotExists(db *database.Queries) {
 
 func setupRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/", handlers.Index)
-	mux.HandleFunc("GET "+views.DestLogin, handlers.LoginGet)
-	mux.HandleFunc("POST "+views.DestLogin, handlers.LoginPost)
-	mux.HandleFunc("GET "+views.DestLogout, handlers.LogoutGet)
+	mux.HandleFunc("GET "+routes.DestLogin, handlers.LoginGet)
+	mux.HandleFunc("POST "+routes.DestLogin, handlers.LoginPost)
+	mux.HandleFunc("GET "+routes.DestLogout, handlers.LogoutGet)
 	mux.Handle("GET /public/", http.FileServerFS(publicFS))
 
-	mux.HandleFunc("GET "+views.DestMonth, handlers.CalendarGet)
+	mux.HandleFunc("GET "+routes.DestMonth, handlers.CalendarGet)
 
 	adminMux := http.NewServeMux()
-	adminMux.Handle("GET "+views.DestAdmin, templ.Handler(views.TermsPage()))
+	adminMux.Handle("GET "+routes.DestAdmin, templ.Handler(routes.TermsPage()))
 
-	adminMux.HandleFunc("GET "+views.DestAdminTerm+"/{id}", handlers.AdminTermGet)
-	adminMux.HandleFunc("POST "+views.DestAdminTerm, handlers.AdminTermPost)
-	adminMux.HandleFunc("GET "+views.DestAdminLoadTerm+"/{id}", handlers.AdminLoadTermGet)
+	adminMux.HandleFunc("GET "+routes.DestAdminTerm+"/{id}", handlers.AdminTermGet)
+	adminMux.HandleFunc("POST "+routes.DestAdminTerm, handlers.AdminTermPost)
+	adminMux.HandleFunc("GET "+routes.DestAdminLoadTerm+"/{id}", handlers.AdminLoadTermGet)
 
-	adminMux.HandleFunc("GET "+views.DestAdminVacation+"/{id}", handlers.AdminVacationGet)
-	adminMux.HandleFunc("POST "+views.DestAdminVacation, handlers.AdminVacationPost)
+	adminMux.HandleFunc("GET "+routes.DestAdminVacation+"/{id}", handlers.AdminVacationGet)
+	adminMux.HandleFunc("POST "+routes.DestAdminVacation, handlers.AdminVacationPost)
 
-	adminMux.Handle("GET "+views.DestAdminCalendar, templ.Handler(views.CalendarPage(time.Now().Year(), time.Now().Month())))
-	adminMux.Handle("GET "+views.DestAdminTimetableClass, templ.Handler(views.TimetableClassPage(time.Now())))
+	adminMux.Handle("GET "+routes.DestAdminCalendar, templ.Handler(routes.CalendarPage(time.Now().Year(), time.Now().Month())))
+	adminMux.Handle("GET "+routes.DestAdminTimetableClass, templ.Handler(routes.TimetableClassPage(time.Now())))
 
-	mux.Handle(views.DestAdmin, middleware.WithUserCheck(
+	mux.Handle(routes.DestAdmin, middleware.WithUserCheck(
 		func(u *database.User) bool { return u.Role == database.RoleAdministrator },
 		adminMux,
 	))

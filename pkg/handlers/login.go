@@ -3,7 +3,7 @@ package handlers
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
-	"calendorario/views"
+	"calendorario/routes"
 	"errors"
 
 	"net/http"
@@ -18,15 +18,15 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	user, err := s.User()
 
 	if err != nil {
-		http.Redirect(w, r, views.DestLogin, http.StatusSeeOther)
+		http.Redirect(w, r, routes.DestLogin, http.StatusSeeOther)
 	} else {
 		switch user.Role {
 		case database.RoleAdministrator:
-			http.Redirect(w, r, views.DestAdmin, http.StatusSeeOther)
+			http.Redirect(w, r, routes.DestAdmin, http.StatusSeeOther)
 		case database.RoleSecretary:
-			http.Redirect(w, r, views.DestSecretary, http.StatusSeeOther)
+			http.Redirect(w, r, routes.DestSecretary, http.StatusSeeOther)
 		case database.RoleTeacher:
-			http.Redirect(w, r, views.DestTeacher, http.StatusSeeOther)
+			http.Redirect(w, r, routes.DestTeacher, http.StatusSeeOther)
 		}
 	}
 }
@@ -38,19 +38,19 @@ func LoginGet(w http.ResponseWriter, r *http.Request) {
 	_, err := s.User()
 
 	if errors.Is(err, session.ErrCookieExpired) {
-		views.Login(false, true).Render(r.Context(), w)
+		routes.Login(false, true).Render(r.Context(), w)
 	} else if err != nil {
-		views.Login(r.URL.Query().Has(errorQueryParam), false).Render(r.Context(), w)
+		routes.Login(r.URL.Query().Has(errorQueryParam), false).Render(r.Context(), w)
 	} else {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 }
 
 func LoginPost(w http.ResponseWriter, r *http.Request) {
-	username := r.FormValue(string(views.KeyUsername))
-	password := r.FormValue(string(views.KeyPassword))
+	username := r.FormValue(string(routes.KeyUsername))
+	password := r.FormValue(string(routes.KeyPassword))
 
-	var destLoginError = views.DestLogin + "?" + errorQueryParam
+	var destLoginError = routes.DestLogin + "?" + errorQueryParam
 
 	s := session.FromContext(r.Context())
 	user, err := s.Database.GetUserWithUsername(r.Context(), username)
@@ -71,5 +71,5 @@ func LoginPost(w http.ResponseWriter, r *http.Request) {
 func LogoutGet(w http.ResponseWriter, r *http.Request) {
 	session.UnsetAuthenticatedUser(w)
 	session.UnsetTermCookie(w)
-	http.Redirect(w, r, views.DestLogin, http.StatusSeeOther)
+	http.Redirect(w, r, routes.DestLogin, http.StatusSeeOther)
 }

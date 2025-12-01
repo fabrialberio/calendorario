@@ -3,7 +3,7 @@ package middleware
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
-	"calendorario/views"
+	"calendorario/routes"
 
 	"log"
 	"net/http"
@@ -36,7 +36,7 @@ func WithUserCheck(checker UserCheckerFunc, next http.Handler) http.Handler {
 		s := session.FromContext(r.Context())
 		user, err := s.User()
 		if err != nil {
-			http.Redirect(w, r, views.DestLogout, http.StatusSeeOther)
+			http.Redirect(w, r, routes.DestLogout, http.StatusSeeOther)
 			return
 		}
 

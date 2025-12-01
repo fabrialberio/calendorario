@@ -1,4 +1,4 @@
-package views
+package routes
 
 const (
 	destTerm           = "/term"

@@ -101,9 +101,10 @@ func setupRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("GET "+routes.DestMonth, handlers.CalendarGet)
 
 	adminMux := http.NewServeMux()
-	adminMux.Handle("GET "+routes.DestAdmin, templ.Handler(routes.TermsPage()))
+	adminMux.Handle(routes.DestAdmin, templ.Handler(routes.TermsPage()))
+	//adminMux.Handle("GET "+routes.DestAdmin, templ.Handler(routes.TermsPage()))
 
-	adminMux.Handle(routes.DestAdminTerm+"/{id}", &term.Handler{})
+	adminMux.Handle(routes.DestAdminTerm, &term.Handler{})
 	adminMux.HandleFunc("GET "+routes.DestAdminLoadTerm+"/{id}", handlers.AdminLoadTermGet)
 
 	adminMux.HandleFunc("GET "+routes.DestAdminVacation+"/{id}", handlers.AdminVacationGet)

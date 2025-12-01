@@ -2,6 +2,7 @@ package routes
 
 import (
 	"calendorario/pkg/database"
+	"calendorario/pkg/dates"
 	"strconv"
 )
 
@@ -46,11 +47,11 @@ templ termCard(term database.Term) {
 				{ term.Name }
 			</p>
 			<p class="text-on-surface-dim">
-				{ term.StartDate.Format("02/01/2006") }-{ term.EndDate.Format("02/01/2006") }
+				{ dates.DayString(term.StartDate, false, true, true) } - { dates.DayString(term.EndDate, false, true, true) }
 			</p>
 			<a
 				class="clickable button bg-surface-high mt-auto w-fit"
-				href={ DestAdminTerm + "/" + strconv.Itoa(int(term.ID)) }
+				href={ DestAdminTerm + "?id=" + strconv.Itoa(int(term.ID)) }
 			>
 				<i class="fas fa-edit"></i>
 				Modifica

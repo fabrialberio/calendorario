@@ -23,7 +23,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.PathValue("id"))
+	id, err := strconv.Atoi(r.FormValue(routes.KeyTermID))
 	if err != nil {
 		View(database.Term{}, true).Render(r.Context(), w)
 		return

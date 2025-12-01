@@ -10,6 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"calendorario/pkg/database"
+	"calendorario/pkg/dates"
 	"strconv"
 )
 
@@ -110,7 +111,7 @@ func termCard(term database.Term) templ.Component {
 		var templ_7745c5c3_Var3 templ.SafeURL
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinURLErrs(DestAdminLoadTerm + "/" + strconv.Itoa(int(term.ID)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 38, Col: 62}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 39, Col: 62}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -123,7 +124,7 @@ func termCard(term database.Term) templ.Component {
 		var templ_7745c5c3_Var4 string
 		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(term.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 46, Col: 15}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 47, Col: 15}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -134,22 +135,22 @@ func termCard(term database.Term) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(term.StartDate.Format("02/01/2006"))
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(dates.DayString(term.StartDate, false, true, true))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 49, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 50, Col: 56}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "-")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, " - ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(term.EndDate.Format("02/01/2006"))
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(dates.DayString(term.EndDate, false, true, true))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 49, Col: 79}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 50, Col: 111}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -160,9 +161,9 @@ func termCard(term database.Term) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var7 templ.SafeURL
-		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinURLErrs(DestAdminTerm + "/" + strconv.Itoa(int(term.ID)))
+		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinURLErrs(DestAdminTerm + "?id=" + strconv.Itoa(int(term.ID)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 53, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 54, Col: 62}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -204,7 +205,7 @@ func newTermCard() templ.Component {
 		var templ_7745c5c3_Var9 templ.SafeURL
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinURLErrs(DestAdminTerm + "/new")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 65, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/term.templ`, Line: 66, Col: 31}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {

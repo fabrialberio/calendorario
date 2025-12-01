@@ -16,7 +16,7 @@ templ TermsPage() {
 	}}
 	<!DOCTYPE html>
 	<html>
-		@head()
+		@Head()
 		<body class="grid place-items-center">
 			<header class="absolute left-0 top-0 flex w-full flex-row p-4">
 				<a class="clickable button mr-auto h-12 px-3" href={ DestLogout }>
@@ -87,7 +87,7 @@ templ CalendarPage(year int, month time.Month) {
 	}}
 	<!DOCTYPE html>
 	<html>
-		@head()
+		@Head()
 		<body>
 			@sidebar(0, term)
 			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
@@ -105,7 +105,7 @@ templ TimetableClassPage(date time.Time) {
 	}}
 	<!DOCTYPE html>
 	<html>
-		@head()
+		@Head()
 		<body>
 			@sidebar(1, term)
 			<main class="ml-64 grid place-items-center space-y-8 p-4">

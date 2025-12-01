@@ -317,6 +317,9 @@
   .inline {
     display: inline;
   }
+  .table {
+    display: table;
+  }
   .h-4 {
     height: calc(var(--spacing) * 4);
   }
@@ -389,6 +392,9 @@
   .table-auto {
     table-layout: auto;
   }
+  .border-collapse {
+    border-collapse: collapse;
+  }
   .border-separate {
     border-collapse: separate;
   }
@@ -403,6 +409,9 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .resize {
+    resize: both;
   }
   .grid-cols-7 {
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -463,6 +472,13 @@
       --tw-space-y-reverse: 0;
       margin-block-start: calc(calc(var(--spacing) * 8) * var(--tw-space-y-reverse));
       margin-block-end: calc(calc(var(--spacing) * 8) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-x-1 {
+    :where(& > :not(:last-child)) {
+      --tw-space-x-reverse: 0;
+      margin-inline-start: calc(calc(var(--spacing) * 1) * var(--tw-space-x-reverse));
+      margin-inline-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-x-reverse)));
     }
   }
   .divide-x {
@@ -550,7 +566,7 @@
     background-color: var(--color-surface-highest);
   }
   .striped-outline {
-    background-image: repeating-linear-gradient(45deg, var(--color-outline) 0, var(--color-outline) 1px, transparent 0, transparent 50%);
+    background-image: repeating-linear-gradient( 45deg, var(--color-outline) 0, var(--color-outline) 1px, transparent 0, transparent 50% );
     background-size: 8px 8px;
   }
   .p-1 {
@@ -624,9 +640,16 @@
   .text-on-surface-dim {
     color: var(--color-on-surface-dim);
   }
+  .underline {
+    text-decoration-line: underline;
+  }
   .shadow-sm {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
   }
   .transition {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
@@ -637,6 +660,10 @@
     transition-property: transform, translate, scale, rotate;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .select-none {
+    -webkit-user-select: none;
+    user-select: none;
   }
   .not-last\:border-r {
     &:not(*:last-child) {
@@ -760,7 +787,7 @@
     display: flex;
     flex-direction: row;
     gap: calc(var(--spacing) * 1);
-    &>* {
+    & > * {
       &:not(*:first-child) {
         border-top-left-radius: var(--radius-sm);
         border-bottom-left-radius: var(--radius-sm);
@@ -783,7 +810,7 @@
     display: flex;
     flex-direction: column;
     gap: calc(var(--spacing) * 1);
-    &>* {
+    & > * {
       &:not(*:first-child) {
         border-top-left-radius: var(--radius-sm);
         border-top-right-radius: var(--radius-sm);
@@ -843,13 +870,13 @@
     }
   }
   .last-child-rounded-bl {
-    &:last-child>* {
+    &:last-child > * {
       overflow: hidden;
       border-bottom-left-radius: calc(var(--radius-lg) - 8px);
     }
   }
   .last-child-rounded-br {
-    &:last-child>* {
+    &:last-child > * {
       overflow: hidden;
       border-bottom-right-radius: calc(var(--radius-lg) - 8px);
     }
@@ -974,6 +1001,11 @@
   inherits: false;
   initial-value: 0;
 }
+@property --tw-space-x-reverse {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
 @property --tw-divide-x-reverse {
   syntax: "*";
   inherits: false;
@@ -992,6 +1024,11 @@
 @property --tw-font-weight {
   syntax: "*";
   inherits: false;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
 }
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
@@ -1022,10 +1059,12 @@
       --tw-skew-x: initial;
       --tw-skew-y: initial;
       --tw-space-y-reverse: 0;
+      --tw-space-x-reverse: 0;
       --tw-divide-x-reverse: 0;
       --tw-border-style: solid;
       --tw-divide-y-reverse: 0;
       --tw-font-weight: initial;
+      --tw-outline-style: solid;
     }
   }
 }

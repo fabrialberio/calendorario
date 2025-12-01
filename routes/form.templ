@@ -3,7 +3,14 @@ package routes
 import "time"
 import "calendorario/pkg/database"
 
-templ FormScaffold(title string, action string, hiddenID int, isNew bool, inputs []templ.Component) {
+templ FormScaffold(
+	title string,
+	action string,
+	hiddenID int,
+	hiddenIDName string,
+	isNew bool,
+	inputs []templ.Component,
+) {
 	<!DOCTYPE html>
 	<html>
 		@Head()
@@ -16,7 +23,7 @@ templ FormScaffold(title string, action string, hiddenID int, isNew bool, inputs
 				<h2>
 					{ title }
 				</h2>
-				<input type="hidden" name={ KeyTermID } value={ hiddenID }/>
+				<input type="hidden" name={ hiddenIDName } value={ hiddenID }/>
 				for i := 0; i < len(inputs); i++ {
 					@inputs[i]
 				}

@@ -117,6 +117,7 @@ func VacationEditPage(vacation database.Vacation, isNew bool) templ.Component {
 			"Vacanza o festività",
 			DestAdminVacation,
 			int(vacation.ID),
+			KeyVacationID,
 			isNew,
 			[]templ.Component{
 				FormInputText("Nome della vacanza", KeyVacationName, vacation.Name),

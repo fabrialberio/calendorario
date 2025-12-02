@@ -37,6 +37,7 @@ func View(date time.Time) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		s := session.FromContext(ctx)
 		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
+		classes, _ := s.Database.ListClasses(ctx)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -65,7 +66,7 @@ func View(date time.Time) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = classTable(exampleClasses).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = classTable(classes).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

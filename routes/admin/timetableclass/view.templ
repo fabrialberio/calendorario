@@ -10,6 +10,7 @@ templ View(date time.Time) {
 	{{
 		s := session.FromContext(ctx)
 		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
+		classes, _ := s.Database.ListClasses(ctx)
 	}}
 	<!DOCTYPE html>
 	<html>
@@ -27,7 +28,7 @@ templ View(date time.Time) {
 					<h2>
 						Tutte le classi
 					</h2>
-					@classTable(exampleClasses)
+					@classTable(classes)
 				</div>
 			</main>
 		</body>

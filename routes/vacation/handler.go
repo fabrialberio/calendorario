@@ -24,6 +24,8 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		h.Get(w, r)
+	case http.MethodPost:
+		h.Post(w, r)
 	default:
 		http.Error(w, "Method not allowed.", http.StatusMethodNotAllowed)
 	}

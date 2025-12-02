@@ -17,6 +17,7 @@ const (
 	RouteAdminCalendar       = routeAdminBase + routeCalendar
 	RouteAdminTimetableClass = routeAdminBase + routeTimetableClass
 
+	RouteClass    = "/class"
 	RouteLoadTerm = "/loadterm"
 	RouteLogin    = "/login"
 	RouteLogout   = "/logout"

@@ -1,0 +1,28 @@
+package class
+
+import (
+	"calendorario/pkg/database"
+	"calendorario/pkg/session"
+	"calendorario/pkg/templates"
+	"calendorario/routes"
+)
+
+templ View(class database.Class, isNew bool) {
+	{{
+		s := session.FromContext(ctx)
+		terms, _ := s.Database.ListTerms(ctx)
+		programs, _ := s.Database.ListPrograms(ctx)
+	}}
+	@templates.FormScaffold(
+		"Classe",
+		routes.RouteTerm,
+		int(class.ID),
+		isNew,
+		[]templ.Component{
+			templates.FormInputNumber("Anno", keyGrade, int(class.Grade)),
+			templates.FormInputText("Sezione", keySection, class.Section),
+			templates.FormInputSelectTerm(keyTermID, int(class.TermID), terms),
+			templates.FormInputSelectProgram(keyProgramID, int(class.ProgramID), programs),
+		},
+	)
+}

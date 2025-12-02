@@ -8,7 +8,7 @@ import (
 
 const EventColorVacation = "#d8dbd1"
 
-const KeyDate = "date"
+const keyDate = "date"
 
 type Handler struct{}
 
@@ -22,7 +22,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	date, err := time.Parse(time.DateOnly, r.FormValue(KeyDate))
+	date, err := time.Parse(time.DateOnly, r.FormValue(keyDate))
 	if err != nil {
 		date = time.Now()
 	}

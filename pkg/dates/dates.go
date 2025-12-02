@@ -10,12 +10,17 @@ type DateInterval struct {
 	End   time.Time
 }
 
+func truncateDate(date time.Time) time.Time {
+	return time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, date.Location())
+}
+
 func Interval(start time.Time, end time.Time) DateInterval {
-	return DateInterval{start.Truncate(time.Hour), end.Truncate(time.Hour)}
+	return DateInterval{truncateDate(start), truncateDate(end)}
 }
 
 // Wether date is contained in the interval.
 func (i DateInterval) Contains(date time.Time) bool {
+	date = truncateDate(date)
 	return i.Start.Compare(date) <= 0 && i.End.Compare(date) >= 0
 }
 

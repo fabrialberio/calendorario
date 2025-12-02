@@ -31,7 +31,7 @@ func WithSession(database *database.Queries, next http.Handler) http.Handler {
 
 type UserCheckerFunc func(user *database.User) bool
 
-func WithUserCheck(checker UserCheckerFunc, next http.Handler) http.Handler {
+func WithAuthenticatedUserCheck(checker UserCheckerFunc, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		s := session.FromContext(r.Context())
 		user, err := s.User()

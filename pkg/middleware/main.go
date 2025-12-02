@@ -41,7 +41,7 @@ func WithUserCheck(checker UserCheckerFunc, next http.Handler) http.Handler {
 		}
 
 		if !checker(user) {
-			http.Error(w, "Status 403 forbidden.", http.StatusForbidden)
+			http.Error(w, "Your role does not allow you to view this page.", http.StatusForbidden)
 			return
 		}
 

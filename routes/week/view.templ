@@ -1,0 +1,78 @@
+package week
+
+import (
+	"calendorario/pkg/dates"
+	"calendorario/routes"
+	"time"
+)
+
+templ View(date time.Time, today time.Time) {
+	{{ id := "week" }}
+	<div
+		id={ id }
+		class=""
+		x-data={ "{ initial: document.getElementById('" + id + "').innerHTML, week: null }" }
+		x-html={ "week == null ? initial : week.text()" }
+	>
+		@innerView(date, today)
+	</div>
+}
+
+func fetchWeekURL(date time.Time) string {
+	return routes.RouteWeek + "?" + keyDate + "=" + date.Format(time.DateOnly)
+}
+
+templ innerView(date time.Time, today time.Time) {
+	<div class="flex w-full flex-col gap-2">
+		{{
+			monday := date
+
+			for monday.Weekday() != time.Monday {
+				monday = monday.AddDate(0, 0, -1)
+			}
+		}}
+		<div class="flex flex-row items-center gap-4">
+			<button class="button bg-primary-container rounded-sm">
+				<i class="fas fa-chalkboard"></i>
+				1A
+				<i class="fas fa-caret-down"></i>
+			</button>
+			<div class="card-group-row">
+				<button
+					class="button bg-surface-highest px-2"
+					x-on:click={ "week = await fetch('" + fetchWeekURL(monday.AddDate(0, 0, -7)) + "')" }
+				>
+					<i class="fas fa-chevron-left"></i>
+				</button>
+				<button
+					class="button bg-surface-highest"
+					x-on:click={ "week = await fetch('" + fetchWeekURL(today) + "')" }
+				>
+					<i class="fas fa-calendar-day"></i>
+					Oggi
+				</button>
+				<button
+					class="button bg-surface-highest px-2"
+					x-on:click={ "week = await fetch('" + fetchWeekURL(monday.AddDate(0, 0, 7)) + "')" }
+				>
+					<i class="fas fa-chevron-right"></i>
+				</button>
+			</div>
+			<h4>
+				{ dates.MonthString(date.Year(), date.Month()) }
+			</h4>
+		</div>
+		<div class="divide-outline min-h-120 bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden rounded-lg shadow-sm">
+			for i := 0; i < 7; i++ {
+				<div class="text-center">
+					<p class="text-on-surface-dim">
+						{ dates.WeekdayNicks[i] }
+					</p>
+					<p class="text-sm">
+						{ monday.AddDate(0, 0, i).Day() }
+					</p>
+				</div>
+			}
+		</div>
+	</div>
+}

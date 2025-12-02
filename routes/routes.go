@@ -24,6 +24,7 @@ const (
 	RouteMonth    = "/month"
 	RouteTerm     = "/term"
 	RouteVacation = "/vacation"
+	RouteWeek     = "/week"
 
 	RouteSecretary = routeSecretaryBase + "/"
 

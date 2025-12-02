@@ -16,6 +16,7 @@ import (
 	"calendorario/routes/month"
 	"calendorario/routes/term"
 	"calendorario/routes/vacation"
+	"calendorario/routes/week"
 	"context"
 
 	"github.com/a-h/templ"
@@ -122,6 +123,7 @@ func setupRoutes(mux *http.ServeMux) {
 	loggedInMux.Handle(routes.RouteMonth, &month.Handler{})
 	loggedInMux.Handle(routes.RouteTerm, &term.Handler{})
 	loggedInMux.Handle(routes.RouteVacation, &vacation.Handler{})
+	loggedInMux.Handle(routes.RouteWeek, &week.Handler{})
 
 	mux.Handle("/", middleware.WithAuthenticatedUserCheck(
 		func(u *database.User) bool { return true },

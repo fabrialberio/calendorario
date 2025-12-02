@@ -3,10 +3,11 @@ package timetableclass
 import (
 	"calendorario/pkg/session"
 	"calendorario/pkg/templates"
+	"calendorario/routes/week"
 	"time"
 )
 
-templ View(date time.Time) {
+templ View(date time.Time, today time.Time) {
 	{{
 		s := session.FromContext(ctx)
 		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
@@ -22,7 +23,7 @@ templ View(date time.Time) {
 					<h2>
 						Orario di classe
 					</h2>
-					@timetable(date)
+					@week.View(date, today)
 				</div>
 				<div class="w-full max-w-4xl space-y-2">
 					<h2>

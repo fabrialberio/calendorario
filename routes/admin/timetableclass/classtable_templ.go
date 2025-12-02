@@ -11,15 +11,9 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
+	"calendorario/routes"
 	"strconv"
 )
-
-var exampleClasses = []database.Class{
-	database.Class{ID: 1, Grade: 1, Section: "A"},
-	database.Class{ID: 2, Grade: 1, Section: "B"},
-	database.Class{ID: 3, Grade: 1, Section: "C"},
-	database.Class{ID: 4, Grade: 2, Section: "A"},
-}
 
 func classTable(classes []database.Class) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -42,15 +36,26 @@ func classTable(classes []database.Class) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"flex flex-row gap-2\"><button class=\"button bg-surface-highest\"><i class=\"fas fa-add\"></i> Aggiungi classe</button></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"flex flex-row gap-2\"><a class=\"button bg-surface-highest clickable\" href=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var2 templ.SafeURL
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(routes.RouteClass)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/timetableclass/classtable.templ`, Line: 14, Col: 27}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\"><i class=\"fas fa-add\"></i> Aggiungi classe</a></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var data [][]string
 
-		for i := 0; i < len(classes); i++ {
-			class := classes[i]
-
+		for _, class := range classes {
 			data = append(data, []string{
 				strconv.Itoa(int(class.ID)),
 				strconv.Itoa(int(class.Grade)),

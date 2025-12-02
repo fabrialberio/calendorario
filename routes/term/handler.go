@@ -12,9 +12,9 @@ import (
 
 const (
 	keyID        = routes.KeyID
-	KeyName      = "name"
-	KeyStartDate = "start_date"
-	KeyEndDate   = "end_date"
+	keyName      = "name"
+	keyStartDate = "start_date"
+	keyEndDate   = "end_date"
 )
 
 type Handler struct{}
@@ -49,21 +49,21 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(r.FormValue(keyID))
-	startDate, _ := time.Parse(time.DateOnly, r.FormValue(KeyStartDate))
-	endDate, _ := time.Parse(time.DateOnly, r.FormValue(KeyEndDate))
+	startDate, _ := time.Parse(time.DateOnly, r.FormValue(keyStartDate))
+	endDate, _ := time.Parse(time.DateOnly, r.FormValue(keyEndDate))
 
 	s := session.FromContext(r.Context())
 
 	if r.Form.Has(templates.FlagCreate) {
 		s.Database.CreateTerm(r.Context(), database.CreateTermParams{
-			Name:      r.FormValue(KeyName),
+			Name:      r.FormValue(keyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 		})
 	} else if r.Form.Has(templates.FlagUpdate) {
 		s.Database.UpdateTerm(r.Context(), database.UpdateTermParams{
 			ID:        int64(id),
-			Name:      r.FormValue(KeyName),
+			Name:      r.FormValue(keyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 		})

@@ -41,12 +41,12 @@ func View(term database.Term, isNew bool) templ.Component {
 			int(term.ID),
 			isNew,
 			[]templ.Component{
-				templates.FormInputText("Nome del periodo", KeyName, term.Name),
+				templates.FormInputText("Nome del periodo", keyName, term.Name),
 				templates.FormInputTwoDates(
 					"Date di inizio e fine",
-					KeyStartDate,
+					keyStartDate,
 					term.StartDate,
-					KeyEndDate,
+					keyEndDate,
 					term.EndDate,
 				),
 			},

@@ -12,10 +12,10 @@ import (
 
 const (
 	keyID        = routes.KeyID
-	KeyName      = "name"
-	KeyStartDate = "start_date"
-	KeyEndDate   = "end_date"
-	KeyTermID    = "term_id"
+	keyName      = "name"
+	keyStartDate = "start_date"
+	keyEndDate   = "end_date"
+	keyTermID    = "term_id"
 )
 
 type Handler struct{}
@@ -54,15 +54,15 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(r.FormValue(keyID))
-	startDate, _ := time.Parse(time.DateOnly, r.FormValue(KeyStartDate))
-	endDate, _ := time.Parse(time.DateOnly, r.FormValue(KeyEndDate))
-	termID, _ := strconv.Atoi(r.FormValue(KeyTermID))
+	startDate, _ := time.Parse(time.DateOnly, r.FormValue(keyStartDate))
+	endDate, _ := time.Parse(time.DateOnly, r.FormValue(keyEndDate))
+	termID, _ := strconv.Atoi(r.FormValue(keyTermID))
 
 	s := session.FromContext(r.Context())
 
 	if r.Form.Has(templates.FlagCreate) {
 		s.Database.CreateVacation(r.Context(), database.CreateVacationParams{
-			Name:      r.FormValue(KeyName),
+			Name:      r.FormValue(keyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 			TermID:    int64(termID),
@@ -70,7 +70,7 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 	} else if r.Form.Has(templates.FlagUpdate) {
 		s.Database.UpdateVacation(r.Context(), database.UpdateVacationParams{
 			ID:        int64(id),
-			Name:      r.FormValue(KeyName),
+			Name:      r.FormValue(keyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 			TermID:    int64(termID),

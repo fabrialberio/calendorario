@@ -44,15 +44,15 @@ func View(vacation database.Vacation, isNew bool) templ.Component {
 			int(vacation.ID),
 			isNew,
 			[]templ.Component{
-				templates.FormInputText("Nome della vacanza", KeyName, vacation.Name),
+				templates.FormInputText("Nome della vacanza", keyName, vacation.Name),
 				templates.FormInputTwoDates(
 					"Date di inizio e fine",
-					KeyStartDate,
+					keyStartDate,
 					vacation.StartDate,
-					KeyEndDate,
+					keyEndDate,
 					vacation.EndDate,
 				),
-				templates.FormInputSelectTerm(KeyTermID, int(vacation.TermID), terms),
+				templates.FormInputSelectTerm(keyTermID, int(vacation.TermID), terms),
 			},
 		).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

@@ -1,0 +1,71 @@
+package login
+
+import "calendorario/routes"
+import "calendorario/pkg/templates"
+
+templ View(wrongUsernamePassword bool, sessionExpired bool) {
+	<!DOCTYPE html>
+	<html>
+		@templates.Head()
+		<body class="fixed grid h-screen w-screen place-items-center">
+			<form
+				class="bg-surface w-full max-w-sm space-y-8 rounded-lg p-4 shadow-sm"
+				method="POST"
+				action={ routes.RouteLogin }
+			>
+				<div class="space-y-2">
+					<h2>Calendorario</h2>
+					if wrongUsernamePassword {
+						<p class="text-error">Username o password errati</p>
+					} else if sessionExpired {
+						<p class="text-error">Sessione scaduta</p>
+					} else {
+						<p>Inserisci le tue credenziali</p>
+					}
+				</div>
+				<div class="space-y-2" x-data="{show_password: false}">
+					<div>
+						<label for="username" class="sr-only">Username</label>
+						<input
+							id="username"
+							name={ KeyUsername }
+							type="username"
+							autocomplete="username"
+							placeholder="Username"
+						/>
+					</div>
+					<div>
+						<label for="password" class="sr-only">Password</label>
+						<input
+							id="password"
+							name={ KeyPassword }
+							x-bind:type="show_password ? 'text' : 'password'"
+							autocomplete="current-password"
+							placeholder="Password"
+						/>
+					</div>
+					<div class="select-none space-x-1">
+						<button
+							class="checkbox align-middle"
+							type="button"
+							x-on:click="show_password = !show_password"
+						>
+							<i class="fa-check fas" x-show="show_password"></i>
+							<input
+								id="checkbox"
+								type="checkbox"
+								tabindex="-1"
+								hidden
+								x-bind:checked="show_password"
+							/>
+						</button>
+						<label for="checkbox">Mostra password</label>
+					</div>
+				</div>
+				<button type="submit" class="button bg-primary text-on-primary h-12 w-full">
+					Accedi
+				</button>
+			</form>
+		</body>
+	</html>
+}

@@ -1,0 +1,104 @@
+package templates
+
+import "time"
+import "calendorario/pkg/database"
+import "calendorario/routes"
+
+const (
+	FlagCreate = "create"
+	FlagUpdate = "update"
+	FlagDelete = "delete"
+)
+
+templ FormScaffold(
+	title string,
+	action string,
+	hiddenID int,
+	isNew bool,
+	inputs []templ.Component,
+) {
+	<!DOCTYPE html>
+	<html>
+		@Head()
+		<body class="grid place-items-center">
+			<form
+				class="bg-surface space-y-4 rounded-lg p-4 shadow-sm"
+				method="post"
+				action={ action }
+			>
+				<h2>
+					{ title }
+				</h2>
+				<input type="hidden" name={ routes.KeyID } value={ hiddenID }/>
+				for i := 0; i < len(inputs); i++ {
+					@inputs[i]
+				}
+				<div class="flex flex-row-reverse pt-4">
+					if isNew {
+						<button class="button bg-primary text-on-primary ml-auto" type="sumbit" name={ FlagCreate } autofocus>
+							<i class="fas fa-add"></i>
+							Crea
+						</button>
+					} else {
+						<button class="button bg-primary text-on-primary ml-auto" type="sumbit" name={ FlagUpdate } autofocus>
+							<i class="fas fa-check"></i>
+							Salva
+						</button>
+						<button class="button bg-surface-highest" type="sumbit" name={ FlagDelete }>
+							<i class="fas fa-x"></i>
+							Elimina
+						</button>
+					}
+				</div>
+			</form>
+		</body>
+	</html>
+}
+
+templ FormInputText(label string, name string, value string) {
+	{{ id := name + "_input" }}
+	<div>
+		<label class="text-on-surface-dim" for={ id }>{ label }</label>
+		<input type="text" id={ id } name={ name } value={ value } required/>
+	</div>
+}
+
+templ FormInputDate(label string, name string, value time.Time) {
+	{{ id := name + "_input" }}
+	<div>
+		<label class="text-on-surface-dim" for={ id }>{ label }</label>
+		<input type="date" id={ id } name={ name } value={ value.Format(time.DateOnly) } required/>
+	</div>
+}
+
+templ FormInputTwoDates(
+	label string,
+	firstName string,
+	firstValue time.Time,
+	secondName string,
+	secondValue time.Time,
+) {
+	{{ firstId := firstName + "_input" }}
+	<div>
+		<label class="text-on-surface-dim" for={ firstId }>{ label }</label>
+		<div class="flex flex-row gap-2">
+			<input type="date" id={ firstId } name={ firstName } value={ firstValue.Format(time.DateOnly) } required/>
+			<input type="date" name={ secondName } value={ secondValue.Format(time.DateOnly) } required/>
+		</div>
+	</div>
+}
+
+templ FormInputSelectTerm(name string, selectedTermID int, terms []database.Term) {
+	{{ id := name + "_select" }}
+	<div>
+		<label class="text-on-surface-dim" for={ id }>Periodo scolastico</label>
+		<select id={ id } name={ name } required>
+			for i := 0; i < len(terms); i++ {
+				{{ t := terms[i] }}
+				<option value={ t.ID } selected?={ t.ID == int64(selectedTermID) }>
+					{ t.Name }
+				</option>
+			}
+		</select>
+	</div>
+}

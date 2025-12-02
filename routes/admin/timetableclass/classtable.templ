@@ -1,0 +1,37 @@
+package timetableclass
+
+import (
+	"calendorario/pkg/database"
+	"calendorario/pkg/templates"
+	"strconv"
+)
+
+var exampleClasses = []database.Class{
+	database.Class{ID: 1, Grade: 1, Section: "A"},
+	database.Class{ID: 2, Grade: 1, Section: "B"},
+	database.Class{ID: 3, Grade: 1, Section: "C"},
+	database.Class{ID: 4, Grade: 2, Section: "A"},
+}
+
+templ classTable(classes []database.Class) {
+	<div class="flex flex-row gap-2">
+		<button class="button bg-surface-highest">
+			<i class="fas fa-add"></i>
+			Aggiungi classe
+		</button>
+	</div>
+	{{
+		var data [][]string
+
+		for i := 0; i < len(classes); i++ {
+			class := classes[i]
+
+			data = append(data, []string{
+				strconv.Itoa(int(class.ID)),
+				strconv.Itoa(int(class.Grade)),
+				class.Section,
+			})
+		}
+	}}
+	@templates.Table([]string{"ID", "Anno", "Sezione"}, data, 0, true)
+}

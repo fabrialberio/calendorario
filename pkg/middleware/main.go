@@ -3,7 +3,7 @@ package middleware
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
-	"calendorario/views"
+	"calendorario/routes"
 
 	"log"
 	"net/http"
@@ -31,17 +31,17 @@ func WithSession(database *database.Queries, next http.Handler) http.Handler {
 
 type UserCheckerFunc func(user *database.User) bool
 
-func WithUserCheck(checker UserCheckerFunc, next http.Handler) http.Handler {
+func WithAuthenticatedUserCheck(checker UserCheckerFunc, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		s := session.FromContext(r.Context())
 		user, err := s.User()
 		if err != nil {
-			http.Redirect(w, r, views.DestLogout, http.StatusSeeOther)
+			http.Redirect(w, r, routes.RouteLogout, http.StatusSeeOther)
 			return
 		}
 
 		if !checker(user) {
-			http.Error(w, "Status 403 forbidden.", http.StatusForbidden)
+			http.Error(w, "Invalid role.", http.StatusForbidden)
 			return
 		}
 

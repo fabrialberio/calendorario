@@ -39,18 +39,19 @@
     }
 
     h2 {
-        @apply text-3xl pt-2 font-extrabold
+        @apply pt-2 text-3xl font-extrabold;
     }
 
     h3 {
-        @apply text-lg font-bold
+        @apply text-lg font-bold;
     }
 
     h4 {
-        @apply font-bold
+        @apply font-bold;
     }
 
-    input:not([type="checkbox"]), select {
+    input:not([type="checkbox"]),
+    select {
         @apply border-on-surface-dim placeholder-on-surface-dim text-on-surface rounded-[12px] h-10 w-full border px-3 py-2;
 
         &:focus-visible {
@@ -88,11 +89,13 @@
 }
 
 @utility striped-* {
-    background-image: repeating-linear-gradient(45deg,
-            --value(--color-*) 0,
-            --value(--color-*) 1px,
-            transparent 0,
-            transparent 50%);
+    background-image: repeating-linear-gradient(
+        45deg,
+        --value(--color-*) 0,
+        --value(--color-*) 1px,
+        transparent 0,
+        transparent 50%
+    );
     background-size: 8px 8px;
 }
 
@@ -108,7 +111,7 @@
     .card-group-row {
         @apply flex flex-row gap-1;
 
-        &>* {
+        & > * {
             @apply not-first:rounded-l-sm not-last:rounded-r-sm first:rounded-l-md last:rounded-r-md;
         }
     }
@@ -116,7 +119,7 @@
     .card-group-col {
         @apply flex flex-col gap-1;
 
-        &>* {
+        & > * {
             @apply not-first:rounded-t-sm not-last:rounded-b-sm first:rounded-t-md last:rounded-b-md;
         }
     }
@@ -125,20 +128,20 @@
         @apply border-on-surface-dim text-on-primary clickable h-5 w-5 rounded-sm border text-sm;
 
         &:has(input[type="checkbox"]:checked) {
-            @apply border-none bg-primary
+            @apply border-none bg-primary;
         }
     }
 
     /* Needed to round bottom event corners in calendar. */
     .last-child-rounded-bl {
-        &:last-child>* {
+        &:last-child > * {
             overflow: hidden;
             border-bottom-left-radius: calc(var(--radius-lg) - 8px);
         }
     }
 
     .last-child-rounded-br {
-        &:last-child>* {
+        &:last-child > * {
             overflow: hidden;
             border-bottom-right-radius: calc(var(--radius-lg) - 8px);
         }

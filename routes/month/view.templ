@@ -1,0 +1,129 @@
+package month
+
+import (
+	"calendorario/pkg/database"
+	"calendorario/pkg/dates"
+	"calendorario/routes"
+	"time"
+)
+
+func fetchMonthURL(date time.Time) string {
+	return routes.RouteMonth + "?" + KeyDate + "=" + date.Format(time.DateOnly)
+}
+
+templ View(
+	year int,
+	month time.Month,
+	today time.Time,
+	term database.Term,
+	vacations []database.Vacation,
+) {
+	{{ id := "calendar" }}
+	<div
+		id={ id }
+		class="flex h-full w-full flex-col gap-2"
+		x-data={ "{ initial: document.getElementById('" + id + "').innerHTML, month: null }" }
+		x-html={ "month == null ? initial : month.text()" }
+	>
+		@innerView(year, month, today, term, vacations)
+	</div>
+}
+
+templ innerView(
+	year int,
+	month time.Month,
+	today time.Time,
+	term database.Term,
+	vacations []database.Vacation,
+) {
+	{{
+		id := "calendar"
+		firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+		termInterval := dates.Interval(term.StartDate, term.EndDate)
+
+		if !termInterval.Contains(firstDay) {
+			year = term.StartDate.Year()
+			month = term.StartDate.Month()
+			firstDay = time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+		}
+	}}
+	<div
+		id={ id }
+		class="flex h-full w-full flex-col gap-2"
+	>
+		<div class="flex flex-row items-center gap-4">
+			<div class="card-group-row">
+				<button
+					class="button bg-surface-highest px-2"
+					disabled?={ !termInterval.Contains(firstDay.AddDate(0, 0, -1)) }
+					x-on:click={ "month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, -1, 0)) + "')" }
+				>
+					<i class="fas fa-chevron-left"></i>
+				</button>
+				<button
+					class="button bg-surface-highest"
+					disabled?={ !termInterval.Contains(today) }
+					x-on:click={ "month = await fetch('" + fetchMonthURL(today) + "')" }
+				>
+					<i class="fas fa-calendar-day"></i>
+					Oggi
+				</button>
+				<button
+					class="button bg-surface-highest px-2"
+					disabled?={ !termInterval.Contains(firstDay.AddDate(0, 1, 0)) }
+					x-on:click={ "month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, 1, 0)) + "')" }
+				>
+					<i class="fas fa-chevron-right"></i>
+				</button>
+			</div>
+			<h4 class="min-w-32">
+				{ dates.MonthString(year, month) }
+			</h4>
+		</div>
+		<div class="bg-surface-highest divide-outline flex h-full flex-auto flex-col divide-y overflow-hidden rounded-lg shadow-sm">
+			{{
+				day := firstDay
+				numRows := 5
+
+				for day.Weekday() != time.Monday {
+					day = day.AddDate(0, 0, -1)
+				}
+
+				if day.AddDate(0, 0, 7*5).Month() == month {
+					numRows++
+				}
+			}}
+			for i := 0; i < numRows; i++ {
+				<div class="pointer-events-none relative grid h-full grid-cols-7">
+					<div
+						class={
+							"absolute z-20 grid w-full bottom-0 overflow-y-auto grid-cols-7 place-items-end",
+							templ.KV("top-15", i == 0),
+							templ.KV("top-11", i != 0),
+						}
+					>
+						for j := 0; j < len(vacations); j++ {
+							@calendarRowVacation(day, i+1 == numRows, vacations[j])
+						}
+						@calendarRowTermBounds(day, term)
+					</div>
+					<a class="clickable absolute left-0 top-0 z-10 block h-full w-full"></a>
+					@calendarRowBackground(day, month, today, i == 0, term)
+				</div>
+				{{ day = day.AddDate(0, 0, 7) }}
+			}
+		</div>
+	</div>
+}
+
+templ calendarEvent(title string, destination string, colorHex string) {
+	<a
+		href={ destination }
+		class="clickable block h-full rounded-sm px-2 py-1"
+		style={ templ.KV("background-color", colorHex) }
+	>
+		<p class="truncate text-sm font-bold">
+			{ title }
+		</p>
+	</a>
+}

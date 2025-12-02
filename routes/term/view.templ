@@ -1,0 +1,26 @@
+package term
+
+import (
+	"calendorario/pkg/database"
+	"calendorario/pkg/templates"
+	"calendorario/routes"
+)
+
+templ View(term database.Term, isNew bool) {
+	@templates.FormScaffold(
+		"Periodo scolastico",
+		routes.RouteTerm,
+		int(term.ID),
+		isNew,
+		[]templ.Component{
+			templates.FormInputText("Nome del periodo", keyName, term.Name),
+			templates.FormInputTwoDates(
+				"Date di inizio e fine",
+				keyStartDate,
+				term.StartDate,
+				keyEndDate,
+				term.EndDate,
+			),
+		},
+	)
+}

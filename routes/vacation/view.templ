@@ -1,0 +1,32 @@
+package vacation
+
+import (
+	"calendorario/pkg/database"
+	"calendorario/pkg/session"
+	"calendorario/pkg/templates"
+	"calendorario/routes"
+)
+
+templ View(vacation database.Vacation, isNew bool) {
+	{{
+		s := session.FromContext(ctx)
+		terms, _ := s.Database.ListTerms(ctx)
+	}}
+	@templates.FormScaffold(
+		"Vacanza o festività",
+		routes.RouteVacation,
+		int(vacation.ID),
+		isNew,
+		[]templ.Component{
+			templates.FormInputText("Nome della vacanza", keyName, vacation.Name),
+			templates.FormInputTwoDates(
+				"Date di inizio e fine",
+				keyStartDate,
+				vacation.StartDate,
+				keyEndDate,
+				vacation.EndDate,
+			),
+			templates.FormInputSelectTerm(keyTermID, int(vacation.TermID), terms),
+		},
+	)
+}

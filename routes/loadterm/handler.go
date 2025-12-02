@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-const KeyID = "id"
+const keyID = routes.KeyID
 
 type Handler struct{}
 
@@ -21,7 +21,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.FormValue(KeyID))
+	id, err := strconv.Atoi(r.FormValue(keyID))
 	if err != nil {
 		http.Redirect(w, r, routes.RouteAdmin, http.StatusSeeOther)
 	}

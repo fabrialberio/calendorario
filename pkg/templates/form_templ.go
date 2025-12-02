@@ -10,6 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "time"
 import "calendorario/pkg/database"
+import "calendorario/routes"
 
 const (
 	FlagCreate = "create"
@@ -21,7 +22,6 @@ func FormScaffold(
 	title string,
 	action string,
 	hiddenID int,
-	hiddenIDName string,
 	isNew bool,
 	inputs []templ.Component,
 ) templ.Component {
@@ -84,7 +84,7 @@ func FormScaffold(
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(hiddenIDName)
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(routes.KeyID)
 		if templ_7745c5c3_Err != nil {
 			return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/templates/form.templ`, Line: 32, Col: 44}
 		}

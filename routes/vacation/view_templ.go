@@ -42,7 +42,6 @@ func View(vacation database.Vacation, isNew bool) templ.Component {
 			"Vacanza o festività",
 			routes.RouteVacation,
 			int(vacation.ID),
-			KeyID,
 			isNew,
 			[]templ.Component{
 				templates.FormInputText("Nome della vacanza", KeyName, vacation.Name),

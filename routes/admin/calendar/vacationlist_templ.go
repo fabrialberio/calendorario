@@ -13,7 +13,6 @@ import (
 	"calendorario/pkg/dates"
 	"calendorario/routes"
 	"calendorario/routes/month"
-	"calendorario/routes/vacation"
 	"strconv"
 )
 
@@ -45,7 +44,7 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 		var templ_7745c5c3_Var2 templ.SafeURL
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(routes.RouteVacation)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 20, Col: 31}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 19, Col: 31}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -61,9 +60,9 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 templ.SafeURL
-			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinURLErrs(routes.RouteVacation + "?" + vacation.KeyID + "=" + strconv.Itoa(int(v.ID)))
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinURLErrs(routes.RouteVacation + "?" + routes.KeyID + "=" + strconv.Itoa(int(v.ID)))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 29, Col: 87}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 28, Col: 85}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -76,7 +75,7 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(templ.KV("background-color", month.EventColorVacation))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 34, Col: 69}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 33, Col: 69}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -89,7 +88,7 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(v.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 37, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 36, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -102,7 +101,7 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(dates.Interval(v.StartDate, v.EndDate).String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 41, Col: 55}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 40, Col: 55}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -155,7 +154,7 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 81, Col: 44}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 80, Col: 44}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -168,7 +167,7 @@ func vacationList(term database.Term, vacations []database.Vacation) templ.Compo
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(values[i])
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 82, Col: 20}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/calendar/vacationlist.templ`, Line: 81, Col: 20}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {

@@ -4,7 +4,6 @@ import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/dates"
 	"calendorario/routes"
-	vacationRoute "calendorario/routes/vacation"
 	"strconv"
 	"time"
 )
@@ -45,7 +44,7 @@ templ calendarRowVacation(
 			<div class="h-full">
 				@calendarEvent(
 					vacation.Name,
-					routes.RouteVacation+"?"+vacationRoute.KeyID+"="+strconv.Itoa(int(vacation.ID)),
+					routes.RouteVacation+"?"+routes.KeyID+"="+strconv.Itoa(int(vacation.ID)),
 					EventColorVacation,
 				)
 			</div>

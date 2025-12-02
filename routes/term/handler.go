@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	KeyID        = "id"
+	keyID        = routes.KeyID
 	KeyName      = "name"
 	KeyStartDate = "start_date"
 	KeyEndDate   = "end_date"
@@ -31,7 +31,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.FormValue(KeyID))
+	id, err := strconv.Atoi(r.FormValue(keyID))
 	if err != nil {
 		View(database.Term{}, true).Render(r.Context(), w)
 		return
@@ -48,7 +48,7 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
-	id, _ := strconv.Atoi(r.FormValue(KeyID))
+	id, _ := strconv.Atoi(r.FormValue(keyID))
 	startDate, _ := time.Parse(time.DateOnly, r.FormValue(KeyStartDate))
 	endDate, _ := time.Parse(time.DateOnly, r.FormValue(KeyEndDate))
 

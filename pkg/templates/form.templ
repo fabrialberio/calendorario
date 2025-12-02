@@ -2,6 +2,7 @@ package templates
 
 import "time"
 import "calendorario/pkg/database"
+import "calendorario/routes"
 
 const (
 	FlagCreate = "create"
@@ -13,7 +14,6 @@ templ FormScaffold(
 	title string,
 	action string,
 	hiddenID int,
-	hiddenIDName string,
 	isNew bool,
 	inputs []templ.Component,
 ) {
@@ -29,7 +29,7 @@ templ FormScaffold(
 				<h2>
 					{ title }
 				</h2>
-				<input type="hidden" name={ hiddenIDName } value={ hiddenID }/>
+				<input type="hidden" name={ routes.KeyID } value={ hiddenID }/>
 				for i := 0; i < len(inputs); i++ {
 					@inputs[i]
 				}

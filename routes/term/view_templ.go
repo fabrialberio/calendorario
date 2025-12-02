@@ -39,7 +39,6 @@ func View(term database.Term, isNew bool) templ.Component {
 			"Periodo scolastico",
 			routes.RouteTerm,
 			int(term.ID),
-			KeyID,
 			isNew,
 			[]templ.Component{
 				templates.FormInputText("Nome del periodo", KeyName, term.Name),

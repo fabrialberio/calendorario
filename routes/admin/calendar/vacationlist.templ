@@ -5,7 +5,6 @@ import (
 	"calendorario/pkg/dates"
 	"calendorario/routes"
 	"calendorario/routes/month"
-	"calendorario/routes/vacation"
 	"strconv"
 )
 
@@ -26,7 +25,7 @@ templ vacationList(term database.Term, vacations []database.Vacation) {
 			for _, v := range vacations {
 				<a
 					class="bg-surface-highest clickable space-y-2 p-4"
-					href={ routes.RouteVacation + "?" + vacation.KeyID + "=" + strconv.Itoa(int(v.ID)) }
+					href={ routes.RouteVacation + "?" + routes.KeyID + "=" + strconv.Itoa(int(v.ID)) }
 				>
 					<div class="flex flex-row gap-2">
 						<div

@@ -4,8 +4,6 @@ import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/dates"
 	"calendorario/routes"
-	"calendorario/routes/loadterm"
-	termRoute "calendorario/routes/term"
 	"strconv"
 )
 
@@ -39,7 +37,7 @@ templ termCard(term database.Term) {
 	<div class="relative overflow-hidden">
 		<a
 			class="bg-surface-highest clickable flex h-32 flex-row items-center pr-4"
-			href={ routes.RouteAdminLoadTerm + "?" + loadterm.KeyID + "=" + strconv.Itoa(int(term.ID)) }
+			href={ routes.RouteAdminLoadTerm + "?" + routes.KeyID + "=" + strconv.Itoa(int(term.ID)) }
 		>
 			<div class="bg-surface-high ml-auto grid h-8 w-8 place-items-center rounded-full">
 				<i class="fas fa-chevron-right"></i>
@@ -54,7 +52,7 @@ templ termCard(term database.Term) {
 			</p>
 			<a
 				class="clickable button bg-surface-high mt-auto w-fit"
-				href={ routes.RouteTerm + "?" + termRoute.KeyID + "=" + strconv.Itoa(int(term.ID)) }
+				href={ routes.RouteTerm + "?" + routes.KeyID + "=" + strconv.Itoa(int(term.ID)) }
 			>
 				<i class="fas fa-edit"></i>
 				Modifica

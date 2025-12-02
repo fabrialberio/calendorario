@@ -31,16 +31,21 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
+	s := session.FromContext(r.Context())
+	initialClass := database.Class{
+		Grade:  1,
+		TermID: int64(s.TermID),
+	}
+
 	id, err := strconv.Atoi(r.FormValue(keyID))
 	if err != nil {
-		View(database.Class{}, true).Render(r.Context(), w)
+		View(initialClass, true).Render(r.Context(), w)
 		return
 	}
 
-	s := session.FromContext(r.Context())
 	class, err := s.Database.GetClass(r.Context(), int64(id))
 	if err != nil {
-		View(database.Class{}, true).Render(r.Context(), w)
+		View(initialClass, true).Render(r.Context(), w)
 		return
 	}
 

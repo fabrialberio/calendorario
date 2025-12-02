@@ -7,7 +7,6 @@ import (
 )
 
 type sessionContext struct {
-	Database          *database.Queries
 	AuthenticatedUser *database.User
 	AuthenticationErr error
 	SelectedTermID    int
@@ -22,7 +21,6 @@ func FromContext(ctx context.Context) sessionContext {
 
 func NewContext(
 	ctx context.Context,
-	database *database.Queries,
 	authenticatedUser *database.User,
 	authenticationErr error,
 	selectedTermID int,
@@ -32,7 +30,6 @@ func NewContext(
 		ctx,
 		sessionContextKey{},
 		sessionContext{
-			database,
 			authenticatedUser,
 			authenticationErr,
 			selectedTermID,

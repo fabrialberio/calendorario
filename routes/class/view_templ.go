@@ -10,12 +10,11 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/session"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
 )
 
-func View(class database.Class, isNew bool) templ.Component {
+func View(class database.Class, isNew bool, terms []database.Term, programs []database.Program) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -36,9 +35,6 @@ func View(class database.Class, isNew bool) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		s := session.FromContext(ctx)
-		terms, _ := s.Database.ListTerms(ctx)
-		programs, _ := s.Database.ListPrograms(ctx)
 		templ_7745c5c3_Err = templates.FormScaffold(
 			"Classe",
 			routes.RouteClass,

@@ -1,6 +1,7 @@
 package month
 
 import (
+	"calendorario/pkg/database"
 	"calendorario/pkg/session"
 	"net/http"
 	"time"
@@ -10,7 +11,9 @@ const EventColorVacation = "#d8dbd1"
 
 const keyDate = "date"
 
-type Handler struct{}
+type Handler struct {
+	Database *database.Queries
+}
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -28,8 +31,8 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	s := session.FromContext(r.Context())
-	term, _ := s.Database.GetTerm(r.Context(), int64(s.SelectedTermID))
-	vacations, _ := s.Database.ListVacationsWithTermID(r.Context(), term.ID)
+	term, _ := h.Database.GetTerm(r.Context(), int64(s.SelectedTermID))
+	vacations, _ := h.Database.ListVacationsWithTermID(r.Context(), term.ID)
 
 	innerView(date.Year(), date.Month(), time.Now(), term, vacations).Render(r.Context(), w)
 }

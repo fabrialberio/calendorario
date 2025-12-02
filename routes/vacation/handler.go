@@ -18,7 +18,9 @@ const (
 	keyTermID    = "term_id"
 )
 
-type Handler struct{}
+type Handler struct {
+	Database *database.Queries
+}
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -39,19 +41,21 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 		TermID:    int64(s.SelectedTermID),
 	}
 
+	terms, _ := h.Database.ListTerms(r.Context())
+
 	id, err := strconv.Atoi(r.FormValue(keyID))
 	if err != nil {
-		View(initialVacation, true).Render(r.Context(), w)
+		View(initialVacation, true, terms).Render(r.Context(), w)
 		return
 	}
 
-	vacation, err := s.Database.GetVacation(r.Context(), int64(id))
+	vacation, err := h.Database.GetVacation(r.Context(), int64(id))
 	if err != nil {
-		View(initialVacation, true).Render(r.Context(), w)
+		View(initialVacation, true, terms).Render(r.Context(), w)
 		return
 	}
 
-	View(vacation, false).Render(r.Context(), w)
+	View(vacation, false, terms).Render(r.Context(), w)
 }
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
@@ -60,17 +64,15 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 	endDate, _ := time.Parse(time.DateOnly, r.FormValue(keyEndDate))
 	termID, _ := strconv.Atoi(r.FormValue(keyTermID))
 
-	s := session.FromContext(r.Context())
-
 	if r.Form.Has(templates.FlagCreate) {
-		s.Database.CreateVacation(r.Context(), database.CreateVacationParams{
+		h.Database.CreateVacation(r.Context(), database.CreateVacationParams{
 			Name:      r.FormValue(keyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 			TermID:    int64(termID),
 		})
 	} else if r.Form.Has(templates.FlagUpdate) {
-		s.Database.UpdateVacation(r.Context(), database.UpdateVacationParams{
+		h.Database.UpdateVacation(r.Context(), database.UpdateVacationParams{
 			ID:        int64(id),
 			Name:      r.FormValue(keyName),
 			StartDate: startDate,
@@ -78,7 +80,7 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 			TermID:    int64(termID),
 		})
 	} else if r.Form.Has(templates.FlagDelete) {
-		s.Database.DeleteVacation(r.Context(), int64(id))
+		h.Database.DeleteVacation(r.Context(), int64(id))
 	}
 
 	http.Redirect(w, r, routes.RouteAdminCalendar, http.StatusSeeOther)

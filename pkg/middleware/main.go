@@ -16,14 +16,14 @@ func WithLogging(next http.Handler) http.Handler {
 	})
 }
 
-func WithSession(database *database.Queries, next http.Handler) http.Handler {
+func WithSession(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		user, err := session.GetAuthenticatedUser(r)
 		selectedTermID, _ := session.GetTermCookie(r)
 		selectedDate, _ := session.GetDateCookie(r)
 
 		ctx := r.Context()
-		s := session.NewContext(ctx, database, user, err, selectedTermID, &selectedDate)
+		s := session.NewContext(ctx, user, err, selectedTermID, &selectedDate)
 		r = r.WithContext(s)
 
 		next.ServeHTTP(w, r)

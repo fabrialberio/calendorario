@@ -2,7 +2,6 @@ package term
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/session"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
 	"net/http"
@@ -17,7 +16,9 @@ const (
 	keyEndDate   = "end_date"
 )
 
-type Handler struct{}
+type Handler struct {
+	Database *database.Queries
+}
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -37,8 +38,7 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s := session.FromContext(r.Context())
-	term, err := s.Database.GetTerm(r.Context(), int64(id))
+	term, err := h.Database.GetTerm(r.Context(), int64(id))
 	if err != nil {
 		View(database.Term{}, true).Render(r.Context(), w)
 		return
@@ -52,23 +52,21 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 	startDate, _ := time.Parse(time.DateOnly, r.FormValue(keyStartDate))
 	endDate, _ := time.Parse(time.DateOnly, r.FormValue(keyEndDate))
 
-	s := session.FromContext(r.Context())
-
 	if r.Form.Has(templates.FlagCreate) {
-		s.Database.CreateTerm(r.Context(), database.CreateTermParams{
+		h.Database.CreateTerm(r.Context(), database.CreateTermParams{
 			Name:      r.FormValue(keyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 		})
 	} else if r.Form.Has(templates.FlagUpdate) {
-		s.Database.UpdateTerm(r.Context(), database.UpdateTermParams{
+		h.Database.UpdateTerm(r.Context(), database.UpdateTermParams{
 			ID:        int64(id),
 			Name:      r.FormValue(keyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 		})
 	} else if r.Form.Has(templates.FlagDelete) {
-		s.Database.DeleteTerm(r.Context(), int64(id))
+		h.Database.DeleteTerm(r.Context(), int64(id))
 	}
 
 	http.Redirect(w, r, routes.RouteAdmin, http.StatusSeeOther)

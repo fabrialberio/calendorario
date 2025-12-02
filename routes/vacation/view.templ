@@ -2,16 +2,11 @@ package vacation
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/session"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
 )
 
-templ View(vacation database.Vacation, isNew bool) {
-	{{
-		s := session.FromContext(ctx)
-		terms, _ := s.Database.ListTerms(ctx)
-	}}
+templ View(vacation database.Vacation, isNew bool, terms []database.Term) {
 	@templates.FormScaffold(
 		"Vacanza o festività",
 		routes.RouteVacation,

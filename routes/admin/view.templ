@@ -1,19 +1,14 @@
 package admin
 
 import (
+	"calendorario/pkg/database"
 	"calendorario/pkg/session"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
 )
 
-templ View() {
-	{{
-		s := session.FromContext(ctx)
-		authUser, _ := s.User()
-
-		user, _ := s.Database.GetUser(ctx, authUser.ID)
-		terms, _ := s.Database.ListTerms(ctx)
-	}}
+templ View(user database.User, terms []database.Term) {
+	{{ s := session.FromContext(ctx) }}
 	<!DOCTYPE html>
 	<html>
 		@templates.Head()

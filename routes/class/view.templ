@@ -2,17 +2,11 @@ package class
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/session"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
 )
 
-templ View(class database.Class, isNew bool) {
-	{{
-		s := session.FromContext(ctx)
-		terms, _ := s.Database.ListTerms(ctx)
-		programs, _ := s.Database.ListPrograms(ctx)
-	}}
+templ View(class database.Class, isNew bool, terms []database.Term, programs []database.Program) {
 	@templates.FormScaffold(
 		"Classe",
 		routes.RouteClass,

@@ -19,7 +19,6 @@ import (
 	"calendorario/routes/week"
 	"context"
 
-	"github.com/a-h/templ"
 	_ "github.com/lib/pq"
 
 	"database/sql"
@@ -39,11 +38,11 @@ func main() {
 	addAdminUserIfNotExists(db)
 
 	mux := http.NewServeMux()
-	setupRoutes(mux)
+	setupRoutes(mux, db)
 
 	server := http.Server{
 		Addr:    ":8080",
-		Handler: middleware.WithSession(db, middleware.WithLogging(mux)),
+		Handler: middleware.WithSession(middleware.WithLogging(mux)),
 	}
 
 	log.Println("Server started on port 8080.")
@@ -99,17 +98,15 @@ func addAdminUserIfNotExists(db *database.Queries) {
 	}
 }
 
-func setupRoutes(mux *http.ServeMux) {
+func setupRoutes(mux *http.ServeMux, db *database.Queries) {
 	mux.Handle("GET /public/", http.FileServerFS(publicFS))
-	mux.Handle(routes.RouteLogin, &login.Handler{})
+	mux.Handle(routes.RouteLogin, &login.Handler{Database: db})
 	mux.Handle(routes.RouteLogout, &logout.Handler{})
 
-	today := time.Now()
-
 	adminMux := http.NewServeMux()
-	adminMux.Handle(routes.RouteAdmin, templ.Handler(admin.View()))
-	adminMux.Handle(routes.RouteAdminCalendar, templ.Handler(adminCalendar.View(today.Year(), today.Month(), today)))
-	adminMux.Handle(routes.RouteAdminTimetableClass, templ.Handler(adminTimetableClass.View(today, today)))
+	adminMux.Handle(routes.RouteAdmin, &admin.Handler{Database: db})
+	adminMux.Handle(routes.RouteAdminCalendar, &adminCalendar.Handler{Database: db})
+	adminMux.Handle(routes.RouteAdminTimetableClass, &adminTimetableClass.Handler{Database: db})
 
 	mux.Handle(routes.RouteAdmin, middleware.WithAuthenticatedUserCheck(
 		func(u *database.User) bool { return u.Role == database.RoleAdministrator },
@@ -118,12 +115,12 @@ func setupRoutes(mux *http.ServeMux) {
 
 	loggedInMux := http.NewServeMux()
 	loggedInMux.Handle("/", &index.Handler{})
-	loggedInMux.Handle(routes.RouteClass, &class.Handler{})
+	loggedInMux.Handle(routes.RouteClass, &class.Handler{Database: db})
 	loggedInMux.Handle(routes.RouteLoadTerm, &loadterm.Handler{})
-	loggedInMux.Handle(routes.RouteMonth, &month.Handler{})
-	loggedInMux.Handle(routes.RouteTerm, &term.Handler{})
-	loggedInMux.Handle(routes.RouteVacation, &vacation.Handler{})
-	loggedInMux.Handle(routes.RouteWeek, &week.Handler{})
+	loggedInMux.Handle(routes.RouteMonth, &month.Handler{Database: db})
+	loggedInMux.Handle(routes.RouteTerm, &term.Handler{Database: db})
+	loggedInMux.Handle(routes.RouteVacation, &vacation.Handler{Database: db})
+	loggedInMux.Handle(routes.RouteWeek, &week.Handler{Database: db})
 
 	mux.Handle("/", middleware.WithAuthenticatedUserCheck(
 		func(u *database.User) bool { return true },

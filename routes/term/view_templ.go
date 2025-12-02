@@ -10,6 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"calendorario/pkg/database"
+	"calendorario/pkg/templates"
 	"calendorario/routes"
 )
 
@@ -34,15 +35,15 @@ func View(term database.Term, isNew bool) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = routes.FormScaffold(
+		templ_7745c5c3_Err = templates.FormScaffold(
 			"Periodo scolastico",
 			routes.RouteTerm,
 			int(term.ID),
 			KeyID,
 			isNew,
 			[]templ.Component{
-				routes.FormInputText("Nome del periodo", KeyName, term.Name),
-				routes.FormInputTwoDates(
+				templates.FormInputText("Nome del periodo", KeyName, term.Name),
+				templates.FormInputTwoDates(
 					"Date di inizio e fine",
 					KeyStartDate,
 					term.StartDate,

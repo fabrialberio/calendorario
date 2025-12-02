@@ -1,7 +1,13 @@
-package routes
+package templates
 
 import "time"
 import "calendorario/pkg/database"
+
+const (
+	FlagCreate = "create"
+	FlagUpdate = "update"
+	FlagDelete = "delete"
+)
 
 templ FormScaffold(
 	title string,

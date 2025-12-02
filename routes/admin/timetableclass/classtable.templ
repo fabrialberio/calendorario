@@ -2,7 +2,7 @@ package timetableclass
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/routes"
+	"calendorario/pkg/templates"
 	"strconv"
 )
 
@@ -33,5 +33,5 @@ templ classTable(classes []database.Class) {
 			})
 		}
 	}}
-	@routes.Table([]string{"ID", "Anno", "Sezione"}, data, 0, true)
+	@templates.Table([]string{"ID", "Anno", "Sezione"}, data, 0, true)
 }

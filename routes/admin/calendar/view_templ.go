@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"calendorario/pkg/session"
-	"calendorario/routes"
+	"calendorario/pkg/templates"
 	monthRoute "calendorario/routes/month"
 	"time"
 )
@@ -45,7 +45,7 @@ func View(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = routes.Head().Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templates.Head().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -53,7 +53,7 @@ func View(year int, month time.Month) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = routes.Sidebar(0, term).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templates.Sidebar(0, term).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

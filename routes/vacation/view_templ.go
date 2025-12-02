@@ -11,6 +11,7 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
+	"calendorario/pkg/templates"
 	"calendorario/routes"
 )
 
@@ -37,22 +38,22 @@ func View(vacation database.Vacation, isNew bool) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		s := session.FromContext(ctx)
 		terms, _ := s.Database.ListTerms(ctx)
-		templ_7745c5c3_Err = routes.FormScaffold(
+		templ_7745c5c3_Err = templates.FormScaffold(
 			"Vacanza o festività",
 			routes.RouteVacation,
 			int(vacation.ID),
 			KeyID,
 			isNew,
 			[]templ.Component{
-				routes.FormInputText("Nome della vacanza", KeyName, vacation.Name),
-				routes.FormInputTwoDates(
+				templates.FormInputText("Nome della vacanza", KeyName, vacation.Name),
+				templates.FormInputTwoDates(
 					"Date di inizio e fine",
 					KeyStartDate,
 					vacation.StartDate,
 					KeyEndDate,
 					vacation.EndDate,
 				),
-				routes.FormInputSelectTerm(KeyTermID, int(vacation.TermID), terms),
+				templates.FormInputSelectTerm(KeyTermID, int(vacation.TermID), terms),
 			},
 		).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {

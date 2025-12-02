@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/routes"
+	"calendorario/pkg/templates"
 	"strconv"
 )
 
@@ -57,7 +57,7 @@ func classTable(classes []database.Class) templ.Component {
 				class.Section,
 			})
 		}
-		templ_7745c5c3_Err = routes.Table([]string{"ID", "Anno", "Sezione"}, data, 0, true).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templates.Table([]string{"ID", "Anno", "Sezione"}, data, 0, true).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

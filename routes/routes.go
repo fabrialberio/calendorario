@@ -1,12 +1,6 @@
 package routes
 
 const (
-	FlagCreate = "create"
-	FlagUpdate = "update"
-	FlagDelete = "delete"
-)
-
-const (
 	routeAdminBase     = "/admin"
 	routeSecretaryBase = "/secretary"
 	routeTeacherBase   = "/teacher"

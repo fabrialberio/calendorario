@@ -3,6 +3,7 @@ package term
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
+	"calendorario/pkg/templates"
 	"calendorario/routes"
 	"net/http"
 	"strconv"
@@ -53,20 +54,20 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 
 	s := session.FromContext(r.Context())
 
-	if r.Form.Has(routes.FlagCreate) {
+	if r.Form.Has(templates.FlagCreate) {
 		s.Database.CreateTerm(r.Context(), database.CreateTermParams{
 			Name:      r.FormValue(KeyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 		})
-	} else if r.Form.Has(routes.FlagUpdate) {
+	} else if r.Form.Has(templates.FlagUpdate) {
 		s.Database.UpdateTerm(r.Context(), database.UpdateTermParams{
 			ID:        int64(id),
 			Name:      r.FormValue(KeyName),
 			StartDate: startDate,
 			EndDate:   endDate,
 		})
-	} else if r.Form.Has(routes.FlagDelete) {
+	} else if r.Form.Has(templates.FlagDelete) {
 		s.Database.DeleteTerm(r.Context(), int64(id))
 	}
 

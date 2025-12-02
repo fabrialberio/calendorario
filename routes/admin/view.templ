@@ -2,6 +2,7 @@ package admin
 
 import (
 	"calendorario/pkg/session"
+	"calendorario/pkg/templates"
 	"calendorario/routes"
 )
 
@@ -15,7 +16,7 @@ templ View() {
 	}}
 	<!DOCTYPE html>
 	<html>
-		@routes.Head()
+		@templates.Head()
 		<body class="grid place-items-center">
 			<header class="absolute left-0 top-0 flex w-full flex-row p-4">
 				<a class="clickable button mr-auto h-12 px-3" href={ routes.RouteLogout }>

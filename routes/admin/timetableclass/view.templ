@@ -2,7 +2,7 @@ package timetableclass
 
 import (
 	"calendorario/pkg/session"
-	"calendorario/routes"
+	"calendorario/pkg/templates"
 	"time"
 )
 
@@ -13,9 +13,9 @@ templ View(date time.Time) {
 	}}
 	<!DOCTYPE html>
 	<html>
-		@routes.Head()
+		@templates.Head()
 		<body>
-			@routes.Sidebar(1, term)
+			@templates.Sidebar(1, term)
 			<main class="ml-64 grid place-items-center space-y-8 p-4">
 				<div class="w-full max-w-4xl space-y-2">
 					<h2>

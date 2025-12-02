@@ -2,7 +2,7 @@ package calendar
 
 import (
 	"calendorario/pkg/session"
-	"calendorario/routes"
+	"calendorario/pkg/templates"
 	monthRoute "calendorario/routes/month"
 	"time"
 )
@@ -17,9 +17,9 @@ templ View(year int, month time.Month) {
 	}}
 	<!DOCTYPE html>
 	<html>
-		@routes.Head()
+		@templates.Head()
 		<body>
-			@routes.Sidebar(0, term)
+			@templates.Sidebar(0, term)
 			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
 				@monthRoute.View(year, month, today, term, vacations)
 				@vacationList(term, vacations)

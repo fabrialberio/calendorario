@@ -121,9 +121,9 @@ templ calendarRowBackground(
 	for j := 0; j < 7; j++ {
 		<div
 			class={
+				"text-center w-full relative h-full p-2 py-2 not-last-of-type:border-r border-outline",
 				templ.KV("bg-surface-high", day.Month() != month),
 				templ.KV("striped-outline", !termInterval.Contains(day)),
-				"text-center w-full relative h-full p-2 py-2 not-last-of-type:border-r border-outline",
 			}
 		>
 			if isFirstRow {

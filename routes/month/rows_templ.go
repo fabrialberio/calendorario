@@ -309,9 +309,9 @@ func calendarRowBackground(
 		day := monday
 		termInterval := dates.Interval(term.StartDate, term.EndDate)
 		for j := 0; j < 7; j++ {
-			var templ_7745c5c3_Var15 = []any{templ.KV("bg-surface-high", day.Month() != month),
+			var templ_7745c5c3_Var15 = []any{"text-center w-full relative h-full p-2 py-2 not-last-of-type:border-r border-outline",
+				templ.KV("bg-surface-high", day.Month() != month),
 				templ.KV("striped-outline", !termInterval.Contains(day)),
-				"text-center w-full relative h-full p-2 py-2 not-last-of-type:border-r border-outline",
 			}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var15...)
 			if templ_7745c5c3_Err != nil {

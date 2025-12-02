@@ -8,6 +8,7 @@ import (
 	"calendorario/routes"
 	"calendorario/routes/admin"
 	"calendorario/routes/admin/calendar"
+	"calendorario/routes/admin/timetableclass"
 	"calendorario/routes/index"
 	"calendorario/routes/login"
 	"calendorario/routes/logout"
@@ -113,7 +114,7 @@ func setupRoutes(mux *http.ServeMux) {
 	adminMux.Handle(routes.RouteAdminVacation, &vacation.Handler{})
 
 	adminMux.Handle("GET "+routes.RouteAdminCalendar, templ.Handler(calendar.View(time.Now().Year(), time.Now().Month())))
-	adminMux.Handle("GET "+routes.RouteAdminTimetableClass, templ.Handler(routes.TimetableClassPage(time.Now())))
+	adminMux.Handle("GET "+routes.RouteAdminTimetableClass, templ.Handler(timetableclass.View(time.Now())))
 
 	mux.Handle(routes.RouteAdmin, middleware.WithUserCheck(
 		func(u *database.User) bool { return u.Role == database.RoleAdministrator },

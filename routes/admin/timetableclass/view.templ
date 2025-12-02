@@ -10,7 +10,7 @@ import (
 templ View(date time.Time, today time.Time) {
 	{{
 		s := session.FromContext(ctx)
-		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
+		term, _ := s.Database.GetTerm(ctx, int64(s.SelectedTermID))
 		classes, _ := s.Database.ListClasses(ctx)
 	}}
 	<!DOCTYPE html>

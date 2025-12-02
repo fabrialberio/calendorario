@@ -12,7 +12,7 @@ templ View(year int, month time.Month, today time.Time) {
 		today := time.Now()
 
 		s := session.FromContext(ctx)
-		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
+		term, _ := s.Database.GetTerm(ctx, int64(s.SelectedTermID))
 		vacations, _ := s.Database.ListVacationsWithTermID(ctx, term.ID)
 	}}
 	<!DOCTYPE html>

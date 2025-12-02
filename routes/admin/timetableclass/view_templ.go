@@ -5,14 +5,14 @@ package timetableclass
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
+import "github.com/a-h/templ"
+import templruntime "github.com/a-h/templ/runtime"
+
 import (
 	"calendorario/pkg/session"
 	"calendorario/pkg/templates"
 	"calendorario/routes/week"
 	"time"
-
-	"github.com/a-h/templ"
-	templruntime "github.com/a-h/templ/runtime"
 )
 
 func View(date time.Time, today time.Time) templ.Component {

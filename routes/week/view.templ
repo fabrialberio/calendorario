@@ -1,12 +1,13 @@
 package week
 
 import (
+	"calendorario/pkg/database"
 	"calendorario/pkg/dates"
 	"calendorario/routes"
 	"time"
 )
 
-templ View(date time.Time, today time.Time) {
+templ View(date time.Time, today time.Time, term database.Term) {
 	{{ id := "week" }}
 	<div
 		id={ id }
@@ -14,7 +15,7 @@ templ View(date time.Time, today time.Time) {
 		x-data={ "{ initial: document.getElementById('" + id + "').innerHTML, week: null }" }
 		x-html={ "week == null ? initial : week.text()" }
 	>
-		@innerView(date, today)
+		@innerView(date, today, term)
 	</div>
 }
 
@@ -22,11 +23,17 @@ func fetchWeekURL(date time.Time) string {
 	return routes.RouteWeek + "?" + keyDate + "=" + date.Format(time.DateOnly)
 }
 
-templ innerView(date time.Time, today time.Time) {
+templ innerView(date time.Time, today time.Time, term database.Term) {
 	<div class="flex w-full flex-col gap-2">
 		{{
-			monday := date
+			firstDay := date
+			termInterval := dates.Interval(term.StartDate, term.EndDate)
 
+			if !termInterval.Contains(firstDay) {
+				firstDay = term.StartDate
+			}
+
+			monday := firstDay
 			for monday.Weekday() != time.Monday {
 				monday = monday.AddDate(0, 0, -1)
 			}
@@ -40,12 +47,14 @@ templ innerView(date time.Time, today time.Time) {
 			<div class="card-group-row">
 				<button
 					class="button bg-surface-highest px-2"
+					disabled?={ !termInterval.Contains(monday.AddDate(0, 0, -1)) }
 					x-on:click={ "week = await fetch('" + fetchWeekURL(monday.AddDate(0, 0, -7)) + "')" }
 				>
 					<i class="fas fa-chevron-left"></i>
 				</button>
 				<button
 					class="button bg-surface-highest"
+					disabled?={ !termInterval.Contains(today) }
 					x-on:click={ "week = await fetch('" + fetchWeekURL(today) + "')" }
 				>
 					<i class="fas fa-calendar-day"></i>
@@ -53,24 +62,42 @@ templ innerView(date time.Time, today time.Time) {
 				</button>
 				<button
 					class="button bg-surface-highest px-2"
+					disabled?={ !termInterval.Contains(monday.AddDate(0, 0, 7)) }
 					x-on:click={ "week = await fetch('" + fetchWeekURL(monday.AddDate(0, 0, 7)) + "')" }
 				>
 					<i class="fas fa-chevron-right"></i>
 				</button>
 			</div>
 			<h4>
-				{ dates.MonthString(date.Year(), date.Month()) }
+				{{ sunday := monday.AddDate(0, 0, 6) }}
+				if sunday.Month() != monday.Month() {
+					{ dates.MonthNames[monday.Month()] } - { dates.MonthString(sunday.Year(), sunday.Month()) }
+				} else {
+					{ dates.MonthString(monday.Year(), monday.Month()) }
+				}
 			</h4>
 		</div>
 		<div class="divide-outline min-h-120 bg-surface-highest grid h-full grid-cols-7 divide-x overflow-hidden rounded-lg shadow-sm">
 			for i := 0; i < 7; i++ {
-				<div class="text-center">
-					<p class="text-on-surface-dim">
+				{{ day := monday.AddDate(0, 0, i) }}
+				<div
+					class={
+						"text-center p-2",
+						templ.KV("striped-outline", !termInterval.Contains(day)),
+					}
+				>
+					<p class="text-on-surface-dim text-sm">
 						{ dates.WeekdayNicks[i] }
 					</p>
-					<p class="text-sm">
-						{ monday.AddDate(0, 0, i).Day() }
-					</p>
+					<div
+						class={ "rounded-full py-1 px-1 truncate",
+						templ.KV(
+							"bg-primary-container font-bold",
+							day.Year() == today.Year() && day.Month() == today.Month() && day.Day() == today.Day(),
+						) }
+					>
+						{ day.Day() }
+					</div>
 				</div>
 			}
 		</div>

@@ -1,6 +1,7 @@
 package week
 
 import (
+	"calendorario/pkg/session"
 	"net/http"
 	"time"
 )
@@ -24,8 +25,8 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 		date = time.Now()
 	}
 
-	//s := session.FromContext(r.Context())
-	//term, _ := s.Database.GetTerm(r.Context(), int64(s.TermID))
+	s := session.FromContext(r.Context())
+	term, _ := s.Database.GetTerm(r.Context(), int64(s.TermID))
 
-	innerView(date, time.Now()).Render(r.Context(), w)
+	innerView(date, time.Now(), term).Render(r.Context(), w)
 }

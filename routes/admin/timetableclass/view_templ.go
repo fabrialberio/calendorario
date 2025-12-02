@@ -59,7 +59,7 @@ func View(date time.Time, today time.Time) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = week.View(date, today).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = week.View(date, today, term).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

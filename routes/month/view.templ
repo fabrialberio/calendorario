@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-func fetchMonthURL(date time.Time) string {
-	return routes.RouteMonth + "?" + keyDate + "=" + date.Format(time.DateOnly)
-}
-
 templ View(
 	year int,
 	month time.Month,
@@ -18,7 +14,7 @@ templ View(
 	term database.Term,
 	vacations []database.Vacation,
 ) {
-	{{ id := "calendar" }}
+	{{ id := "month" }}
 	<div
 		id={ id }
 		class="flex h-full w-full flex-col gap-2"
@@ -29,6 +25,10 @@ templ View(
 	</div>
 }
 
+func fetchMonthURL(date time.Time) string {
+	return routes.RouteMonth + "?" + keyDate + "=" + date.Format(time.DateOnly)
+}
+
 templ innerView(
 	year int,
 	month time.Month,
@@ -37,7 +37,6 @@ templ innerView(
 	vacations []database.Vacation,
 ) {
 	{{
-		id := "calendar"
 		firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 		termInterval := dates.Interval(term.StartDate, term.EndDate)
 
@@ -47,10 +46,7 @@ templ innerView(
 			firstDay = time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 		}
 	}}
-	<div
-		id={ id }
-		class="flex h-full w-full flex-col gap-2"
-	>
+	<div class="flex h-full w-full flex-col gap-2">
 		<div class="flex flex-row items-center gap-4">
 			<div class="card-group-row">
 				<button

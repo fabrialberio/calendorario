@@ -22,7 +22,7 @@ templ View(year int, month time.Month) {
 			@routes.Sidebar(0, term)
 			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
 				@monthRoute.View(year, month, today, term, vacations)
-				@VacationList(term, vacations)
+				@vacationList(term, vacations)
 			</main>
 		</body>
 	</html>

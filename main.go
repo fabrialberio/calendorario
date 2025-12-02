@@ -6,12 +6,14 @@ import (
 	"calendorario/pkg/middleware"
 	"calendorario/pkg/session"
 	"calendorario/routes"
+	"calendorario/routes/admin"
 	"calendorario/routes/admin/calendar"
 	"calendorario/routes/index"
 	"calendorario/routes/login"
 	"calendorario/routes/logout"
 	"calendorario/routes/month"
 	"calendorario/routes/term"
+	"calendorario/routes/vacation"
 	"context"
 
 	"github.com/a-h/templ"
@@ -103,14 +105,12 @@ func setupRoutes(mux *http.ServeMux) {
 	mux.Handle(routes.RouteMonth, &month.Handler{})
 
 	adminMux := http.NewServeMux()
-	adminMux.Handle(routes.RouteAdmin, templ.Handler(routes.TermsPage()))
-	//adminMux.Handle("GET "+routes.DestAdmin, templ.Handler(routes.TermsPage()))
+	adminMux.Handle(routes.RouteAdmin, templ.Handler(admin.View()))
 
 	adminMux.Handle(routes.RouteAdminTerm, &term.Handler{})
 	adminMux.HandleFunc("GET "+routes.RouteAdminLoadTerm+"/{id}", handlers.AdminLoadTermGet)
 
-	adminMux.HandleFunc("GET "+routes.RouteAdminVacation+"/{id}", handlers.AdminVacationGet)
-	adminMux.HandleFunc("POST "+routes.RouteAdminVacation, handlers.AdminVacationPost)
+	adminMux.Handle(routes.RouteAdminVacation, &vacation.Handler{})
 
 	adminMux.Handle("GET "+routes.RouteAdminCalendar, templ.Handler(calendar.View(time.Now().Year(), time.Now().Month())))
 	adminMux.Handle("GET "+routes.RouteAdminTimetableClass, templ.Handler(routes.TimetableClassPage(time.Now())))

@@ -1,8 +1,10 @@
-package routes
+package admin
 
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/dates"
+	"calendorario/routes"
+	termRoute "calendorario/routes/term"
 	"strconv"
 )
 
@@ -36,7 +38,7 @@ templ termCard(term database.Term) {
 	<div class="relative overflow-hidden">
 		<a
 			class="bg-surface-highest clickable flex h-32 flex-row items-center pr-4"
-			href={ RouteAdminLoadTerm + "/" + strconv.Itoa(int(term.ID)) }
+			href={ routes.RouteAdminLoadTerm + "/" + strconv.Itoa(int(term.ID)) }
 		>
 			<div class="bg-surface-high ml-auto grid h-8 w-8 place-items-center rounded-full">
 				<i class="fas fa-chevron-right"></i>
@@ -51,7 +53,7 @@ templ termCard(term database.Term) {
 			</p>
 			<a
 				class="clickable button bg-surface-high mt-auto w-fit"
-				href={ RouteAdminTerm + "?id=" + strconv.Itoa(int(term.ID)) }
+				href={ routes.RouteAdminTerm + "?" + termRoute.KeyID + "=" + strconv.Itoa(int(term.ID)) }
 			>
 				<i class="fas fa-edit"></i>
 				Modifica
@@ -63,7 +65,7 @@ templ termCard(term database.Term) {
 templ newTermCard() {
 	<a
 		class="clickable border-on-surface-dim grid h-32 place-items-center rounded-md border border-dashed"
-		href={ RouteAdminTerm }
+		href={ routes.RouteAdminTerm }
 	>
 		<div class="bg-primary-container button">
 			<i class="fa-add fas"></i>

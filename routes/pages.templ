@@ -1,63 +1,9 @@
 package routes
 
 import (
-	"calendorario/pkg/database"
 	"calendorario/pkg/session"
 	"time"
 )
-
-templ TermsPage() {
-	{{
-		s := session.FromContext(ctx)
-		authUser, _ := s.User()
-
-		user, _ := s.Database.GetUser(ctx, authUser.ID)
-		terms, _ := s.Database.ListTerms(ctx)
-	}}
-	<!DOCTYPE html>
-	<html>
-		@Head()
-		<body class="grid place-items-center">
-			<header class="absolute left-0 top-0 flex w-full flex-row p-4">
-				<a class="clickable button mr-auto h-12 px-3" href={ RouteLogout }>
-					<i class="fa-arrow-right-from-bracket fas"></i>
-					Esci
-				</a>
-			</header>
-			<main class="bg-surface max-w-4xl space-y-4 rounded-lg p-4 text-center shadow-sm">
-				<h2>
-					Benvenuto, { user.Name }!
-				</h2>
-				@termGrid(terms, s.TermID)
-			</main>
-		</body>
-	</html>
-}
-
-templ VacationEditPage(vacation database.Vacation, isNew bool) {
-	{{
-		s := session.FromContext(ctx)
-		terms, _ := s.Database.ListTerms(ctx)
-	}}
-	@FormScaffold(
-		"Vacanza o festività",
-		RouteAdminVacation,
-		int(vacation.ID),
-		KeyVacationID,
-		isNew,
-		[]templ.Component{
-			FormInputText("Nome della vacanza", KeyVacationName, vacation.Name),
-			FormInputTwoDates(
-				"Date di inizio e fine",
-				KeyVacationStartDate,
-				vacation.StartDate,
-				KeyVacationEndDate,
-				vacation.EndDate,
-			),
-			FormInputSelectTerm(KeyVacationTermID, int(vacation.TermID), terms),
-		},
-	)
-}
 
 templ TimetableClassPage(date time.Time) {
 	{{

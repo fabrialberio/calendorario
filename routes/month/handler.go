@@ -2,12 +2,13 @@ package month
 
 import (
 	"calendorario/pkg/session"
-	"calendorario/routes"
 	"net/http"
 	"time"
 )
 
 const EventColorVacation = "#d8dbd1"
+
+const KeyDate = "date"
 
 type Handler struct{}
 
@@ -21,7 +22,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	date, err := time.Parse(time.DateOnly, r.FormValue(routes.KeyCalendarDate))
+	date, err := time.Parse(time.DateOnly, r.FormValue(KeyDate))
 	if err != nil {
 		date = time.Now()
 	}

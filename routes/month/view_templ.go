@@ -16,7 +16,7 @@ import (
 )
 
 func fetchMonthURL(date time.Time) string {
-	return routes.RouteMonth + "?" + routes.KeyCalendarDate + "=" + date.Format(time.DateOnly)
+	return routes.RouteMonth + "?" + KeyDate + "=" + date.Format(time.DateOnly)
 }
 
 func View(

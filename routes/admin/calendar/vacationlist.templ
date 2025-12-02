@@ -5,10 +5,11 @@ import (
 	"calendorario/pkg/dates"
 	"calendorario/routes"
 	"calendorario/routes/month"
+	"calendorario/routes/vacation"
 	"strconv"
 )
 
-templ VacationList(term database.Term, vacations []database.Vacation) {
+templ vacationList(term database.Term, vacations []database.Vacation) {
 	<div class="flex h-full max-h-screen basis-80 flex-col gap-2">
 		<div class="flex flex-row items-center">
 			<h4>
@@ -16,7 +17,7 @@ templ VacationList(term database.Term, vacations []database.Vacation) {
 			</h4>
 			<a
 				class="button bg-primary clickable text-on-primary ml-auto px-2"
-				href={ routes.RouteAdminVacation + "/new" }
+				href={ routes.RouteAdminVacation }
 			>
 				<i class="fas fa-add"></i>
 			</a>
@@ -25,7 +26,7 @@ templ VacationList(term database.Term, vacations []database.Vacation) {
 			for _, v := range vacations {
 				<a
 					class="bg-surface-highest clickable space-y-2 p-4"
-					href={ routes.RouteAdminVacation + "/" + strconv.Itoa(int(v.ID)) }
+					href={ routes.RouteAdminVacation + "?" + vacation.KeyID + "=" + strconv.Itoa(int(v.ID)) }
 				>
 					<div class="flex flex-row gap-2">
 						<div

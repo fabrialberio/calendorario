@@ -1,6 +1,12 @@
 package routes
 
 const (
+	FlagCreate = "create"
+	FlagUpdate = "update"
+	FlagDelete = "delete"
+)
+
+const (
 	routeTerm           = "/term"
 	routeVacation       = "/vacation"
 	routeCalendar       = "/calendar"

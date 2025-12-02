@@ -2,7 +2,6 @@ package main
 
 import (
 	"calendorario/pkg/database"
-	"calendorario/pkg/handlers"
 	"calendorario/pkg/middleware"
 	"calendorario/pkg/session"
 	"calendorario/routes"
@@ -10,6 +9,7 @@ import (
 	"calendorario/routes/admin/calendar"
 	"calendorario/routes/admin/timetableclass"
 	"calendorario/routes/index"
+	"calendorario/routes/loadterm"
 	"calendorario/routes/login"
 	"calendorario/routes/logout"
 	"calendorario/routes/month"
@@ -105,7 +105,7 @@ func setupRoutes(mux *http.ServeMux) {
 	adminMux.Handle(routes.RouteAdmin, templ.Handler(admin.View()))
 	adminMux.Handle(routes.RouteAdminCalendar, templ.Handler(calendar.View(time.Now().Year(), time.Now().Month())))
 	adminMux.Handle(routes.RouteAdminTimetableClass, templ.Handler(timetableclass.View(time.Now())))
-	adminMux.HandleFunc("GET "+routes.RouteAdminLoadTerm+"/{id}", handlers.AdminLoadTermGet)
+	adminMux.Handle(routes.RouteAdminLoadTerm, &loadterm.Handler{})
 
 	mux.Handle(routes.RouteLogin, &login.Handler{})
 	mux.Handle(routes.RouteLogout, &logout.Handler{})

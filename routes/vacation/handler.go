@@ -33,7 +33,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	s := session.FromContext(r.Context())
-	defaultVacation := database.Vacation{
+	initialVacation := database.Vacation{
 		StartDate: time.Now(),
 		EndDate:   time.Now().AddDate(0, 0, 1),
 		TermID:    int64(s.TermID),
@@ -41,13 +41,13 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 
 	id, err := strconv.Atoi(r.FormValue(keyID))
 	if err != nil {
-		View(defaultVacation, true).Render(r.Context(), w)
+		View(initialVacation, true).Render(r.Context(), w)
 		return
 	}
 
 	vacation, err := s.Database.GetVacation(r.Context(), int64(id))
 	if err != nil {
-		View(defaultVacation, true).Render(r.Context(), w)
+		View(initialVacation, true).Render(r.Context(), w)
 		return
 	}
 

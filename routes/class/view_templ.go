@@ -41,7 +41,7 @@ func View(class database.Class, isNew bool) templ.Component {
 		programs, _ := s.Database.ListPrograms(ctx)
 		templ_7745c5c3_Err = templates.FormScaffold(
 			"Classe",
-			routes.RouteTerm,
+			routes.RouteClass,
 			int(class.ID),
 			isNew,
 			[]templ.Component{

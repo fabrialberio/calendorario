@@ -12,6 +12,7 @@ import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/dates"
 	"calendorario/routes"
+	vacationRoute "calendorario/routes/vacation"
 	"strconv"
 	"time"
 )
@@ -84,7 +85,7 @@ func calendarRowVacation(
 				templ.KV("grid-column-end", strconv.Itoa(endCol+1)),
 			)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 42, Col: 3}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 43, Col: 3}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -96,7 +97,7 @@ func calendarRowVacation(
 			}
 			templ_7745c5c3_Err = calendarEvent(
 				vacation.Name,
-				routes.RouteAdminVacation+"/"+strconv.Itoa(int(vacation.ID)),
+				routes.RouteVacation+"?"+vacationRoute.KeyID+"="+strconv.Itoa(int(vacation.ID)),
 				EventColorVacation,
 			).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
@@ -214,7 +215,7 @@ func calendarRowMessage(title string, value string, boundCol int) templ.Componen
 			templ.KV("grid-column-end", strconv.Itoa(endCol+1)),
 		)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 93, Col: 2}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 94, Col: 2}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -252,7 +253,7 @@ func calendarRowMessage(title string, value string, boundCol int) templ.Componen
 		var templ_7745c5c3_Var12 string
 		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 103, Col: 11}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 104, Col: 11}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 		if templ_7745c5c3_Err != nil {
@@ -265,7 +266,7 @@ func calendarRowMessage(title string, value string, boundCol int) templ.Componen
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(value)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 105, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 106, Col: 10}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 		if templ_7745c5c3_Err != nil {
@@ -342,7 +343,7 @@ func calendarRowBackground(
 				var templ_7745c5c3_Var17 string
 				templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(dates.WeekdayNicks[j])
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 131, Col: 28}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 132, Col: 28}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 				if templ_7745c5c3_Err != nil {
@@ -383,7 +384,7 @@ func calendarRowBackground(
 			var templ_7745c5c3_Var20 string
 			templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(day.Day())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 143, Col: 15}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 144, Col: 15}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 			if templ_7745c5c3_Err != nil {
@@ -397,7 +398,7 @@ func calendarRowBackground(
 				var templ_7745c5c3_Var21 string
 				templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(dates.MonthNicks[day.Month()])
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 145, Col: 36}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/rows.templ`, Line: 146, Col: 36}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 				if templ_7745c5c3_Err != nil {

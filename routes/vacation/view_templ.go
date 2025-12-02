@@ -39,7 +39,7 @@ func View(vacation database.Vacation, isNew bool) templ.Component {
 		terms, _ := s.Database.ListTerms(ctx)
 		templ_7745c5c3_Err = routes.FormScaffold(
 			"Vacanza o festività",
-			routes.RouteAdminVacation,
+			routes.RouteVacation,
 			int(vacation.ID),
 			KeyID,
 			isNew,

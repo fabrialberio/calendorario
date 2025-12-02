@@ -99,22 +99,19 @@ func addAdminUserIfNotExists(db *database.Queries) {
 
 func setupRoutes(mux *http.ServeMux) {
 	mux.Handle("/", &index.Handler{})
-	mux.Handle(routes.RouteLogin, &login.Handler{})
-	mux.Handle(routes.RouteLogout, &logout.Handler{})
 	mux.Handle("GET /public/", http.FileServerFS(publicFS))
-
-	mux.Handle(routes.RouteMonth, &month.Handler{})
 
 	adminMux := http.NewServeMux()
 	adminMux.Handle(routes.RouteAdmin, templ.Handler(admin.View()))
-
-	adminMux.Handle(routes.RouteAdminTerm, &term.Handler{})
+	adminMux.Handle(routes.RouteAdminCalendar, templ.Handler(calendar.View(time.Now().Year(), time.Now().Month())))
+	adminMux.Handle(routes.RouteAdminTimetableClass, templ.Handler(timetableclass.View(time.Now())))
 	adminMux.HandleFunc("GET "+routes.RouteAdminLoadTerm+"/{id}", handlers.AdminLoadTermGet)
 
-	adminMux.Handle(routes.RouteAdminVacation, &vacation.Handler{})
-
-	adminMux.Handle("GET "+routes.RouteAdminCalendar, templ.Handler(calendar.View(time.Now().Year(), time.Now().Month())))
-	adminMux.Handle("GET "+routes.RouteAdminTimetableClass, templ.Handler(timetableclass.View(time.Now())))
+	mux.Handle(routes.RouteLogin, &login.Handler{})
+	mux.Handle(routes.RouteLogout, &logout.Handler{})
+	mux.Handle(routes.RouteMonth, &month.Handler{})
+	mux.Handle(routes.RouteTerm, &term.Handler{})
+	mux.Handle(routes.RouteVacation, &vacation.Handler{})
 
 	mux.Handle(routes.RouteAdmin, middleware.WithUserCheck(
 		func(u *database.User) bool { return u.Role == database.RoleAdministrator },

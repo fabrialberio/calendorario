@@ -7,28 +7,26 @@ const (
 )
 
 const (
-	routeTerm           = "/term"
-	routeVacation       = "/vacation"
-	routeCalendar       = "/calendar"
-	routeTimetableClass = "/timetable_class"
-
 	routeAdminBase     = "/admin"
 	routeSecretaryBase = "/secretary"
 	routeTeacherBase   = "/teacher"
+
+	routeCalendar       = "/calendar"
+	routeTimetableClass = "/timetable_class"
 )
 
 const (
-	RouteLogin  = "/login"
-	RouteLogout = "/logout"
-
-	RouteMonth = "/month"
-
 	RouteAdmin               = routeAdminBase + "/"
-	RouteAdminLoadTerm       = routeAdminBase + "/load_term"
-	RouteAdminTerm           = routeAdminBase + routeTerm
-	RouteAdminVacation       = routeAdminBase + routeVacation
 	RouteAdminCalendar       = routeAdminBase + routeCalendar
 	RouteAdminTimetableClass = routeAdminBase + routeTimetableClass
+	RouteAdminLoadTerm       = routeAdminBase + "/load_term"
+
+	RouteLogin    = "/login"
+	RouteLogout   = "/logout"
+	RouteMonth 	  = "/month"
+	RouteTerm     = "/term"
+	RouteVacation = "/vacation"
+
 
 	RouteSecretary = routeSecretaryBase + "/"
 

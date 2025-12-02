@@ -36,7 +36,7 @@ func View(term database.Term, isNew bool) templ.Component {
 		ctx = templ.ClearChildren(ctx)
 		templ_7745c5c3_Err = routes.FormScaffold(
 			"Periodo scolastico",
-			routes.RouteAdminTerm,
+			routes.RouteTerm,
 			int(term.ID),
 			KeyID,
 			isNew,

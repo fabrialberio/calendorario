@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-templ View(year int, month time.Month) {
+templ View(year int, month time.Month, today time.Time) {
 	{{
 		today := time.Now()
 

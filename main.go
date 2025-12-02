@@ -103,10 +103,12 @@ func setupRoutes(mux *http.ServeMux) {
 	mux.Handle(routes.RouteLogin, &login.Handler{})
 	mux.Handle(routes.RouteLogout, &logout.Handler{})
 
+	today := time.Now()
+
 	adminMux := http.NewServeMux()
 	adminMux.Handle(routes.RouteAdmin, templ.Handler(admin.View()))
-	adminMux.Handle(routes.RouteAdminCalendar, templ.Handler(adminCalendar.View(time.Now().Year(), time.Now().Month())))
-	adminMux.Handle(routes.RouteAdminTimetableClass, templ.Handler(adminTimetableClass.View(time.Now())))
+	adminMux.Handle(routes.RouteAdminCalendar, templ.Handler(adminCalendar.View(today.Year(), today.Month(), today)))
+	adminMux.Handle(routes.RouteAdminTimetableClass, templ.Handler(adminTimetableClass.View(today, today)))
 
 	mux.Handle(routes.RouteAdmin, middleware.WithAuthenticatedUserCheck(
 		func(u *database.User) bool { return u.Role == database.RoleAdministrator },

@@ -3,9 +3,10 @@ package session
 import (
 	"net/http"
 	"strconv"
+	"time"
 )
 
-const termCookieName = "current_term"
+const termCookieName = "selected_term"
 
 func GetTermCookie(r *http.Request) (int, error) {
 	cookie, err := r.Cookie(termCookieName)
@@ -17,17 +18,44 @@ func GetTermCookie(r *http.Request) (int, error) {
 }
 
 func SetTermCookie(w http.ResponseWriter, termID int) {
+	setCookie(w, termCookieName, strconv.Itoa(termID))
+}
+
+func UnsetTermCookie(w http.ResponseWriter) {
+	unsetCookie(w, termCookieName)
+}
+
+const dateCookieName = "selected_date"
+
+func GetDateCookie(r *http.Request) (time.Time, error) {
+	cookie, err := r.Cookie(dateCookieName)
+	if err != nil {
+		return time.Time{}, ErrCookieNotFound
+	}
+
+	return time.Parse(time.DateOnly, cookie.Value)
+}
+
+func SetDateCookie(w http.ResponseWriter, date time.Time) {
+	setCookie(w, dateCookieName, date.Format(time.DateOnly))
+}
+
+func UnsetDateCookie(w http.ResponseWriter) {
+	unsetCookie(w, dateCookieName)
+}
+
+func setCookie(w http.ResponseWriter, name string, value string) {
 	http.SetCookie(w, &http.Cookie{
-		Name:     termCookieName,
-		Value:    strconv.Itoa(termID),
+		Name:     name,
+		Value:    value,
 		Path:     "/",
 		HttpOnly: true,
 	})
 }
 
-func UnsetTermCookie(w http.ResponseWriter) {
+func unsetCookie(w http.ResponseWriter, name string) {
 	http.SetCookie(w, &http.Cookie{
-		Name:     termCookieName,
+		Name:     name,
 		Value:    "",
 		HttpOnly: true,
 		MaxAge:   -1,

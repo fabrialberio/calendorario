@@ -36,7 +36,7 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	initialVacation := database.Vacation{
 		StartDate: time.Now(),
 		EndDate:   time.Now().AddDate(0, 0, 1),
-		TermID:    int64(s.TermID),
+		TermID:    int64(s.SelectedTermID),
 	}
 
 	id, err := strconv.Atoi(r.FormValue(keyID))

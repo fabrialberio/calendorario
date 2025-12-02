@@ -34,7 +34,7 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	s := session.FromContext(r.Context())
 	initialClass := database.Class{
 		Grade:  1,
-		TermID: int64(s.TermID),
+		TermID: int64(s.SelectedTermID),
 	}
 
 	id, err := strconv.Atoi(r.FormValue(keyID))

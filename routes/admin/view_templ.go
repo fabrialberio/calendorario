@@ -5,13 +5,13 @@ package admin
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import "github.com/a-h/templ"
-import templruntime "github.com/a-h/templ/runtime"
-
 import (
 	"calendorario/pkg/session"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
+
+	"github.com/a-h/templ"
+	templruntime "github.com/a-h/templ/runtime"
 )
 
 func View() templ.Component {
@@ -78,7 +78,7 @@ func View() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = termGrid(terms, s.TermID).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = termGrid(terms, s.SelectedTermID).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

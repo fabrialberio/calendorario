@@ -5,12 +5,13 @@ package calendar
 
 //lint:file-ignore SA4006 This context is only used if a nested component is present.
 
-import "github.com/a-h/templ"
-import templruntime "github.com/a-h/templ/runtime"
-
 import (
 	"calendorario/pkg/session"
 	"calendorario/pkg/templates"
+
+	"github.com/a-h/templ"
+	templruntime "github.com/a-h/templ/runtime"
+
 	monthRoute "calendorario/routes/month"
 	"time"
 )
@@ -39,7 +40,7 @@ func View(year int, month time.Month, today time.Time) templ.Component {
 		today := time.Now()
 
 		s := session.FromContext(ctx)
-		term, _ := s.Database.GetTerm(ctx, int64(s.TermID))
+		term, _ := s.Database.GetTerm(ctx, int64(s.SelectedTermID))
 		vacations, _ := s.Database.ListVacationsWithTermID(ctx, term.ID)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html>")
 		if templ_7745c5c3_Err != nil {

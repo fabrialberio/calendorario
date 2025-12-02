@@ -26,7 +26,7 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	s := session.FromContext(r.Context())
-	term, _ := s.Database.GetTerm(r.Context(), int64(s.TermID))
+	term, _ := s.Database.GetTerm(r.Context(), int64(s.SelectedTermID))
 
 	innerView(date, time.Now(), term).Render(r.Context(), w)
 }

@@ -3,13 +3,15 @@ package session
 import (
 	"calendorario/pkg/database"
 	"context"
+	"time"
 )
 
 type sessionContext struct {
 	Database          *database.Queries
 	AuthenticatedUser *database.User
 	AuthenticationErr error
-	TermID            int
+	SelectedTermID    int
+	SelectedDate      *time.Time
 }
 
 type sessionContextKey struct{}
@@ -18,26 +20,13 @@ func FromContext(ctx context.Context) sessionContext {
 	return ctx.Value(sessionContextKey{}).(sessionContext)
 }
 
-func New(
-	database *database.Queries,
-	authenticatedUser *database.User,
-	authenticationErr error,
-	termID int,
-) sessionContext {
-	return sessionContext{
-		database,
-		authenticatedUser,
-		authenticationErr,
-		termID,
-	}
-}
-
 func NewContext(
 	ctx context.Context,
 	database *database.Queries,
 	authenticatedUser *database.User,
 	authenticationErr error,
-	termID int,
+	selectedTermID int,
+	selectedDate *time.Time,
 ) context.Context {
 	return context.WithValue(
 		ctx,
@@ -46,7 +35,8 @@ func NewContext(
 			database,
 			authenticatedUser,
 			authenticationErr,
-			termID,
+			selectedTermID,
+			selectedDate,
 		},
 	)
 }

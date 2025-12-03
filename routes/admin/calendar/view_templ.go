@@ -9,13 +9,19 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"calendorario/pkg/session"
+	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
 	monthRoute "calendorario/routes/month"
 	"time"
 )
 
-func View(year int, month time.Month, today time.Time) templ.Component {
+func View(
+	year int,
+	month time.Month,
+	today time.Time,
+	term database.Term,
+	vacations []database.Vacation,
+) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -36,11 +42,6 @@ func View(year int, month time.Month, today time.Time) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		today := time.Now()
-
-		s := session.FromContext(ctx)
-		term, _ := s.Database.GetTerm(ctx, int64(s.SelectedTermID))
-		vacations, _ := s.Database.ListVacationsWithTermID(ctx, term.ID)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

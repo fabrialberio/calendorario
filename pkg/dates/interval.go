@@ -10,10 +10,6 @@ type DateInterval struct {
 	End   time.Time
 }
 
-func truncateDate(date time.Time) time.Time {
-	return time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, date.Location())
-}
-
 func Interval(start time.Time, end time.Time) DateInterval {
 	return DateInterval{truncateDate(start), truncateDate(end)}
 }
@@ -39,4 +35,8 @@ func (i DateInterval) String() string {
 
 	return DayString(i.Start, false, true, showYear) + " - " +
 		DayString(i.End, false, true, showYear)
+}
+
+func truncateDate(date time.Time) time.Time {
+	return time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, date.Location())
 }

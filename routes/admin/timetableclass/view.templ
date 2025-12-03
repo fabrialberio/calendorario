@@ -1,18 +1,13 @@
 package timetableclass
 
 import (
-	"calendorario/pkg/session"
+	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
 	"calendorario/routes/week"
 	"time"
 )
 
-templ View(date time.Time, today time.Time) {
-	{{
-		s := session.FromContext(ctx)
-		term, _ := s.Database.GetTerm(ctx, int64(s.SelectedTermID))
-		classes, _ := s.Database.ListClasses(ctx)
-	}}
+templ View(date time.Time, today time.Time, term database.Term, classes []database.Class) {
 	<!DOCTYPE html>
 	<html>
 		@templates.Head()

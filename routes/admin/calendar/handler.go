@@ -1,35 +1,29 @@
-package week
+package calendar
 
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
 	"net/http"
 	"time"
-)
 
-const keyDate = "date"
+	"github.com/a-h/templ"
+)
 
 type Handler struct {
 	Database *database.Queries
 }
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case http.MethodGet:
-		h.Get(w, r)
-	default:
+	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed.", http.StatusMethodNotAllowed)
+		return
 	}
-}
 
-func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	date, err := time.Parse(time.DateOnly, r.FormValue(keyDate))
-	if err != nil {
-		date = time.Now()
-	}
+	today := time.Now()
 
 	termID, _ := session.SelectedTermID(r)
 	term, _ := h.Database.GetTerm(r.Context(), int64(termID))
+	vacations, _ := h.Database.ListVacationsWithTermID(r.Context(), int64(termID))
 
-	innerView(date, time.Now(), term).Render(r.Context(), w)
+	templ.Handler(View(today.Year(), today.Month(), today, term, vacations)).ServeHTTP(w, r)
 }

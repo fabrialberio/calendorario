@@ -1,6 +1,7 @@
 package login
 
 import (
+	"calendorario/pkg/database"
 	"calendorario/pkg/session"
 	"calendorario/routes"
 	"errors"
@@ -14,7 +15,9 @@ const (
 	errorQueryParam = "error"
 )
 
-type Handler struct{}
+type Handler struct {
+	Database *database.Queries
+}
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -28,8 +31,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	s := session.FromContext(r.Context())
-	_, err := s.User()
+	_, err := session.AuthenticatedUser(r)
 
 	if errors.Is(err, session.ErrCookieExpired) {
 		View(false, true).Render(r.Context(), w)
@@ -46,8 +48,7 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 
 	var destLoginError = routes.RouteLogin + "?" + errorQueryParam
 
-	s := session.FromContext(r.Context())
-	user, err := s.Database.GetUserWithUsername(r.Context(), username)
+	user, err := h.Database.GetUserWithUsername(r.Context(), username)
 	if err != nil {
 		http.Redirect(w, r, destLoginError, http.StatusSeeOther)
 		return

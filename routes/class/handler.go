@@ -17,7 +17,9 @@ const (
 	keyProgramID = "program_id"
 )
 
-type Handler struct{}
+type Handler struct {
+	Database *database.Queries
+}
 
 func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -31,25 +33,28 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	s := session.FromContext(r.Context())
+	termID, _ := session.SelectedTermID(r)
 	initialClass := database.Class{
 		Grade:  1,
-		TermID: int64(s.SelectedTermID),
+		TermID: int64(termID),
 	}
+
+	terms, _ := h.Database.ListTerms(r.Context())
+	programs, _ := h.Database.ListPrograms(r.Context())
 
 	id, err := strconv.Atoi(r.FormValue(keyID))
 	if err != nil {
-		View(initialClass, true).Render(r.Context(), w)
+		View(initialClass, true, terms, programs).Render(r.Context(), w)
 		return
 	}
 
-	class, err := s.Database.GetClass(r.Context(), int64(id))
+	class, err := h.Database.GetClass(r.Context(), int64(id))
 	if err != nil {
-		View(initialClass, true).Render(r.Context(), w)
+		View(initialClass, true, terms, programs).Render(r.Context(), w)
 		return
 	}
 
-	View(class, false).Render(r.Context(), w)
+	View(class, false, terms, programs).Render(r.Context(), w)
 }
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
@@ -58,17 +63,15 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 	termID, _ := strconv.Atoi(r.FormValue(keyTermID))
 	programID, _ := strconv.Atoi(r.FormValue(keyProgramID))
 
-	s := session.FromContext(r.Context())
-
 	if r.Form.Has(templates.FlagCreate) {
-		s.Database.CreateClass(r.Context(), database.CreateClassParams{
+		h.Database.CreateClass(r.Context(), database.CreateClassParams{
 			Grade:     int32(grade),
 			Section:   r.FormValue(keySection),
 			TermID:    int64(termID),
 			ProgramID: int64(programID),
 		})
 	} else if r.Form.Has(templates.FlagUpdate) {
-		s.Database.UpdateClass(r.Context(), database.UpdateClassParams{
+		h.Database.UpdateClass(r.Context(), database.UpdateClassParams{
 			ID:        int64(id),
 			Grade:     int32(grade),
 			Section:   r.FormValue(keySection),
@@ -76,7 +79,7 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 			ProgramID: int64(programID),
 		})
 	} else if r.Form.Has(templates.FlagDelete) {
-		s.Database.DeleteClass(r.Context(), int64(id))
+		h.Database.DeleteClass(r.Context(), int64(id))
 	}
 
 	http.Redirect(w, r, routes.RouteAdmin, http.StatusSeeOther)

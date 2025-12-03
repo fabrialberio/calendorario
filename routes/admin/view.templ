@@ -1,19 +1,12 @@
 package admin
 
 import (
-	"calendorario/pkg/session"
+	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
 )
 
-templ View() {
-	{{
-		s := session.FromContext(ctx)
-		authUser, _ := s.User()
-
-		user, _ := s.Database.GetUser(ctx, authUser.ID)
-		terms, _ := s.Database.ListTerms(ctx)
-	}}
+templ View(user database.User, selectedTermID int, terms []database.Term) {
 	<!DOCTYPE html>
 	<html>
 		@templates.Head()
@@ -28,7 +21,7 @@ templ View() {
 				<h2>
 					Benvenuto, { user.Name }!
 				</h2>
-				@termGrid(terms, s.SelectedTermID)
+				@termGrid(terms, selectedTermID)
 			</main>
 		</body>
 	</html>

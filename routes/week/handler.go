@@ -28,8 +28,8 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 		date = time.Now()
 	}
 
-	s := session.FromContext(r.Context())
-	term, _ := h.Database.GetTerm(r.Context(), int64(s.SelectedTermID))
+	termID, _ := session.SelectedTermID(r)
+	term, _ := h.Database.GetTerm(r.Context(), int64(termID))
 
 	innerView(date, time.Now(), term).Render(r.Context(), w)
 }

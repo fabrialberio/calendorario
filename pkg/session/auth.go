@@ -14,7 +14,7 @@ var (
 	ErrCookieExpired  = errors.New("cookie is expired")
 )
 
-const sessionCookieName = "jwt"
+const sessionCookie = "jwt"
 
 func HashPassword(password string) ([]byte, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
@@ -25,8 +25,8 @@ func HashPassword(password string) ([]byte, error) {
 	return hash, nil
 }
 
-func GetAuthenticatedUser(r *http.Request) (*database.User, error) {
-	cookie, err := r.Cookie(sessionCookieName)
+func AuthenticatedUser(r *http.Request) (*database.User, error) {
+	cookie, err := r.Cookie(sessionCookie)
 	if err != nil {
 		return nil, ErrCookieNotFound
 	}
@@ -52,21 +52,11 @@ func SetAuthenticatedUser(w http.ResponseWriter, user *database.User, password [
 		return err
 	}
 
-	http.SetCookie(w, &http.Cookie{
-		Name:     sessionCookieName,
-		Value:    token,
-		Path:     "/",
-		HttpOnly: true,
-	})
+	setCookie(w, sessionCookie, token)
 
 	return nil
 }
 
 func UnsetAuthenticatedUser(w http.ResponseWriter) {
-	http.SetCookie(w, &http.Cookie{
-		Name:     sessionCookieName,
-		Value:    "",
-		HttpOnly: true,
-		MaxAge:   -1,
-	})
+	unsetCookie(w, sessionCookie)
 }

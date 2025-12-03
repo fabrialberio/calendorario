@@ -6,10 +6,10 @@ import (
 	"time"
 )
 
-const termCookieName = "selected_term"
+const selectedTermCookie = "selected_term"
 
-func GetTermCookie(r *http.Request) (int, error) {
-	cookie, err := r.Cookie(termCookieName)
+func SelectedTermID(r *http.Request) (int, error) {
+	cookie, err := r.Cookie(selectedTermCookie)
 	if err != nil {
 		return 0, ErrCookieNotFound
 	}
@@ -17,18 +17,18 @@ func GetTermCookie(r *http.Request) (int, error) {
 	return strconv.Atoi(cookie.Value)
 }
 
-func SetTermCookie(w http.ResponseWriter, termID int) {
-	setCookie(w, termCookieName, strconv.Itoa(termID))
+func SetSelectedTermID(w http.ResponseWriter, termID int) {
+	setCookie(w, selectedTermCookie, strconv.Itoa(termID))
 }
 
-func UnsetTermCookie(w http.ResponseWriter) {
-	unsetCookie(w, termCookieName)
+func UnsetSelectedTermID(w http.ResponseWriter) {
+	unsetCookie(w, selectedTermCookie)
 }
 
-const dateCookieName = "selected_date"
+const selectedDateCookie = "selected_date"
 
-func GetDateCookie(r *http.Request) (time.Time, error) {
-	cookie, err := r.Cookie(dateCookieName)
+func SelectedDate(r *http.Request) (time.Time, error) {
+	cookie, err := r.Cookie(selectedDateCookie)
 	if err != nil {
 		return time.Time{}, ErrCookieNotFound
 	}
@@ -36,12 +36,12 @@ func GetDateCookie(r *http.Request) (time.Time, error) {
 	return time.Parse(time.DateOnly, cookie.Value)
 }
 
-func SetDateCookie(w http.ResponseWriter, date time.Time) {
-	setCookie(w, dateCookieName, date.Format(time.DateOnly))
+func SetSelectedDate(w http.ResponseWriter, date time.Time) {
+	setCookie(w, selectedDateCookie, date.Format(time.DateOnly))
 }
 
-func UnsetDateCookie(w http.ResponseWriter) {
-	unsetCookie(w, dateCookieName)
+func UnsetSelectedDate(w http.ResponseWriter) {
+	unsetCookie(w, selectedDateCookie)
 }
 
 func setCookie(w http.ResponseWriter, name string, value string) {

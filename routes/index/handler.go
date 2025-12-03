@@ -16,8 +16,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s := session.FromContext(r.Context())
-	user, err := s.User()
+	user, err := session.AuthenticatedUser(r)
 
 	if err != nil {
 		http.Redirect(w, r, routes.RouteLogin, http.StatusSeeOther)

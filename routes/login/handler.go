@@ -31,8 +31,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	s := session.FromContext(r.Context())
-	_, err := s.User()
+	_, err := session.AuthenticatedUser(r)
 
 	if errors.Is(err, session.ErrCookieExpired) {
 		View(false, true).Render(r.Context(), w)

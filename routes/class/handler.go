@@ -33,10 +33,10 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	s := session.FromContext(r.Context())
+	termID, _ := session.SelectedTermID(r)
 	initialClass := database.Class{
 		Grade:  1,
-		TermID: int64(s.SelectedTermID),
+		TermID: int64(termID),
 	}
 
 	terms, _ := h.Database.ListTerms(r.Context())

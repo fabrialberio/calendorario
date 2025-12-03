@@ -21,9 +21,9 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	today := time.Now()
 
-	s := session.FromContext(r.Context())
-	term, _ := h.Database.GetTerm(r.Context(), int64(s.SelectedTermID))
-	vacations, _ := h.Database.ListVacationsWithTermID(r.Context(), int64(s.SelectedTermID))
+	termID, _ := session.SelectedTermID(r)
+	term, _ := h.Database.GetTerm(r.Context(), int64(termID))
+	vacations, _ := h.Database.ListVacationsWithTermID(r.Context(), int64(termID))
 
 	templ.Handler(View(today.Year(), today.Month(), today, term, vacations)).ServeHTTP(w, r)
 }

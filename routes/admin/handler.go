@@ -18,11 +18,11 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s := session.FromContext(r.Context())
-	authUser, _ := s.User()
+	termID, _ := session.SelectedTermID(r)
+	authUser, _ := session.AuthenticatedUser(r)
 
 	user, _ := h.Database.GetUser(r.Context(), authUser.ID)
 	terms, _ := h.Database.ListTerms(r.Context())
 
-	templ.Handler(View(user, terms)).ServeHTTP(w, r)
+	templ.Handler(View(user, termID, terms)).ServeHTTP(w, r)
 }

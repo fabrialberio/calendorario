@@ -15,6 +15,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	session.UnsetAuthenticatedUser(w)
-	session.UnsetTermCookie(w)
+	session.UnsetSelectedTermID(w)
+	session.UnsetSelectedDate(w)
 	http.Redirect(w, r, routes.RouteLogin, http.StatusSeeOther)
 }

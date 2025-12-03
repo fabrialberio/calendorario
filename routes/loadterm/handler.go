@@ -26,7 +26,7 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, routes.RouteAdmin, http.StatusSeeOther)
 	}
 
-	session.SetTermCookie(w, id)
+	session.SetSelectedTermID(w, id)
 
 	http.Redirect(w, r, routes.RouteAdminCalendar, http.StatusSeeOther)
 }

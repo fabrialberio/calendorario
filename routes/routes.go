@@ -21,6 +21,7 @@ const (
 	RouteAdminTimetableClass = routeAdminBase + routeTimetableClass
 
 	RouteClass    = "/class"
+	RouteLoadDate = "/loaddate"
 	RouteLoadTerm = "/loadterm"
 	RouteLogin    = "/login"
 	RouteLogout   = "/logout"

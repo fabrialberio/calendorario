@@ -19,11 +19,14 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	today := time.Now()
+	date, err := session.SelectedDate(r)
+	if err != nil {
+		date = time.Now()
+	}
 
 	termID, _ := session.SelectedTermID(r)
 	term, _ := h.Database.GetTerm(r.Context(), int64(termID))
 	vacations, _ := h.Database.ListVacationsWithTermID(r.Context(), int64(termID))
 
-	templ.Handler(View(today.Year(), today.Month(), today, term, vacations)).ServeHTTP(w, r)
+	templ.Handler(View(date.Year(), date.Month(), time.Now(), term, vacations)).ServeHTTP(w, r)
 }

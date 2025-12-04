@@ -10,6 +10,7 @@ import (
 	adminTimetableClass "calendorario/routes/admin/timetableclass"
 	"calendorario/routes/class"
 	"calendorario/routes/index"
+	"calendorario/routes/loaddate"
 	"calendorario/routes/loadterm"
 	"calendorario/routes/login"
 	"calendorario/routes/logout"
@@ -116,6 +117,7 @@ func setupRoutes(mux *http.ServeMux, db *database.Queries) {
 	loggedInMux := http.NewServeMux()
 	loggedInMux.Handle("/", &index.Handler{})
 	loggedInMux.Handle(routes.RouteClass, &class.Handler{Database: db})
+	loggedInMux.Handle(routes.RouteLoadDate, &loaddate.Handler{})
 	loggedInMux.Handle(routes.RouteLoadTerm, &loadterm.Handler{})
 	loggedInMux.Handle(routes.RouteMonth, &month.Handler{Database: db})
 	loggedInMux.Handle(routes.RouteTerm, &term.Handler{Database: db})

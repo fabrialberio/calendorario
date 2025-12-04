@@ -26,12 +26,8 @@ func fetchWeekURL(date time.Time) string {
 templ innerView(date time.Time, today time.Time, term database.Term) {
 	<div class="flex w-full flex-col gap-2">
 		{{
-			firstDay := date
 			termInterval := dates.Interval(term.StartDate, term.EndDate)
-
-			if !termInterval.Contains(firstDay) {
-				firstDay = term.StartDate
-			}
+			firstDay := termInterval.Clamp(date)
 
 			monday := firstDay
 			for monday.Weekday() != time.Monday {

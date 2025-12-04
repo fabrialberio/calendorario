@@ -37,14 +37,12 @@ templ innerView(
 	vacations []database.Vacation,
 ) {
 	{{
-		firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 		termInterval := dates.Interval(term.StartDate, term.EndDate)
+		date := termInterval.Clamp(time.Date(year, month, 1, 0, 0, 0, 0, time.Local))
 
-		if !termInterval.Contains(firstDay) {
-			year = term.StartDate.Year()
-			month = term.StartDate.Month()
-			firstDay = time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
-		}
+		year = date.Year()
+		month = date.Month()
+		firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 	}}
 	<div class="flex h-full w-full flex-col gap-2">
 		<div class="flex flex-row items-center gap-4">

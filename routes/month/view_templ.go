@@ -129,14 +129,12 @@ func innerView(
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 		termInterval := dates.Interval(term.StartDate, term.EndDate)
+		date := termInterval.Clamp(time.Date(year, month, 1, 0, 0, 0, 0, time.Local))
 
-		if !termInterval.Contains(firstDay) {
-			year = term.StartDate.Year()
-			month = term.StartDate.Month()
-			firstDay = time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
-		}
+		year = date.Year()
+		month = date.Month()
+		firstDay := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"flex h-full w-full flex-col gap-2\"><div class=\"flex flex-row items-center gap-4\"><div class=\"card-group-row\"><button class=\"button bg-surface-highest px-2\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -154,7 +152,7 @@ func innerView(
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, -1, 0)) + "')")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 55, Col: 92}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 53, Col: 92}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -177,7 +175,7 @@ func innerView(
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("month = await fetch('" + fetchMonthURL(today) + "')")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 62, Col: 71}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 60, Col: 71}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -200,7 +198,7 @@ func innerView(
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("month = await fetch('" + fetchMonthURL(firstDay.AddDate(0, 1, 0)) + "')")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 70, Col: 91}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 68, Col: 91}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -213,7 +211,7 @@ func innerView(
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(dates.MonthString(year, month))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 76, Col: 36}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 74, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -280,7 +278,7 @@ func innerView(
 			var templ_7745c5c3_Var12 templ.SafeURL
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinURLErrs(routes.RouteLoadDate + "?" + routes.KeyDate + "=" + day.Format(time.DateOnly))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 108, Col: 90}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 106, Col: 90}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -336,7 +334,7 @@ func calendarEvent(title string, destination string, colorHex string) templ.Comp
 		var templ_7745c5c3_Var14 templ.SafeURL
 		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinURLErrs(destination)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 120, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 118, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 		if templ_7745c5c3_Err != nil {
@@ -349,7 +347,7 @@ func calendarEvent(title string, destination string, colorHex string) templ.Comp
 		var templ_7745c5c3_Var15 string
 		templ_7745c5c3_Var15, templ_7745c5c3_Err = templruntime.SanitizeStyleAttributeValues(templ.KV("background-color", colorHex))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 122, Col: 48}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 120, Col: 48}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 		if templ_7745c5c3_Err != nil {
@@ -362,7 +360,7 @@ func calendarEvent(title string, destination string, colorHex string) templ.Comp
 		var templ_7745c5c3_Var16 string
 		templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 125, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/month/view.templ`, Line: 123, Col: 10}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 		if templ_7745c5c3_Err != nil {

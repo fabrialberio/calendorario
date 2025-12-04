@@ -20,6 +20,19 @@ func (i DateInterval) Contains(date time.Time) bool {
 	return i.Start.Compare(date) <= 0 && i.End.Compare(date) >= 0
 }
 
+// Clamps date between i.Start and i.End.
+func (i DateInterval) Clamp(date time.Time) time.Time {
+	if i.Contains(date) {
+		return date
+	}
+
+	if date.After(i.End) {
+		return i.End
+	}
+
+	return i.Start
+}
+
 // Wether two date intervals overlap.
 func (i DateInterval) Overlaps(interval DateInterval) bool {
 	return i.End.Compare(interval.Start) >= 0 && i.Start.Compare(interval.End) <= 0

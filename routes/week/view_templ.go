@@ -121,12 +121,8 @@ func innerView(date time.Time, today time.Time, term database.Term) templ.Compon
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		firstDay := date
 		termInterval := dates.Interval(term.StartDate, term.EndDate)
-
-		if !termInterval.Contains(firstDay) {
-			firstDay = term.StartDate
-		}
+		firstDay := termInterval.Clamp(date)
 
 		monday := firstDay
 		for monday.Weekday() != time.Monday {
@@ -149,7 +145,7 @@ func innerView(date time.Time, today time.Time, term database.Term) templ.Compon
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs("week = await fetch('" + fetchWeekURL(monday.AddDate(0, 0, -7)) + "')")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 51, Col: 88}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 47, Col: 88}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -172,7 +168,7 @@ func innerView(date time.Time, today time.Time, term database.Term) templ.Compon
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs("week = await fetch('" + fetchWeekURL(today) + "')")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 58, Col: 69}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 54, Col: 69}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
@@ -195,7 +191,7 @@ func innerView(date time.Time, today time.Time, term database.Term) templ.Compon
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs("week = await fetch('" + fetchWeekURL(monday.AddDate(0, 0, 7)) + "')")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 66, Col: 87}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 62, Col: 87}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -210,7 +206,7 @@ func innerView(date time.Time, today time.Time, term database.Term) templ.Compon
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(dates.MonthNames[monday.Month()])
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 74, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 70, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -223,7 +219,7 @@ func innerView(date time.Time, today time.Time, term database.Term) templ.Compon
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(dates.MonthString(sunday.Year(), sunday.Month()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 74, Col: 94}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 70, Col: 94}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -233,7 +229,7 @@ func innerView(date time.Time, today time.Time, term database.Term) templ.Compon
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(dates.MonthString(monday.Year(), monday.Month()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 76, Col: 55}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 72, Col: 55}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -273,7 +269,7 @@ func innerView(date time.Time, today time.Time, term database.Term) templ.Compon
 			var templ_7745c5c3_Var14 string
 			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(dates.WeekdayNicks[i])
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 90, Col: 29}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 86, Col: 29}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
@@ -312,7 +308,7 @@ func innerView(date time.Time, today time.Time, term database.Term) templ.Compon
 			var templ_7745c5c3_Var17 string
 			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(day.Day())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 99, Col: 17}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/week/view.templ`, Line: 95, Col: 17}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 			if templ_7745c5c3_Err != nil {

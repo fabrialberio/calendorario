@@ -103,7 +103,10 @@ templ innerView(
 						}
 						@calendarRowTermBounds(day, term)
 					</div>
-					<a class="clickable absolute left-0 top-0 z-10 block h-full w-full"></a>
+					<a
+						class="clickable absolute left-0 top-0 z-10 block h-full w-full"
+						href={ routes.RouteLoadDate + "?" + routes.KeyDate + "=" + day.Format(time.DateOnly) }
+					></a>
 					@calendarRowBackground(day, month, today, i == 0, term)
 				</div>
 				{{ day = day.AddDate(0, 0, 7) }}

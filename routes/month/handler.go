@@ -26,10 +26,9 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
-	date, err := time.Parse(time.DateOnly, r.FormValue(keyDate))
-	if err != nil {
-		date = time.Now()
-	}
+	date, _ := time.Parse(time.DateOnly, r.FormValue(keyDate))
+
+	session.SetSelectedDate(w, date)
 
 	termID, _ := session.SelectedTermID(r)
 	term, _ := h.Database.GetTerm(r.Context(), int64(termID))

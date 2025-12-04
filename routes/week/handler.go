@@ -29,6 +29,8 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 		date = time.Now()
 	}
 
+	session.SetSelectedDate(w, date)
+
 	termID, _ := session.SelectedTermID(r)
 	term, _ := h.Database.GetTerm(r.Context(), int64(termID))
 

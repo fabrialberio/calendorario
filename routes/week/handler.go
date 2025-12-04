@@ -3,11 +3,12 @@ package week
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
+	"calendorario/routes"
 	"net/http"
 	"time"
 )
 
-const keyDate = "date"
+const keyDate = routes.KeyDate
 
 type Handler struct {
 	Database *database.Queries

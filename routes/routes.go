@@ -1,7 +1,10 @@
 package routes
 
-// Common id path parameter name used for all routes.
-const KeyID = "id"
+// Common path parameter names used for multiple routes.
+const (
+	KeyID   = "id"
+	KeyDate = "date"
+)
 
 const (
 	routeAdminBase     = "/admin"

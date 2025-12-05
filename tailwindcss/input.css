@@ -26,7 +26,7 @@
 
     --radius-*: initial;
     /* Used for button groups and chips. */
-    --radius-sm: 6px;
+    --radius-sm: 8px;
     /* Used for small cards. */
     --radius-md: 24px;
     /* Used for large cards. */
@@ -125,7 +125,7 @@
     }
 
     .checkbox {
-        @apply border-on-surface-dim text-on-primary clickable h-5 w-5 rounded-sm border text-sm;
+        @apply border-on-surface-dim text-on-primary clickable h-5 w-5 rounded-[6px] border text-sm;
 
         &:has(input[type="checkbox"]:checked) {
             @apply border-none bg-primary;

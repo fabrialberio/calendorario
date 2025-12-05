@@ -82,7 +82,7 @@ func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 = []any{templ.KV("bg-primary-container", i == selectedIndex),
-				templ.KV("clickable", i != selectedIndex),
+				templ.KV("clickable font-normal", i != selectedIndex),
 				"button h-12 px-3 w-full justify-start",
 			}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var4...)

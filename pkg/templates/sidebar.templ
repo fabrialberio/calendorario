@@ -42,7 +42,7 @@ templ Sidebar(selectedIndex int, currentTerm database.Term) {
 						<a
 							class={
 								templ.KV("bg-primary-container", i == selectedIndex),
-								templ.KV("clickable", i != selectedIndex),
+								templ.KV("clickable font-normal", i != selectedIndex),
 								"button h-12 px-3 w-full justify-start",
 							}
 							if i != selectedIndex {

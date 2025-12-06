@@ -4,8 +4,6 @@ import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/session"
 	"net/http"
-
-	"github.com/a-h/templ"
 )
 
 type Handler struct {
@@ -24,5 +22,5 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	user, _ := h.Database.GetUser(r.Context(), authUser.ID)
 	terms, _ := h.Database.ListTerms(r.Context())
 
-	templ.Handler(View(user, termID, terms)).ServeHTTP(w, r)
+	View(user, termID, terms).Render(r.Context(), w)
 }

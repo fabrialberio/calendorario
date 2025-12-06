@@ -5,8 +5,6 @@ import (
 	"calendorario/pkg/session"
 	"net/http"
 	"time"
-
-	"github.com/a-h/templ"
 )
 
 type Handler struct {
@@ -28,5 +26,5 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	term, _ := h.Database.GetTerm(r.Context(), int64(termID))
 	vacations, _ := h.Database.ListVacationsWithTermID(r.Context(), int64(termID))
 
-	templ.Handler(View(date.Year(), date.Month(), time.Now(), term, vacations)).ServeHTTP(w, r)
+	View(date.Year(), date.Month(), time.Now(), term, vacations).Render(r.Context(), w)
 }

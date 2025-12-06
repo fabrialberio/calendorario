@@ -16,6 +16,7 @@ import (
 	"calendorario/routes/login"
 	"calendorario/routes/logout"
 	"calendorario/routes/month"
+	"calendorario/routes/subject"
 	"calendorario/routes/term"
 	"calendorario/routes/vacation"
 	"calendorario/routes/week"
@@ -122,6 +123,7 @@ func setupRoutes(mux *http.ServeMux, db *database.Queries) {
 	loggedInMux.Handle(routes.RouteLoadDate, &loaddate.Handler{})
 	loggedInMux.Handle(routes.RouteLoadTerm, &loadterm.Handler{})
 	loggedInMux.Handle(routes.RouteMonth, &month.Handler{Database: db})
+	loggedInMux.Handle(routes.RouteSubject, &subject.Handler{Database: db})
 	loggedInMux.Handle(routes.RouteTerm, &term.Handler{Database: db})
 	loggedInMux.Handle(routes.RouteVacation, &vacation.Handler{Database: db})
 	loggedInMux.Handle(routes.RouteWeek, &week.Handler{Database: db})

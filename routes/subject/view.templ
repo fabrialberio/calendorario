@@ -1,0 +1,20 @@
+package subject
+
+import (
+	"calendorario/pkg/database"
+	"calendorario/pkg/templates"
+	"calendorario/routes"
+)
+
+templ View(subject database.Subject, isNew bool) {
+	@templates.FormScaffold(
+		"Materia",
+		routes.RouteSubject,
+		int(subject.ID),
+		isNew,
+		[]templ.Component{
+			templates.FormInputText("Nome", keyName, subject.Name),
+			templates.FormInputText("Colore", keyColorHexValue, string(subject.ColorHexValue)),
+		},
+	)
+}

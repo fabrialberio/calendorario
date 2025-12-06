@@ -4,23 +4,121 @@ import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
+	"strconv"
 )
 
 templ View(term database.Term, isNew bool) {
-	@templates.FormScaffold(
-		"Periodo scolastico",
-		routes.RouteTerm,
-		int(term.ID),
-		isNew,
-		[]templ.Component{
-			templates.FormInputText("Nome del periodo", keyName, term.Name),
-			templates.FormInputTwoDates(
-				"Date di inizio e fine",
-				keyStartDate,
-				term.StartDate,
-				keyEndDate,
-				term.EndDate,
-			),
-		},
-	)
+	<!DOCTYPE html>
+	<html>
+		@templates.Head()
+		<body class="grid place-items-center">
+			<form
+				class="flex flex-col gap-4"
+				method="post"
+				action={ routes.RouteTerm }
+				x-data="{ step: 1 }"
+			>
+				@stepPicker()
+				<div
+					class="bg-surface space-y-4 rounded-lg p-4 shadow-sm"
+					x-show="step == 1"
+				>
+					<h2>
+						Periodo scolastico
+					</h2>
+					<input type="hidden" name={ keyID } value={ strconv.Itoa(int(term.ID)) }/>
+					@templates.FormInputText("Nome del periodo", keyName, term.Name)
+					@templates.FormInputTwoDates(
+						"Date di inizio e fine",
+						keyStartDate,
+						term.StartDate,
+						keyEndDate,
+						term.EndDate,
+					)
+					@nextStepButton(1, isNew)
+				</div>
+				<div
+					class="bg-surface space-y-4 rounded-lg p-4 shadow-sm"
+					x-show="step == 2"
+				>
+					<h2>
+						Materie
+					</h2>
+					@nextStepButton(2, isNew)
+				</div>
+				<div
+					class="bg-surface space-y-4 rounded-lg p-4 shadow-sm"
+					x-show="step == 3"
+				>
+					<h2>
+						Indirizzi
+					</h2>
+					@nextStepButton(3, isNew)
+				</div>
+			</form>
+		</body>
+	</html>
+}
+
+templ stepPicker() {
+	<div class="border border-outline rounded-full items-center divide-x divide-outline flex flex-row overflow-hidden">
+		{{ titles := []string{"Informazioni", "Materie", "Indirizzi"} }}
+		for i, title := range titles {
+			<button
+				type="button"
+				class="px-3 py-2 flex items-center flex-row grow gap-2"
+				x-on:click={ "step = " + strconv.Itoa(i+1) }
+			>
+				<div class="bg-primary-container flex flex-row px-2 py-2 rounded-full font-bold">
+					{ i + 1 }
+				</div>
+				{ title }
+			</button>
+		}
+	</div>
+}
+
+templ nextStepButton(step int, isNew bool) {
+	<div class="flex flex-row-reverse pt-4">
+		if step < 3 {
+			<button
+				class="button bg-primary text-on-primary ml-auto"
+				type="button"
+				autofocus
+				x-on:click="step++"
+			>
+				Successivo
+				<i class="fas fa-arrow-right"></i>
+			</button>
+		} else {
+			{{
+				var name string
+
+				if isNew {
+					name = templates.FlagCreate
+				} else {
+					name = templates.FlagUpdate
+				}
+			}}
+			<button
+				class="button bg-primary text-on-primary ml-auto"
+				type="submit"
+				name={ name }
+				autofocus
+			>
+				<i class="fas fa-check"></i>
+				Fine
+			</button>
+		}
+		if step == 1 {
+			<button
+				class="button bg-surface-highest"
+				type="submit"
+				name={ templates.FlagDelete }
+			>
+				<i class="fas fa-x"></i>
+				Elimina
+			</button>
+		}
+	</div>
 }

@@ -18,6 +18,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	termID, _ := session.SelectedTermID(r)
 	term, _ := h.Database.GetTerm(r.Context(), int64(termID))
+	subjects, _ := h.Database.ListSubjects(r.Context())
 
-	View(term).Render(r.Context(), w)
+	View(term, subjects).Render(r.Context(), w)
 }

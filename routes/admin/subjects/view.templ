@@ -3,9 +3,10 @@ package subjects
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
+	"calendorario/routes"
 )
 
-templ View(term database.Term) {
+templ View(term database.Term, subjects []database.Subject) {
 	<!DOCTYPE html>
 	<html>
 		@templates.Head()
@@ -16,8 +17,32 @@ templ View(term database.Term) {
 					<h2>
 						Materie
 					</h2>
+					@subjectTable(subjects)
 				</div>
 			</main>
 		</body>
 	</html>
+}
+
+templ subjectTable(subjects []database.Subject) {
+	<div class="flex flex-row gap-2">
+		<a
+			class="button bg-surface-highest clickable"
+			href={ routes.RouteSubject }
+		>
+			<i class="fas fa-add"></i>
+			Aggiungi materia
+		</a>
+	</div>
+	{{
+		var data [][]string
+
+		for _, subject := range subjects {
+			data = append(data, []string{
+				subject.Name,
+				string(subject.ColorHexValue),
+			})
+		}
+	}}
+	@templates.Table([]string{"Nome", "Colore"}, data, 0, true)
 }

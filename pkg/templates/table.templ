@@ -1,6 +1,11 @@
 package templates
 
-templ Table(headings []string, data [][]string, orderByCol int, orderDesc bool) {
+type TableRow struct {
+	Values []string
+	Href   string
+}
+
+templ Table(headings []string, rows []TableRow, orderByCol int, orderDesc bool) {
 	<table class="border-outline w-full table-auto border-separate border-spacing-0 overflow-hidden rounded-md border">
 		<thead class="bg-surface-high font-bold">
 			<tr class="divide-outline divide-x">
@@ -25,11 +30,19 @@ templ Table(headings []string, data [][]string, orderByCol int, orderDesc bool) 
 			</tr>
 		</thead>
 		<tbody>
-			for i := 0; i < len(data); i++ {
-				<tr class="clickable">
-					for j := 0; j < len(data[i]); j++ {
+			for _, row := range rows {
+				<tr class="relative">
+					for i, data := range row.Values {
 						<td class="border-outline not-last:border-r border-t px-3 py-1">
-							{ data[i][j] }
+							if i == 0 {
+								<a
+									class="absolute top-0 left-0 w-full h-full clickable flex flex-row-reverse items-center px-3"
+									href={ row.Href }
+								>
+									<i class="fas fa-edit"></i>
+								</a>
+							}
+							{ data }
 						</td>
 					}
 				</tr>

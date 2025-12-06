@@ -12,6 +12,7 @@ import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
+	"strconv"
 )
 
 func View(term database.Term, subjects []database.Subject) templ.Component {
@@ -95,7 +96,7 @@ func subjectTable(subjects []database.Subject) templ.Component {
 		var templ_7745c5c3_Var3 templ.SafeURL
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinURLErrs(routes.RouteSubject)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/subjects/view.templ`, Line: 31, Col: 29}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `routes/admin/subjects/view.templ`, Line: 32, Col: 29}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -105,15 +106,18 @@ func subjectTable(subjects []database.Subject) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var data [][]string
+		var rows []templates.TableRow
 
 		for _, subject := range subjects {
-			data = append(data, []string{
-				subject.Name,
-				string(subject.ColorHexValue),
+			rows = append(rows, templates.TableRow{
+				Values: []string{
+					subject.Name,
+					string(subject.ColorHexValue),
+				},
+				Href: routes.RouteSubject + "?" + routes.KeyID + "=" + strconv.Itoa(int(subject.ID)),
 			})
 		}
-		templ_7745c5c3_Err = templates.Table([]string{"Nome", "Colore"}, data, 0, true).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templates.Table([]string{"Nome", "Colore"}, rows, 0, true).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

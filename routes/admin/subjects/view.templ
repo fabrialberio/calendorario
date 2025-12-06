@@ -4,6 +4,7 @@ import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
+	"strconv"
 )
 
 templ View(term database.Term, subjects []database.Subject) {
@@ -35,14 +36,17 @@ templ subjectTable(subjects []database.Subject) {
 		</a>
 	</div>
 	{{
-		var data [][]string
+		var rows []templates.TableRow
 
 		for _, subject := range subjects {
-			data = append(data, []string{
-				subject.Name,
-				string(subject.ColorHexValue),
+			rows = append(rows, templates.TableRow{
+				Values: []string{
+					subject.Name,
+					string(subject.ColorHexValue),
+				},
+				Href: routes.RouteSubject + "?" + routes.KeyID + "=" + strconv.Itoa(int(subject.ID)),
 			})
 		}
 	}}
-	@templates.Table([]string{"Nome", "Colore"}, data, 0, true)
+	@templates.Table([]string{"Nome", "Colore"}, rows, 0, true)
 }

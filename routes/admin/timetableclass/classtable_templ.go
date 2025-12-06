@@ -53,16 +53,19 @@ func classTable(classes []database.Class) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var data [][]string
+		var rows []templates.TableRow
 
 		for _, class := range classes {
-			data = append(data, []string{
-				strconv.Itoa(int(class.ID)),
-				strconv.Itoa(int(class.Grade)),
-				class.Section,
+			rows = append(rows, templates.TableRow{
+				Values: []string{
+					strconv.Itoa(int(class.ID)),
+					strconv.Itoa(int(class.Grade)),
+					class.Section,
+				},
+				Href: routes.RouteClass + "?" + routes.KeyID + "=" + strconv.Itoa(int(class.ID)),
 			})
 		}
-		templ_7745c5c3_Err = templates.Table([]string{"ID", "Anno", "Sezione"}, data, 0, true).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templates.Table([]string{"ID", "Anno", "Sezione"}, rows, 0, true).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

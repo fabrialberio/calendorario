@@ -18,15 +18,18 @@ templ classTable(classes []database.Class) {
 		</a>
 	</div>
 	{{
-		var data [][]string
+		var rows []templates.TableRow
 
 		for _, class := range classes {
-			data = append(data, []string{
-				strconv.Itoa(int(class.ID)),
-				strconv.Itoa(int(class.Grade)),
-				class.Section,
+			rows = append(rows, templates.TableRow{
+				Values: []string{
+					strconv.Itoa(int(class.ID)),
+					strconv.Itoa(int(class.Grade)),
+					class.Section,
+				},
+				Href: routes.RouteClass + "?" + routes.KeyID + "=" + strconv.Itoa(int(class.ID)),
 			})
 		}
 	}}
-	@templates.Table([]string{"ID", "Anno", "Sezione"}, data, 0, true)
+	@templates.Table([]string{"ID", "Anno", "Sezione"}, rows, 0, true)
 }

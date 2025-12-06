@@ -7,6 +7,7 @@ import (
 	"calendorario/routes"
 	"calendorario/routes/admin"
 	adminCalendar "calendorario/routes/admin/calendar"
+	adminSubjects "calendorario/routes/admin/subjects"
 	adminTimetableClass "calendorario/routes/admin/timetableclass"
 	"calendorario/routes/class"
 	"calendorario/routes/index"
@@ -107,6 +108,7 @@ func setupRoutes(mux *http.ServeMux, db *database.Queries) {
 	adminMux := http.NewServeMux()
 	adminMux.Handle(routes.RouteAdmin, &admin.Handler{Database: db})
 	adminMux.Handle(routes.RouteAdminCalendar, &adminCalendar.Handler{Database: db})
+	adminMux.Handle(routes.RouteAdminSubjects, &adminSubjects.Handler{Database: db})
 	adminMux.Handle(routes.RouteAdminTimetableClass, &adminTimetableClass.Handler{Database: db})
 
 	mux.Handle(routes.RouteAdmin, middleware.WithAuthenticatedUserCheck(

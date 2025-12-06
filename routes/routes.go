@@ -10,15 +10,13 @@ const (
 	routeAdminBase     = "/admin"
 	routeSecretaryBase = "/secretary"
 	routeTeacherBase   = "/teacher"
-
-	routeCalendar       = "/calendar"
-	routeTimetableClass = "/timetableclass"
 )
 
 const (
 	RouteAdmin               = routeAdminBase + "/"
-	RouteAdminCalendar       = routeAdminBase + routeCalendar
-	RouteAdminTimetableClass = routeAdminBase + routeTimetableClass
+	RouteAdminCalendar       = routeAdminBase + "/calendar"
+	RouteAdminSubjects       = routeAdminBase + "/subjects"
+	RouteAdminTimetableClass = routeAdminBase + "/timetableclass"
 
 	RouteClass    = "/class"
 	RouteLoadDate = "/loaddate"
@@ -26,6 +24,7 @@ const (
 	RouteLogin    = "/login"
 	RouteLogout   = "/logout"
 	RouteMonth    = "/month"
+	RouteSubject  = "/subject"
 	RouteTerm     = "/term"
 	RouteVacation = "/vacation"
 	RouteWeek     = "/week"

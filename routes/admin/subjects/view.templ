@@ -1,0 +1,23 @@
+package subjects
+
+import (
+	"calendorario/pkg/database"
+	"calendorario/pkg/templates"
+)
+
+templ View(term database.Term) {
+	<!DOCTYPE html>
+	<html>
+		@templates.Head()
+		<body>
+			@templates.Sidebar(2, term)
+			<main class="ml-64 grid place-items-center space-y-8 p-4">
+				<div class="w-full max-w-4xl space-y-2">
+					<h2>
+						Materie
+					</h2>
+				</div>
+			</main>
+		</body>
+	</html>
+}

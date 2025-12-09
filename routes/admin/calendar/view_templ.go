@@ -11,6 +11,7 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
+	"calendorario/routes/admin"
 	monthRoute "calendorario/routes/month"
 	"time"
 )
@@ -54,7 +55,7 @@ func View(
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templates.Sidebar(0, term).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templates.Sidebar(admin.SidebarRows(0), term).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

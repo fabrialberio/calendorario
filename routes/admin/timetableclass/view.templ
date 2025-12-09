@@ -3,6 +3,7 @@ package timetableclass
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
+	"calendorario/routes/admin"
 	"calendorario/routes/week"
 	"time"
 )
@@ -12,7 +13,7 @@ templ View(date time.Time, today time.Time, term database.Term, classes []databa
 	<html>
 		@templates.Head()
 		<body>
-			@templates.Sidebar(1, term)
+			@templates.Sidebar(admin.SidebarRows(1), term)
 			<main class="ml-64 grid place-items-center space-y-8 p-4">
 				<div class="w-full max-w-4xl space-y-2">
 					<h2>

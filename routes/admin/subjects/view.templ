@@ -4,6 +4,7 @@ import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
 	"calendorario/routes"
+	"calendorario/routes/admin"
 	"strconv"
 )
 
@@ -12,7 +13,7 @@ templ View(term database.Term, subjects []database.Subject) {
 	<html>
 		@templates.Head()
 		<body>
-			@templates.Sidebar(2, term)
+			@templates.Sidebar(admin.SidebarRows(2), term)
 			<main class="ml-64 grid place-items-center space-y-8 p-4">
 				<div class="w-full max-w-4xl space-y-2">
 					<h2>

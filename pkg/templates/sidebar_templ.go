@@ -13,20 +13,14 @@ import (
 	"calendorario/routes"
 )
 
-type sidebarRow struct {
-	faIcon      string
-	label       string
-	destination string
+type SidebarRow struct {
+	FAIcon   string
+	Label    string
+	Href     string
+	Selected bool
 }
 
-var sidebarRows = []sidebarRow{
-	sidebarRow{"fa-calendar-days", "Calendario", routes.RouteAdminCalendar},
-	sidebarRow{"fa-calendar-week", "Orario", routes.RouteAdminTimetableClass},
-	sidebarRow{"fa-book", "Materie", routes.RouteAdminSubjects},
-	sidebarRow{"fa-arrow-right-from-bracket", "Esci", routes.RouteLogout},
-}
-
-func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
+func Sidebar(rows []SidebarRow, currentTerm database.Term) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -54,7 +48,7 @@ func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 		var templ_7745c5c3_Var2 templ.SafeURL
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(routes.RouteAdmin)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/templates/sidebar.templ`, Line: 26, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/templates/sidebar.templ`, Line: 20, Col: 28}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -67,7 +61,7 @@ func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(currentTerm.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/templates/sidebar.templ`, Line: 36, Col: 24}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/templates/sidebar.templ`, Line: 30, Col: 24}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -77,13 +71,13 @@ func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		for i := 0; i < len(sidebarRows); i++ {
+		for _, row := range rows {
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<li>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var4 = []any{templ.KV("bg-primary-container", i == selectedIndex),
-				templ.KV("clickable font-normal", i != selectedIndex),
+			var templ_7745c5c3_Var4 = []any{templ.KV("bg-primary-container", row.Selected),
+				templ.KV("clickable font-normal", !row.Selected),
 				"button h-12 px-3 w-full justify-start",
 			}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var4...)
@@ -107,15 +101,15 @@ func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if i != selectedIndex {
+			if !row.Selected {
 				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, " href=\"")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var6 templ.SafeURL
-				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinURLErrs(sidebarRows[i].destination)
+				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinURLErrs(row.Href)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/templates/sidebar.templ`, Line: 50, Col: 41}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/templates/sidebar.templ`, Line: 44, Col: 23}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
@@ -130,7 +124,7 @@ func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var7 = []any{sidebarRows[i].faIcon, " fas"}
+			var templ_7745c5c3_Var7 = []any{row.FAIcon, " fas"}
 			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var7...)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -153,9 +147,9 @@ func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var9 string
-			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(sidebarRows[i].label)
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(row.Label)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/templates/sidebar.templ`, Line: 54, Col: 29}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/templates/sidebar.templ`, Line: 48, Col: 18}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -175,7 +169,7 @@ func Sidebar(selectedIndex int, currentTerm database.Term) templ.Component {
 }
 
 func SidebarScaffold(
-	sidebarIndex int,
+	rows []SidebarRow,
 	currentTerm database.Term,
 	content templ.Component,
 ) templ.Component {
@@ -211,7 +205,7 @@ func SidebarScaffold(
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Sidebar(sidebarIndex, currentTerm).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = Sidebar(rows, currentTerm).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

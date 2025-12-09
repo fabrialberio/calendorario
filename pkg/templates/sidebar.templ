@@ -5,20 +5,14 @@ import (
 	"calendorario/routes"
 )
 
-type sidebarRow struct {
-	faIcon      string
-	label       string
-	destination string
+type SidebarRow struct {
+	FAIcon   string
+	Label    string
+	Href     string
+	Selected bool
 }
 
-var sidebarRows = []sidebarRow{
-	sidebarRow{"fa-calendar-days", "Calendario", routes.RouteAdminCalendar},
-	sidebarRow{"fa-calendar-week", "Orario", routes.RouteAdminTimetableClass},
-	sidebarRow{"fa-book", "Materie", routes.RouteAdminSubjects},
-	sidebarRow{"fa-arrow-right-from-bracket", "Esci", routes.RouteLogout},
-}
-
-templ Sidebar(selectedIndex int, currentTerm database.Term) {
+templ Sidebar(rows []SidebarRow, currentTerm database.Term) {
 	<aside class="fixed left-0 top-0 z-10 h-full w-64 translate-x-0 transition-transform">
 		<nav class="h-full space-y-4 p-4">
 			<a
@@ -38,20 +32,20 @@ templ Sidebar(selectedIndex int, currentTerm database.Term) {
 				</div>
 			</a>
 			<ul class="space-y-1">
-				for i := 0; i < len(sidebarRows); i++ {
+				for _, row := range rows {
 					<li>
 						<a
 							class={
-								templ.KV("bg-primary-container", i == selectedIndex),
-								templ.KV("clickable font-normal", i != selectedIndex),
+								templ.KV("bg-primary-container", row.Selected),
+								templ.KV("clickable font-normal", !row.Selected),
 								"button h-12 px-3 w-full justify-start",
 							}
-							if i != selectedIndex {
-								href={ sidebarRows[i].destination }
+							if !row.Selected {
+								href={ row.Href }
 							}
 						>
-							<i class={ sidebarRows[i].faIcon, " fas" }></i>
-							{ sidebarRows[i].label }
+							<i class={ row.FAIcon, " fas" }></i>
+							{ row.Label }
 						</a>
 					</li>
 				}
@@ -62,7 +56,7 @@ templ Sidebar(selectedIndex int, currentTerm database.Term) {
 }
 
 templ SidebarScaffold(
-	sidebarIndex int,
+	rows []SidebarRow,
 	currentTerm database.Term,
 	content templ.Component,
 ) {
@@ -70,7 +64,7 @@ templ SidebarScaffold(
 	<html>
 		@Head()
 		<body>
-			@Sidebar(sidebarIndex, currentTerm)
+			@Sidebar(rows, currentTerm)
 			<main class="ml-64 flex h-full flex-row gap-8 rounded-tl-lg p-4">
 				@content
 			</main>

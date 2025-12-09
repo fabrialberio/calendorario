@@ -11,6 +11,7 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"calendorario/pkg/database"
 	"calendorario/pkg/templates"
+	"calendorario/routes/admin"
 	"calendorario/routes/week"
 	"time"
 )
@@ -48,7 +49,7 @@ func View(date time.Time, today time.Time, term database.Term, classes []databas
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templates.Sidebar(1, term).Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = templates.Sidebar(admin.SidebarRows(1), term).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -13,6 +13,7 @@ const (
 templ FormScaffold(
 	title string,
 	action string,
+	backURL string,
 	hiddenID int,
 	isNew bool,
 	inputs []templ.Component,
@@ -26,10 +27,19 @@ templ FormScaffold(
 				method="post"
 				action={ action }
 			>
-				<h2>
-					{ title }
-				</h2>
+				<div class="flex flex-row items-center gap-4">
+					<a
+						class="clickable bg-surface-highest rounded-full grid place-items-center w-10 h-10"
+						href={ backURL }
+					>
+						<i class="fas fa-arrow-left"></i>
+					</a>
+					<h2>
+						{ title }
+					</h2>
+				</div>
 				<input type="hidden" name={ routes.KeyID } value={ hiddenID }/>
+				<input type="hidden" name={ routes.KeyBackURL } value={ backURL }/>
 				for _, input := range inputs {
 					@input
 				}

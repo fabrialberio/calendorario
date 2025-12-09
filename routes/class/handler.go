@@ -34,6 +34,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	termID, _ := session.SelectedTermID(r)
+	backURL := r.Referer()
 	initialClass := database.Class{
 		Grade:  1,
 		TermID: int64(termID),
@@ -44,17 +45,17 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 
 	id, err := strconv.Atoi(r.FormValue(keyID))
 	if err != nil {
-		View(initialClass, true, terms, programs).Render(r.Context(), w)
+		View(initialClass, true, backURL, terms, programs).Render(r.Context(), w)
 		return
 	}
 
 	class, err := h.Database.GetClass(r.Context(), int64(id))
 	if err != nil {
-		View(initialClass, true, terms, programs).Render(r.Context(), w)
+		View(initialClass, true, backURL, terms, programs).Render(r.Context(), w)
 		return
 	}
 
-	View(class, false, terms, programs).Render(r.Context(), w)
+	View(class, false, backURL, terms, programs).Render(r.Context(), w)
 }
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
@@ -82,5 +83,5 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 		h.Database.DeleteClass(r.Context(), int64(id))
 	}
 
-	http.Redirect(w, r, routes.RouteAdmin, http.StatusSeeOther)
+	routes.RedirectToBackURL(w, r)
 }

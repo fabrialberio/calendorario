@@ -39,7 +39,7 @@
     }
 
     h2 {
-        @apply pt-2 text-3xl font-extrabold;
+        @apply text-3xl font-extrabold;
     }
 
     h3 {

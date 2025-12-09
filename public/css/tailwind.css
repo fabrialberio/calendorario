@@ -321,6 +321,9 @@
   .h-8 {
     height: calc(var(--spacing) * 8);
   }
+  .h-10 {
+    height: calc(var(--spacing) * 10);
+  }
   .h-12 {
     height: calc(var(--spacing) * 12);
   }
@@ -353,6 +356,9 @@
   }
   .w-8 {
     width: calc(var(--spacing) * 8);
+  }
+  .w-10 {
+    width: calc(var(--spacing) * 10);
   }
   .w-64 {
     width: calc(var(--spacing) * 64);
@@ -678,7 +684,6 @@
     color: var(--color-on-surface);
   }
   h2 {
-    padding-top: calc(var(--spacing) * 2);
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
     --tw-font-weight: var(--font-weight-extrabold);

@@ -6,10 +6,11 @@ import (
 	"calendorario/routes"
 )
 
-templ View(term database.Term, isNew bool) {
+templ View(term database.Term, isNew bool, backURL string) {
 	@templates.FormScaffold(
 		"Periodo scolastico",
 		routes.RouteTerm,
+		backURL,
 		int(term.ID),
 		isNew,
 		[]templ.Component{

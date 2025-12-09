@@ -14,7 +14,7 @@ import (
 	"calendorario/routes"
 )
 
-func View(vacation database.Vacation, isNew bool, terms []database.Term) templ.Component {
+func View(vacation database.Vacation, isNew bool, backURL string, terms []database.Term) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -38,6 +38,7 @@ func View(vacation database.Vacation, isNew bool, terms []database.Term) templ.C
 		templ_7745c5c3_Err = templates.FormScaffold(
 			"Vacanza o festività",
 			routes.RouteVacation,
+			backURL,
 			int(vacation.ID),
 			isNew,
 			[]templ.Component{

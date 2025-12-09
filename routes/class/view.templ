@@ -6,10 +6,11 @@ import (
 	"calendorario/routes"
 )
 
-templ View(class database.Class, isNew bool, terms []database.Term, programs []database.Program) {
+templ View(class database.Class, isNew bool, backURL string, terms []database.Term, programs []database.Program) {
 	@templates.FormScaffold(
 		"Classe",
 		routes.RouteClass,
+		backURL,
 		int(class.ID),
 		isNew,
 		[]templ.Component{

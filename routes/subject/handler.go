@@ -30,19 +30,21 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
+	backURL := r.Referer()
+
 	id, err := strconv.Atoi(r.FormValue(keyID))
 	if err != nil {
-		View(database.Subject{}, true).Render(r.Context(), w)
+		View(database.Subject{}, true, backURL).Render(r.Context(), w)
 		return
 	}
 
 	subject, err := h.Database.GetSubject(r.Context(), int64(id))
 	if err != nil {
-		View(database.Subject{}, true).Render(r.Context(), w)
+		View(database.Subject{}, true, backURL).Render(r.Context(), w)
 		return
 	}
 
-	View(subject, false).Render(r.Context(), w)
+	View(subject, false, backURL).Render(r.Context(), w)
 }
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
@@ -63,5 +65,5 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 		h.Database.DeleteSubject(r.Context(), int64(id))
 	}
 
-	http.Redirect(w, r, routes.RouteAdminSubjects, http.StatusSeeOther)
+	routes.RedirectToBackURL(w, r)
 }

@@ -34,6 +34,7 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
+	backURL := r.Referer()
 	termID, _ := session.SelectedTermID(r)
 	initialVacation := database.Vacation{
 		StartDate: time.Now(),
@@ -45,17 +46,17 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 
 	id, err := strconv.Atoi(r.FormValue(keyID))
 	if err != nil {
-		View(initialVacation, true, terms).Render(r.Context(), w)
+		View(initialVacation, true, backURL, terms).Render(r.Context(), w)
 		return
 	}
 
 	vacation, err := h.Database.GetVacation(r.Context(), int64(id))
 	if err != nil {
-		View(initialVacation, true, terms).Render(r.Context(), w)
+		View(initialVacation, true, backURL, terms).Render(r.Context(), w)
 		return
 	}
 
-	View(vacation, false, terms).Render(r.Context(), w)
+	View(vacation, false, backURL, terms).Render(r.Context(), w)
 }
 
 func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
@@ -83,5 +84,5 @@ func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 		h.Database.DeleteVacation(r.Context(), int64(id))
 	}
 
-	http.Redirect(w, r, routes.RouteAdminCalendar, http.StatusSeeOther)
+	routes.RedirectToBackURL(w, r)
 }

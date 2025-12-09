@@ -1,9 +1,12 @@
 package routes
 
+import "net/http"
+
 // Common path parameter names used for multiple routes.
 const (
-	KeyID   = "id"
-	KeyDate = "date"
+	KeyID      = "id"
+	KeyDate    = "date"
+	KeyBackURL = "back_url"
 )
 
 const (
@@ -33,3 +36,8 @@ const (
 
 	RouteTeacher = routeTeacherBase + "/"
 )
+
+func RedirectToBackURL(w http.ResponseWriter, r *http.Request) {
+	backURL := r.FormValue(KeyBackURL)
+	http.Redirect(w, r, backURL, http.StatusSeeOther)
+}

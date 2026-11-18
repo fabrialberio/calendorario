@@ -7,7 +7,7 @@ services:
       - .env
     volumes:
       - postgres-data:/var/lib/postgresql/18/docker
-      - ./migrations/:/docker-entrypoint-initdb.d
+      - ./migrations/:/docker-entrypoint-initdb.d:z
     networks:
       - calendorario-network
 
@@ -17,10 +17,12 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
+    security_opt:
+      - label=disable
     ports:
       - "80:80"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - letsencrypt:/letsencrypt
     networks:
       - calendorario-network
@@ -30,14 +32,14 @@ services:
     command: generate --watch
     working_dir: /app
     volumes:
-      - .:/app
+      - .:/app:z
 
   sqlc:
     image: sqlc/sqlc
     command: generate
     working_dir: /app/sqlc
     volumes:
-      - .:/app
+      - .:/app:z
 
   tailwindcss:
     build: ./tailwindcss
@@ -46,7 +48,7 @@ services:
     tty: true
     stop_grace_period: 0s
     volumes:
-      - .:/app
+      - .:/app:z
 
   app:
     image: cosmtrek/air:v1.63.0
@@ -64,7 +66,7 @@ services:
     environment:
       - GOFLAGS=-buildvcs=false
     volumes:
-      - .:/app
+      - .:/app:z
     networks:
       - calendorario-network
 

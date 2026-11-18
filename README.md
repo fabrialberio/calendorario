@@ -1,4 +1,10 @@
+![Screenshot](screenshot.png)
+
+> [!IMPORTANT] Proof-of-concept
+> Questo progetto è ancora in fase di mockup.
+
 ## Calendorario
+Gestire il calendario scolastico non deve essere difficile, basta una buona interfaccia.
 
 ### Installazione
 1. [Installa Docker](https://docs.docker.com/engine/install/)

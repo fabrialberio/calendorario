@@ -387,6 +387,9 @@
   .flex-none {
     flex: none;
   }
+  .grow {
+    flex-grow: 1;
+  }
   .basis-80 {
     flex-basis: calc(var(--spacing) * 80);
   }

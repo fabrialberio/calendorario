@@ -27,6 +27,7 @@ const (
 	RouteLogin    = "/login"
 	RouteLogout   = "/logout"
 	RouteMonth    = "/month"
+	RouteNewTerm  = "/newterm"
 	RouteSubject  = "/subject"
 	RouteTerm     = "/term"
 	RouteVacation = "/vacation"

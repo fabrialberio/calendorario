@@ -16,6 +16,7 @@ import (
 	"calendorario/routes/login"
 	"calendorario/routes/logout"
 	"calendorario/routes/month"
+	"calendorario/routes/newterm"
 	"calendorario/routes/subject"
 	"calendorario/routes/term"
 	"calendorario/routes/vacation"
@@ -32,7 +33,6 @@ import (
 	"os"
 	"time"
 )
-
 //go:embed public
 var publicFS embed.FS
 
@@ -123,6 +123,7 @@ func setupRoutes(mux *http.ServeMux, db *database.Queries) {
 	loggedInMux.Handle(routes.RouteLoadDate, &loaddate.Handler{})
 	loggedInMux.Handle(routes.RouteLoadTerm, &loadterm.Handler{})
 	loggedInMux.Handle(routes.RouteMonth, &month.Handler{Database: db})
+	loggedInMux.Handle(routes.RouteNewTerm, newterm.NewHandler(db))
 	loggedInMux.Handle(routes.RouteSubject, &subject.Handler{Database: db})
 	loggedInMux.Handle(routes.RouteTerm, &term.Handler{Database: db})
 	loggedInMux.Handle(routes.RouteVacation, &vacation.Handler{Database: db})

@@ -1,6 +1,6 @@
 ![Screenshot](screenshot.png)
 
-> [!IMPORTANT] Proof-of-concept
+> [!IMPORTANT]
 > Questo progetto è ancora in fase di mockup.
 
 ## Calendorario
